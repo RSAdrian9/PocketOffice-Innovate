@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp } from 'ionicons/icons';
+import { barChartOutline, bookmarkOutline, clipboardOutline, compassOutline, peopleOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-root',
@@ -14,22 +14,22 @@ import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutlin
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Clientes', url: '/folder/clientes', icon: 'mail' },
-    { title: 'Contactos', url: '/folder/contactos', icon: 'paper-plane' },
-    { title: 'Datos Bancarios', url: '/folder/datos-bancarios', icon: 'heart' },
-    { title: 'Direcciones', url: '/folder/direcciones', icon: 'archive' },
-    { title: 'Historial', url: '/folder/historial', icon: 'trash' },
-    { title: 'Listado Facturas', url: '/folder/listado-facturas', icon: 'warning' },
-    { title: 'Listado Albaranes', url: '/folder/listado-albaranes', icon: 'mail' },
-    { title: 'Listado Presupuestos', url: '/folder/listado-presupuestos', icon: 'paper-plane' },
-    { title: 'Listado Pedidos', url: '/folder/listado-pedidos', icon: 'heart' },
-    { title: 'Efectos', url: '/folder/efectos', icon: 'archive' },
-    { title: 'Mayor De Cuentas', url: '/folder/mayor-cuentas', icon: 'trash' },
-    { title: 'Situación de Riesgo', url: '/folder/situacion-riesgo', icon: 'warning' },
-    { title: 'Rentabilidad', url: '/folder/rentabilidad', icon: 'trash' },
-    { title: 'Resumen Mensual de Ventas', url: '/folder/resumen-mensual', icon: 'warning' },
+    { title: 'Clientes', url: '/folder/clientes', icon: 'people' },
+    { title: 'Contactos', url: '/folder/contactos', icon: 'assets/icons/cuaderno.svg' },
+    { title: 'Datos Bancarios', url: '/folder/datos-bancarios', icon: 'card' },
+    { title: 'Direcciones', url: '/folder/direcciones', icon: 'compass' },
+    { title: 'Historial', url: '/folder/historial', icon: 'clipboard' },
+    { title: 'Listado Facturas', url: '/folder/listado-facturas', icon: 'assets/icons/bill.svg' },
+    { title: 'Listado Albaranes', url: '/folder/listado-albaranes', icon: 'assets/icons/delivery-note.svg' },
+    { title: 'Listado Presupuestos', url: '/folder/listado-presupuestos', icon: 'assets/icons/finanzas.svg' },
+    { title: 'Listado Pedidos', url: '/folder/listado-pedidos', icon: 'assets/icons/caja.svg' },
+    { title: 'Efectos', url: '/folder/efectos', icon: 'assets/icons/flujo-de-efectivo.svg' },
+    { title: 'Mayor De Cuentas', url: '/folder/mayor-cuentas', icon: 'assets/icons/mayor.svg' },
+    { title: 'Situación de Riesgo', url: '/folder/situacion-riesgo', icon: 'assets/icons/caution-sign.svg' },
+    { title: 'Rentabilidad', url: '/folder/rentabilidad', icon: 'assets/icons/money-bag.svg' },
+    { title: 'Resumen Mensual de Ventas', url: '/folder/resumen-mensual', icon: 'bar-chart' },
   ];
   constructor() {
-    addIcons({ mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp });
+    addIcons({ peopleOutline, compassOutline, clipboardOutline, bookmarkOutline, barChartOutline });
   }
 }

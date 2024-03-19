@@ -117,3 +117,10 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+
+/* Estilos para los iconos SVG */
+.svg-container img {
+  width: 24px;
+  height: 24px;
+}
+

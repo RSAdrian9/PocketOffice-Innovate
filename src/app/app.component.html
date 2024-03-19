@@ -3,12 +3,17 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi&#64;ionicframework.com</ion-note>
+          <ion-list-header>Innovate</ion-list-header>
+          <ion-note>info&#64;innovatesl.com</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <!-- Si el icono es un SVG -->
+              <div class="svg-container">
+                <img *ngIf="p.icon.includes('.svg')" [src]="p.icon" alt="{{ p.title }}">
+              </div>
+              <!-- Si el icono es de Ionicons -->
+              <ion-icon *ngIf="!p.icon.includes('.svg')" [name]="p.icon"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
