@@ -1,0 +1,18 @@
+export interface contacto {
+    car?: string,
+    cla?: string,
+    cod?: string,
+    codcon?: string,
+    email?: string,
+    ext?: string,
+    id?: string,
+    lopd_ces?: string,
+    lopd_ori?: string,
+    lopd_otr_c?: string,
+    lopd_otr_o?: string,
+    nom?: string,
+    ob1?: string,
+    ob2?: string,
+    ob3?: string,
+    tel?: string,
+}

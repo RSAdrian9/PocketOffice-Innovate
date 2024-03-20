@@ -10,7 +10,7 @@
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
               <!-- Si el icono es un SVG -->
               <div class="svg-container">
-                <img *ngIf="p.icon.includes('.svg')" [src]="p.icon" alt="{{ p.title }}">
+                <ion-icon *ngIf="p.icon.includes('.svg')" [src]="p.icon"></ion-icon>
               </div>
               <!-- Si el icono es de Ionicons -->
               <ion-icon *ngIf="!p.icon.includes('.svg')" [name]="p.icon"></ion-icon>
