@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="padding-left:0 ;">Historial</ion-title>
+    <ion-title size="small" slot="end">{{this.nom}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-textarea style="width: 100%; height: 100%;" disabled readonly>{{this.cliente.historia}}</ion-textarea>
+  </ion-item>
+</ion-content>

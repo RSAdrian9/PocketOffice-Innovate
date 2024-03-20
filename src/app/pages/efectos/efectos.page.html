@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="padding-left:0 ;">Efectos</ion-title>
+    <ion-title size="small" slot="end">{{this.nom}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-item class="ion-no-padding">
+      <ion-button slot="start" class="btn" style="height: 70px;width: 70px; margin: 10px;" (click)="openSelectTipo()">
+        <ion-icon class="titleCliente" size="large" src="../../../assets/imgs/bill.svg"></ion-icon>
+      </ion-button>
+      <p style="display: block !important;padding: 0px !important; margin: 0px !important;" class="title">
+        {{this.tipoEfecto}}</p>
+    </ion-item>
+    <ion-select class="hideElement " [(ngModel)]="this.tipoEfecto" (ionChange)="this.filtro()" interface="action-sheet"
+      #mySelectTipo>
+      <ion-select-option value="Todas">Todas</ion-select-option>
+      <ion-select-option value="Cobradas">Cobradas</ion-select-option>
+      <ion-select-option value="Pendientes">Pendientes</ion-select-option>
+    </ion-select>
+    <p slot="end" style="padding: 0px !important; margin: 0px !important;" class="title">{{this.fechaEfecto}}</p>
+    <ion-button slot="end" class="btn" style="height: 70px;width: 70px; margin: 10px;" (click)="openSelectFecha()">
+      <ion-icon class="titleCliente" size="large" name="calendar-outline"></ion-icon>
+    </ion-button>
+    <ion-select class="hideElement " [(ngModel)]="this.fechaEfecto" (ionChange)="this.filtro()" interface="action-sheet"
+      #mySelectFecha>
+      <ion-select-option value="Hoy">Hoy</ion-select-option>
+      <ion-select-option value="Semana">Semana</ion-select-option>
+      <ion-select-option value="Mes">Mes</ion-select-option>
+      <ion-select-option value="Año">Año</ion-select-option>
+      <ion-select-option value="Todo">Todo</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-grid class="ion-margin">
+    <ion-row>
+      <ion-col style="font-size: 13px;overflow: overlay;">Fecha</ion-col>
+      <ion-col style="font-size: 13px;overflow: overlay;">Nº Factura</ion-col>
+      <ion-col style="font-size: 13px;overflow: overlay;">F.VTO</ion-col>
+      <ion-col style="font-size: 13px;overflow: overlay;">Importe</ion-col>
+    </ion-row>
+    <ion-row (click)="this.vistaEfecto(efecto)" [style]="this.comprobarEfecto(efecto)" *ngFor="let efecto of efecAux">
+      <ion-col style="font-size: 12px;overflow: overlay;">{{efecto.fec2}}</ion-col>
+      <ion-col style="font-size: 13px;overflow: overlay;">{{efecto.fac}}</ion-col>
+      <ion-col style="font-size: 12px;overflow: overlay;">{{efecto.vto}}</ion-col>
+      <ion-col style="font-size: 13px;text-align: right !important;font-weight: bold;overflow: overlay;">{{efecto.impeu}}€</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col
+        style="background-color:  #6d226d; color: #ffffff !important; font-weight: bold;font-size: 13px;font-weight: bold;overflow: overlay;">
+        TOTAL</ion-col>
+      <ion-col style="background-color:  #6d226d; color: #ffffff !important; font-weight: bold;font-size: 13px;overflow: overlay;">
+      </ion-col>
+      <ion-col style="background-color:  #6d226d; color: #ffffff !important; font-weight: bold;font-size: 13px;overflow: overlay;">
+      </ion-col>
+      <ion-col
+        style="background-color:  #6d226d; color: #ffffff !important; font-weight: bold;font-size: 13px;text-align: right !important;font-weight: bold;overflow: overlay;">
+        {{this.total}}€
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

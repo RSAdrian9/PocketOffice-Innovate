@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item>
+      <ion-button size="large" class="btn" shape="round" (click)="this.exit()">
+        <ion-icon name="arrow-undo-outline"></ion-icon>
+      </ion-button>
+      <ion-title>Datos Efecto</ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <p class="title titleSize">Fecha Efecto: </p>
+    <p class="paddingL">{{this.efecto.fec2}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Número Efecto: </p>
+    <p class="paddingL">{{this.efecto.num}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Fecha Vencimiento: </p>
+    <p class="paddingL">{{this.efecto.vto}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Banco: </p>
+    <p class="paddingL">{{this.efecto.ban}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Cuenta: </p>
+    <p class="paddingL">{{this.efecto.banefe}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Número Factura: </p>
+    <p class="paddingL">{{this.efecto.fac}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Remesa: </p>
+    <p class="paddingL">{{this.efecto.rem}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Tipo De Agrupación: </p>
+    <p class="paddingL">{{this.efecto.efe_tipagr}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Número Documento: </p>
+    <p class="paddingL">{{this.efecto.efe_docagr}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Devolución: </p>
+    <p class="paddingL">{{this.efecto.dev}} </p>
+  </ion-item>
+  <ion-item>
+    <p *ngIf="this.tipo=='Clientes'" class="title titleSize">Importe Cobrado: </p>
+    <p *ngIf="this.tipo=='Proveedores'" class="title titleSize">Importe Pagado: </p>
+    <p class="paddingL">{{this.efecto.pageu}}€</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Importe Pendiente: </p>
+    <p class="paddingL">{{this.efecto.impend}}€</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Total Efecto: </p>
+    <p class="paddingL">{{this.efecto.impeu}}€</p>
+  </ion-item>
+</ion-content>

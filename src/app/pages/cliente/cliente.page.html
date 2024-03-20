@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{this.title}}</ion-title>
+    <ion-button (click)="this.refrescar()" slot="end" class="bIdiom">
+      <ion-icon style="height: 30px;width: 30px;" name="refresh-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar #input showCancelButton="focus" debounce="500" (ionChange)="searchCliente($event)"
+      placeholder="Buscar"></ion-searchbar>
+  </ion-toolbar>
+  
+  <ion-toolbar>
+    <ion-item>
+      <ion-item class="ion-no-padding">
+        <ion-button slot="start" class="btn" style="height: 40px;width: 40px; margin: 10px;" (click)="openSelectActivo()">
+          <ion-icon class="titleCliente" size="large" name="person-outline"></ion-icon>
+        </ion-button>
+        <p style="display: block !important;padding: 0px !important; margin: 0px !important;" class="title">
+          {{this.tipoActivo}}</p>
+      </ion-item>
+      <ion-select class="hideElement " [(ngModel)]="this.tipoActivo" (ionChange)="this.filtro()" interface="action-sheet"
+        #mySelectActivo>
+        <ion-select-option value="Todo">Todo</ion-select-option>
+        <ion-select-option value="Activos">Activos</ion-select-option>
+        <ion-select-option value="No Activos">No Activos</ion-select-option>
+      </ion-select>
+      <div slot="end" *ngIf="this.title=='Clientes'">
+        <ion-item lines="none" class="item-inner" style="padding: 0px !important; margin: 0px !important;">
+          <p slot="end" style="padding: 0px !important; margin: 0px !important;" class="title">{{this.riesgo}}</p>
+          <ion-button slot="end" class="btn" style="height: 40px;width: 40px; margin: 10px;" (click)="openSelectRiesgo()">
+            <ion-icon class="titleCliente" size="large" src="../../../assets/imgs/caution-sign.svg"></ion-icon>
+          </ion-button>
+          <ion-select class="hideElement " [(ngModel)]="this.riesgo" (ionChange)="this.filtro()" interface="action-sheet"
+            #mySelectRiesgo>
+            <ion-select-option value="Todo">Todo</ion-select-option>
+            <ion-select-option value="Riesgo">Riesgo</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="contentBackground">
+ 
+  <div *ngIf="this.title=='Clientes'">
+    <ion-list>
+      <ion-item (click)="this.vistaCliente(cliente)" *ngFor="let cliente of this.clientesAUX">
+        <ion-item>
+          <div>
+            <h1>{{cliente.nom}}</h1>
+            <ion-item lines="none" style="padding:0px !important;margin: 0px !important;">
+              <p slot="start" style="color: gray;">{{cliente.cod}}</p>
+              <p slot="end" *ngIf="this.comprobarDiferencia(cliente)=='color: red;'"
+                [style]="this.comprobarDiferencia(cliente)">
+                Riesgo <ion-icon slot="end" src="../../../assets/imgs/caution-sign.svg"></ion-icon>
+              </p>
+            </ion-item>
+          </div>
+        </ion-item>
+        <ion-icon (click)="this.vistaCliente(cliente)" slot="end" name="eye-outline"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div *ngIf="this.title=='Proveedores'">
+    <ion-list>
+      <ion-item (click)="this.vistaCliente(cliente)" *ngFor="let cliente of this.proveedoresAUX">
+        <ion-item>
+          <div>
+            <h1>{{cliente.nom}}</h1>
+            <p style="color: gray;">{{cliente.cod}}</p>
+          </div>
+        </ion-item>
+        <ion-icon slot="end" name="eye-outline"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

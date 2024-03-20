@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item>
+      <ion-button size="large" class="btn" shape="round" (click)="this.exit()">
+        <ion-icon name="arrow-undo-outline"></ion-icon>
+      </ion-button>
+      <ion-title>Dirección</ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <p class="title titleSize">Denominación:</p>
+    <p class="paddingL">{{this.direccion.den}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize" >Dirección:</p>
+    <p class="paddingL">{{this.direccion.dir}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize" >Población:</p>
+    <p class="paddingL">{{this.direccion.pob}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize" >Provincia:</p>
+    <p class="paddingL">{{this.direccion.pro}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize" >Telefono:</p>
+    <p class="paddingL">{{this.direccion.tel}}</p>
+    <ion-button size=""
+      [disabled]="this.valid(this.direccion.tel)"
+      class="btn btn_margin" (click)='callNumber(this.direccion.tel)' slot="end">
+      <ion-icon name="call-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Per. Contacto:</p>
+    <p class="paddingL">{{this.direccion.per}}</p>
+  </ion-item>
+</ion-content>

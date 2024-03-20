@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item>
+      <ion-button size="large" class="btn" shape="round" (click)="this.exit()">
+        <ion-icon name="arrow-undo-outline"></ion-icon>
+      </ion-button>
+      <ion-title>Datos Albarán</ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <p class="title titleSize">Número: </p>
+     <p class="paddingL">{{this.albaran.num}}</p>
+   </ion-item>
+   <div *ngIf="this.albaran.numpro!=undefined || this.albaran.numpro!=null">
+     <ion-item>
+      <p class="title titleSize">Factura Proveedor: </p>
+       <p class="paddingL">{{this.albaran.numpro}}</p>
+     </ion-item>
+   </div>
+   <ion-item>
+    <p class="title titleSize">Fecha Albarán: </p>
+     <p class="paddingL">{{this.albaran.fec2}} </p>
+   </ion-item>
+   <ion-item>
+   <p class="title titleSize">Numero Factura: </p>
+    <p class="paddingL">{{this.albaran.n_f}}</p>
+  </ion-item>
+   <ion-item>
+    <p class="title titleSize">Total Base: </p>
+     <p class="paddingL">{{this.albaran.baseu}}€</p>
+   </ion-item>
+   <ion-item>
+    <p class="title titleSize">Total Impuesto: </p>
+     <p class="paddingL">{{this.albaran.totimpu}}€</p>
+   </ion-item>
+   <ion-item>
+    <p class="title titleSize">Total Albarán: </p>
+     <p class="paddingL">{{this.albaran.toteu}}€</p>
+   </ion-item>
+   <ion-item>
+    <p class="title titleSize">COBRADO :</p>
+     <p class="paddingL">{{this.albaran.cobeu}}€</p>
+   </ion-item>
+   <ion-item>
+    <p class="title titleSize">PENDIENTE: </p>
+     <p class="paddingL">{{this.albaran.impend}}€</p>
+   </ion-item>
+   
+   <ion-button [disabled]="this.valid(this.albaran.pdf)" (click)="this.openPDF(this.albaran.rutapdf)" class="pdfBtn" shape="round" expand="full">PDF
+    <ion-icon style="padding-left: 5px;" src="../../../assets/imgs/pdf.svg"></ion-icon>
+</ion-button>
+
+</ion-content>

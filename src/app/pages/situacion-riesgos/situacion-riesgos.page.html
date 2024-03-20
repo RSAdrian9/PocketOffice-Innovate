@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="display: block !important;padding:0px !important; font-size:100%; margin: 0px !important;">
+      Situación de Riesgo</ion-title>
+    <ion-title size="small" style="padding: 0px !important; margin: 10px !important;" slot="end">{{this.nom}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item class="ion-text-center title titleCliente">
+    <ion-label>SITUACION DE RIESGO</ion-label>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Riesgo del cliente:</p>
+    <p class="paddingL">{{this.situacionriesgo.rie}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Pendiente en contabilidad:</p>
+    <p class="paddingL">{{this.situacionriesgo.sal}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Pendiente en albaranes:</p>
+    <p class="paddingL">{{this.situacionriesgo.totalb}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Pendiente en pedidos:</p>
+    <p class="paddingL">{{this.situacionriesgo.totped}}</p>
+  </ion-item>
+  <ion-item lines="none">
+    <p class="title titleSize">Total:</p>
+    <p class="paddingL">{{this.situacionriesgo.total}}</p>
+  </ion-item>
+  <hr>
+  <ion-item>
+    <p class="title titleSize">Diferencia:</p>
+    <p class="paddingL" [style]="this.comprobarDiferencia(this.situacionriesgo)">{{this.situacionriesgo.diferencia}}</p>
+  </ion-item>
+  <ion-item class="ion-text-center title titleCliente">
+    <ion-label style="white-space: initial;">INFORMACIÓN ADICIONAL DE LA EMPRESA ACTUAL</ion-label>
+  </ion-item>
+  <ion-grid class="ion-margin">
+    <ion-row>
+      <ion-col style="overflow: overlay;">Título</ion-col>
+      <ion-col style="overflow: overlay;">Nº</ion-col>
+      <ion-col style="overflow: overlay;">Importe</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="font-weight: bold; overflow: overlay;">Total efectos</ion-col>
+        <ion-col style="overflow: overlay;">{{this.situacionriesgo.nefetot}}</ion-col>
+      <ion-col style="text-align: right !important; overflow: overlay;">{{this.situacionriesgo.totefetot}}€</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="font-weight: bold; overflow: overlay;">Efectos remesados</ion-col>
+        <ion-col style="overflow: overlay;">{{this.situacionriesgo.neferem}}</ion-col>
+      <ion-col style="text-align: right !important; overflow: overlay;">{{this.situacionriesgo.toteferem}}€</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="font-weight: bold; overflow: overlay;">Efectos pendientes</ion-col>
+        <ion-col style="overflow: overlay;">{{this.situacionriesgo.nefepen}}</ion-col>
+      <ion-col style="text-align: right !important; overflow: overlay;">{{this.situacionriesgo.totefepen}}€</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="font-weight: bold; overflow: overlay;">Efectos devueltos</ion-col>
+        <ion-col style="overflow: overlay;">{{this.situacionriesgo.nefedev}}</ion-col>
+      <ion-col style="text-align: right !important; overflow: overlay;">{{this.situacionriesgo.totefedev}}€</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="font-weight: bold; overflow: overlay;">Facturas pendientes</ion-col>
+        <ion-col style="overflow: overlay;">{{this.situacionriesgo.nfacpen}}</ion-col>
+      <ion-col style="text-align: right !important; overflow: overlay;">{{this.situacionriesgo.totfacpen}}€</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

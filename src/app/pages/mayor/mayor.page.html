@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="padding-left:0 ;">Mayor De Cuentas</ion-title>
+    <ion-title size="small" slot="end">{{this.nom}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-list slot="start">
+      <ion-item>
+        <ion-label>Fecha Inicio</ion-label>
+        <ion-datetime displayFormat="DD/MM" [(ngModel)]="this.fini" (ionChange)="this.filtro()" placeholder="Seleccione"></ion-datetime>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Fecha Final</ion-label>
+        <ion-datetime displayFormat="DD/MM" [(ngModel)]="this.ffin" (ionChange)="this.filtro()" placeholder="Seleccione"></ion-datetime>
+      </ion-item>
+    </ion-list>
+
+    <p slot="end" style="padding: 0px !important; margin: 0px !important;" class="title">{{this.anioMayor}}</p>
+    <ion-button slot="end" class="btn" style="height: 70px;width: 70px; margin: 10px;" (click)="openSelectAnio()">
+      <ion-icon class="titleCliente" size="large" name="calendar-outline"></ion-icon>
+    </ion-button>
+  <ion-select class="hideElement" [(ngModel)]="this.anioMayor" (ionChange)="this.filtro()" #mySelectAnio>
+    <ion-select-option *ngFor="let anio of anios" [value]="anio.aniodef">{{anio.aniodef}}</ion-select-option>
+  </ion-select>
+  </ion-item>
+
+  <ion-grid class="ion-margin">
+    <ion-row>
+      <ion-col style="overflow: overlay;">Fecha</ion-col>
+      <ion-col style="overflow: overlay;">Debe</ion-col>
+      <ion-col style="overflow: overlay;">Haber</ion-col>
+      <ion-col style="overflow: overlay;">Saldo</ion-col>
+    </ion-row>
+    <ion-row (click)="this.vistaMayor(mayor)" *ngFor="let mayor of mayAux3">
+      <ion-col style="font-size: 12px;overflow: overlay;">{{mayor.fec2}}</ion-col>
+      <ion-col style="text-align: right !important;font-size: 13px;overflow: overlay;" *ngIf="this.mayor.sig=='D'; else debe">{{mayor.impeu}}€</ion-col>
+      <ng-template #debe>
+        <ion-col style="font-size: 13px;overflow: overlay;"></ion-col>
+      </ng-template>
+      <ion-col style="text-align: right !important;font-size: 13px;overflow: overlay;" *ngIf="this.mayor.sig=='H'; else haber">{{mayor.impeu}}€</ion-col>
+      <ng-template #haber>
+        <ion-col style="font-size: 13px;overflow: overlay;"></ion-col>
+      </ng-template>
+      <ion-col style="text-align: right !important;font-weight: bold;font-size: 13px;overflow: overlay;">{{mayor.sal}}€</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="background-color:  #6d226d; color: #ffffff !important; font-weight: bold;overflow: overlay;">Totales</ion-col>
+      <ion-col style="background-color:  #6d226d; color: #ffffff !important; font-weight: bold;text-align: right !important;font-size: 13px;overflow: overlay;">{{totales.deb}}€
+      </ion-col>
+      <ion-col style="background-color:  #6d226d; color: #ffffff !important; font-weight: bold;text-align: right !important;font-size: 13px;overflow: overlay;">{{totales.hab}}€
+      </ion-col>
+      <ion-col style="background-color:  #6d226d; color: #ffffff !important; font-weight: bold;text-align: right !important;font-weight: bold;font-size: 13px;overflow: overlay;">{{totales.sal}}€
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

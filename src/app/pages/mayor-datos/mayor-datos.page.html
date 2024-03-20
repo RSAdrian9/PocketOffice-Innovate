@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item>
+      <ion-button size="large" class="btn" shape="round" (click)="this.exit()">
+        <ion-icon name="arrow-undo-outline"></ion-icon>
+      </ion-button>
+      <ion-title>Datos Mayor</ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <p class="title titleSize">Fecha Mayor: </p>
+    <p class="paddingL">{{this.mayor.fec2}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Número Mayor: </p>
+    <p class="paddingL">{{this.mayor.num}} </p>
+  </ion-item>  
+  <ion-item>
+    <p class="title titleSize">Concepto: </p>
+    <p class="paddingL">{{this.mayor.con}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Debe: </p>
+    <p class="paddingL">{{this.mayor.deb}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Haber: </p>
+    <p class="paddingL">{{this.mayor.hab}} </p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Saldo: </p>
+    <p class="paddingL">{{this.mayor.sal}} </p>
+  </ion-item>
+</ion-content>
