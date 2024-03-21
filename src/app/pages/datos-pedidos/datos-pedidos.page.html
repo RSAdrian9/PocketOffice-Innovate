@@ -1,52 +1,13 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-item>
-      <ion-button size="large" class="btn" shape="round" (click)="this.exit()">
-        <ion-icon name="arrow-undo-outline"></ion-icon>
-      </ion-button>
-      <ion-title>Datos Pedido</ion-title>
-    </ion-item>
+    <ion-title>datos-pedidos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item>
-    <p class="title titleSize">Número: </p>
-     <p class="paddingL">{{this.pedido.num}}</p>
-   </ion-item>
-   <ion-item>
-    <p class="title titleSize">Fecha pedido: </p>
-     <p class="paddingL">{{this.pedido.fec2}} </p>
-   </ion-item>  
-   <div *ngIf="this.tipo=='Clientes'">
-    <ion-item>
-     <p class="title titleSize">Estado: </p>
-      <p class="paddingL">{{this.pedido.est}} </p>
-    </ion-item> 
-   </div> 
-   <ion-item>
-    <p class="title titleSize">Traspasado a: </p>
-     <p class="paddingL">{{this.pedido.doc}} </p>
-   </ion-item>
-   <ion-item>
-    <p class="title titleSize">Total Base: </p>
-     <p class="paddingL">{{this.pedido.baseu}}€</p>
-   </ion-item>
-   <ion-item>
-    <p class="title titleSize">Total Impuesto: </p>
-     <p class="paddingL">{{this.pedido.totimpu}}€</p>
-   </ion-item>
-   <ion-item>
-    <p class="title titleSize">Total Factura: </p>
-     <p class="paddingL">{{this.pedido.toteu}}€</p>
-   </ion-item>
-   <ion-item>
-    <p class="title titleSize">Servido: </p>
-    <p class="paddingL" *ngIf="this.pedido.ser.trim()=='2'">SI</p>
-    <p class="paddingL" *ngIf="this.pedido.ser.trim()=='1'">PARCIAL</p>
-    <p class="paddingL" *ngIf="this.pedido.ser.trim()==''">NO</p>
-   </ion-item>
-   <ion-button [disabled]="this.valid(this.pedido.pdf)" (click)="this.openPDF(this.pedido.rutapdf)" class="pdfBtn" shape="round" expand="full">PDF
-    <ion-icon style="padding-left: 5px;" src="../../../assets/imgs/pdf.svg"></ion-icon>
-</ion-button>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">datos-pedidos</ion-title>
+    </ion-toolbar>
+  </ion-header>
 </ion-content>

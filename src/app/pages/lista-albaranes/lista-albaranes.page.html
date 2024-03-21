@@ -1,52 +1,13 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title style="display: block !important;padding:0px !important; font-size:100%; margin: 0px !important;">Listado Albaranes</ion-title>
-    <ion-title size="small" style="padding: 0px !important; margin: 10px !important;" slot="end">{{this.nom}}</ion-title>
+    <ion-title>lista-albaranes</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item style="overflow: unset;">
-    <ion-item class="ion-no-padding">
-  <ion-button slot="start" class="btn" style="height: 70px;width: 70px; margin: 10px;" (click)="openSelectTipo()">
-    <ion-icon class="titleCliente" size="large" src="../../../assets/imgs/bill.svg"></ion-icon>
-  </ion-button> 
-  <p style="display: block !important; padding: 0px !important; margin: 0px !important;" class="title">{{this.tipoAlbaran}}</p>
-</ion-item>
-  <ion-select class="hideElement " [(ngModel)]="this.tipoAlbaran" (ionChange)="this.filtro()" interface="action-sheet"
-    #mySelectTipo>
-    <ion-select-option value="Todos">Todos</ion-select-option>
-    <ion-select-option value="Cobrados">Cobrados</ion-select-option>
-    <ion-select-option value="Pendientes">Pendientes</ion-select-option>
-  </ion-select>
-  <p slot="end" style="padding: 0px !important; margin: 0px !important;" class="title">{{this.albaranFacturado}}</p>
-  <ion-button slot="end" class="btn ion-no-padding" style="height: 70px;width: 70px; margin: 10px;" (click)="openSelectFecha()">
-    <ion-icon class="titleCliente" size="large" src="../../../assets/imgs/delivery-note.svg"></ion-icon>
-  </ion-button>
-  <ion-select class="hideElement " [(ngModel)]="this.albaranFacturado" (ionChange)="this.filtro()" interface="action-sheet"
-    #mySelectFacturado>
-    <ion-select-option value="Todos">Todos</ion-select-option>
-    <ion-select-option value="Facturados">Facturados</ion-select-option>
-    <ion-select-option value="No Facturados">No Facturados</ion-select-option>
-  </ion-select>
-</ion-item>
-  <ion-list>
-    <ion-item [style]="this.comprobarAlbaran(albaran)" (click)="this.vistaAlbaran(albaran)" *ngFor="let albaran of this.albAux">
-      <ion-item [style]="this.comprobarAlbaran(albaran)">
-        <div>
-         <h1>{{albaran.fec2}}-{{albaran.num}}-{{albaran.toteu}}€ <div style="color: rgb(0, 0, 0);">Factura: {{this.albaran.n_f}}</div></h1>
-        </div>
-        <ion-icon color="#FFF" slot="end" name="eye-outline"></ion-icon>
-      </ion-item>
-    </ion-item>
-  </ion-list>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">lista-albaranes</ion-title>
+    </ion-toolbar>
+  </ion-header>
 </ion-content>
-
-<ion-footer >
-  <ion-toolbar style="--background: #6d226d;color: #ffffff !important;">
-    <ion-title>TOTAL: {{this.total2}}€</ion-title>
-  </ion-toolbar>
-</ion-footer>

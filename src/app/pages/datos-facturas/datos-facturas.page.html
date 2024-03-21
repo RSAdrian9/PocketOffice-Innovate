@@ -1,53 +1,13 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-item>
-      <ion-button size="large" class="btn" shape="round" (click)="this.exit()">
-        <ion-icon name="arrow-undo-outline"></ion-icon>
-      </ion-button>
-      <ion-title>Datos Factura</ion-title>
-    </ion-item>
+    <ion-title>datos-facturas</ion-title>
   </ion-toolbar>
-
 </ion-header>
 
-<ion-content>
-  <ion-item>
-   <p class="title titleSize">Número: </p>
-    <p class="paddingL">{{this.facturas.num}}</p>
-  </ion-item>
-  <div *ngIf="this.facturas.numpro!=undefined || this.facturas.numpro!=null">
-    <ion-item>
-     <p class="title titleSize">Factura Proveedor: </p>
-      <p class="paddingL">{{this.facturas.numpro}}</p>
-    </ion-item>
-  </div>
-  <ion-item>
-   <p class="title titleSize">Fecha Factura: </p>
-    <p class="paddingL">{{this.facturas.fee2}} </p>
-  </ion-item>
-  <ion-item>
-   <p class="title titleSize">Total Base: </p>
-    <p class="paddingL">{{this.facturas.basmon}}€</p>
-  </ion-item>
-  <ion-item>
-   <p class="title titleSize">Total Impuesto: </p>
-    <p class="paddingL">{{this.facturas.totimpu}}€</p>
-  </ion-item>
-  <ion-item>
-   <p class="title titleSize">Total Factura: </p>
-    <p class="paddingL">{{this.facturas.totmon}}€</p>
-  </ion-item>
-  <ion-item>
-   <p class="title titleSize">COBRADO :</p>
-    <p class="paddingL">{{this.facturas.toceu}}€</p>
-  </ion-item>
-  <ion-item>
-   <p class="title titleSize">PENDIENTE: </p>
-    <p class="paddingL">{{this.facturas.impend}}€</p>
-  </ion-item>
-
-  <ion-button [disabled]="this.valid(this.facturas.pdf)" (click)="this.openPDF(this.facturas.rutapdf)" class="pdfBtn" shape="round" expand="full">PDF
-    <ion-icon style="padding-left: 5px;" src="../../../assets/imgs/pdf.svg"></ion-icon>
-</ion-button>
-
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">datos-facturas</ion-title>
+    </ion-toolbar>
+  </ion-header>
 </ion-content>

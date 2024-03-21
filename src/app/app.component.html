@@ -9,11 +9,9 @@
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
               <!-- Si el icono es un SVG -->
-              <div class="svg-container">
                 <ion-icon *ngIf="p.icon.includes('.svg')" [src]="p.icon"></ion-icon>
-              </div>
               <!-- Si el icono es de Ionicons -->
-              <ion-icon *ngIf="!p.icon.includes('.svg')" [name]="p.icon"></ion-icon>
+                <ion-icon *ngIf="!p.icon.includes('.svg')" [ios]="p.icon" [md]="p.icon"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>

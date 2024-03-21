@@ -1,29 +1,13 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-item>
-      <ion-button size="large" class="btn" shape="round" (click)="this.exit()">
-        <ion-icon name="arrow-undo-outline"></ion-icon>
-      </ion-button>
-    </ion-item>
+    <ion-title>pdf</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <pdf-viewer [src]="this.pdf"  [zoom]="pdfZoom" [fit-to-page]="true" [render-text]="true"></pdf-viewer>
-  <ion-fab  horizontal="start" vertical="bottom" slot="fixed"t>
-    <ion-fab-button (click)="zoomIn()" class="btn">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
- </ion-fab>
- <ion-fab  horizontal="end" vertical="bottom" slot="fixed"t>
-  <ion-fab-button (click)="zoomOut()" class="btn">
-    <ion-icon name="remove"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-<ion-fab  horizontal="center" vertical="bottom" slot="fixed"t>
- <ion-fab-button (click)="resetZoom()" class="btn">
-   <ion-icon name="refresh"></ion-icon>
- </ion-fab-button>
-</ion-fab>
-
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">pdf</ion-title>
+    </ion-toolbar>
+  </ion-header>
 </ion-content>

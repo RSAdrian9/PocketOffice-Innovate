@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-mayor-datos',
-  templateUrl: './mayor-datos.page.html',
-  styleUrls: ['./mayor-datos.page.scss'],
+  selector: 'app-resumen-mensual-ventas',
+  templateUrl: './resumen-mensual-ventas.page.html',
+  styleUrls: ['./resumen-mensual-ventas.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class MayorDatosPage implements OnInit {
+export class ResumenMensualVentasPage implements OnInit {
 
   constructor() { }
 

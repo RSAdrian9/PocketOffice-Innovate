@@ -1,18 +1,11 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VistaClientePage } from './vista-cliente.page';
 
 describe('VistaClientePage', () => {
   let component: VistaClientePage;
   let fixture: ComponentFixture<VistaClientePage>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ VistaClientePage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
-
+  beforeEach(async(() => {
     fixture = TestBed.createComponent(VistaClientePage);
     component = fixture.componentInstance;
     fixture.detectChanges();

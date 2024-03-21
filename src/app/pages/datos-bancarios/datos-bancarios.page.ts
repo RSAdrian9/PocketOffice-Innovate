@@ -1,30 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ModalController, NavController, NavParams, Platform } from '@ionic/angular';
-import { banco } from 'src/app/model/banco';
-import { TransferirDatosService } from 'src/app/services/transferir-datos.service';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-datos-bancarios',
   templateUrl: './datos-bancarios.page.html',
   styleUrls: ['./datos-bancarios.page.scss'],
+  standalone: true,
+  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class DatosBancariosPage implements OnInit {
-  banco: banco;
-  constructor(private platform: Platform,
-    private navC: NavController,
-    private navParams: NavParams,
-    private transferir: TransferirDatosService,
-    private modalController: ModalController) { }
+
+  constructor() { }
 
   ngOnInit() {
-    this.banco = this.navParams.get("datosBanco")
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navC.back()
-    });
   }
 
-
-  public exit() {
-    this.modalController.dismiss();
-  }
 }

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ResumenMesualVentasPage } from './resumen-mesual-ventas.page';
+import { SvgIconComponent } from './svg-icon.component';
 
-describe('ResumenMesualVentasPage', () => {
-  let component: ResumenMesualVentasPage;
-  let fixture: ComponentFixture<ResumenMesualVentasPage>;
+describe('SvgIconComponent', () => {
+  let component: SvgIconComponent;
+  let fixture: ComponentFixture<SvgIconComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResumenMesualVentasPage ],
+      declarations: [ SvgIconComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ResumenMesualVentasPage);
+    fixture = TestBed.createComponent(SvgIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

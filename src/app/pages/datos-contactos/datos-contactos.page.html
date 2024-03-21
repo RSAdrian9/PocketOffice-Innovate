@@ -1,39 +1,13 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-item>
-      <ion-button size="large" class="btn" shape="round" (click)="this.exit()" >
-        <ion-icon name="arrow-undo-outline"></ion-icon>
-      </ion-button>
-      <ion-title>Datos Contacto</ion-title>
-    </ion-item>
+    <ion-title>datos-contactos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item>
-    <p class="title titleSize">Nombre:</p>
-    <p class="paddingL">{{this.contacto.nom}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">Teléfono:</p>
-    <p class="paddingL">{{this.contacto.tel}}</p>
-    <ion-button size="" [disabled]="this.valid(this.contacto.tel)" class="btn btn_margin" (click)='callNumber(this.contacto.tel)' slot="end">
-      <ion-icon name="call-outline"></ion-icon>
-    </ion-button>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">EXT.:</p>
-    <p class="paddingL">{{this.contacto.ext}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">Cargo:</p>
-    <p class="paddingL">{{this.contacto.car}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">E-mail:</p>
-    <p class="paddingL">{{this.contacto.email}}</p>
-    <ion-button size="" [disabled]="this.valid(this.contacto.email)" class="btn btn_margin" (click)='mailto(this.contacto.email)' slot="end">
-      <ion-icon name="mail-outline"></ion-icon>
-    </ion-button>
-  </ion-item>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">datos-contactos</ion-title>
+    </ion-toolbar>
+  </ion-header>
 </ion-content>
