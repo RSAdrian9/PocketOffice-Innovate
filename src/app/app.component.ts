@@ -26,7 +26,7 @@ export class AppComponent {
 
 
   public appPages = [
-    { title: 'Clientes', url: '/cliente', icon: 'people-outline' },
+    { title: 'Clientes', url: '/clientes', icon: 'people-outline' },
     { title: 'Contactos', url: '/lista-contactos', icon: 'assets/icons/cuaderno.svg' },
     { title: 'Datos Bancarios', url: '/lista-bancos', icon: 'card-sharp' },
     { title: 'Direcciones', url: '/lista-direcciones', icon: 'compass-outline' },
