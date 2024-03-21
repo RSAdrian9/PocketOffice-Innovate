@@ -6,30 +6,41 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh;">
+<ion-content [fullscreen]="true">
   <div class="ion-text-center" id="buttons">
-    <div>
-      <ion-button size="large" class="ion-color-primary">
-        <ion-card-header>
-          <ion-icon name="people-outline"></ion-icon>
-        </ion-card-header>
-
+    <div class="button-container-clientes">
+      <ion-button size="large" class="ion-color-primary" (click)="goToClientes()">
+        <ion-icon name="people-sharp"></ion-icon>
         <ion-card-content>
           <ion-label>Clientes</ion-label>
         </ion-card-content>
       </ion-button>
     </div>
 
-    <div>
-      <ion-button size="large" class="ion-color-primary">
-        <ion-card-header>
-          <ion-icon name="people-outline"></ion-icon>
-        </ion-card-header>
-
+    <div class="button-container-proveedores">
+      <ion-button size="large" class="ion-color-primary" (click)="goToProveedores()">
+        <ion-icon src="assets/icons/home/proveedor-hotelero.svg"></ion-icon>
         <ion-card-content>
           <ion-label>Proveedores</ion-label>
         </ion-card-content>
       </ion-button>
     </div>
+
+    <div class="button-container-bottom">
+      <ion-button size="large" class="ion-color-primary" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+        <ion-card-content>
+          <ion-label>Logout</ion-label>
+        </ion-card-content>
+      </ion-button>
+      
+      <ion-button size="large" class="ion-color-primary" (click)="actualizar()">
+        <ion-icon name="reload"></ion-icon>
+        <ion-card-content>
+          <ion-label>Actualizar</ion-label>
+        </ion-card-content>
+      </ion-button>
+    </div>
+    
   </div>
 </ion-content>

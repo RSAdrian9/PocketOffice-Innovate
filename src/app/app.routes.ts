@@ -16,8 +16,8 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
   },
   {
-    path: 'cliente',
-    loadComponent: () => import('./pages/cliente/cliente.page').then( m => m.ClientePage)
+    path: 'clientes',
+    loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientePage)
   },
   {
     path: 'lista-contactos',
@@ -70,9 +70,10 @@ export const routes: Routes = [
   {
     path: 'resumen-mensual-ventas',
     loadComponent: () => import('./pages/resumen-mensual-ventas/resumen-mensual-ventas.page').then( m => m.ResumenMensualVentasPage)
-  },  {
+  },
+  {
     path: 'cliente',
-    loadComponent: () => import('./pages/cliente/cliente.page').then( m => m.ClientePage)
+    loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientePage)
   },
   {
     path: 'datos-albaranes',
@@ -177,6 +178,10 @@ export const routes: Routes = [
   {
     path: 'vista-cliente',
     loadComponent: () => import('./pages/vista-cliente/vista-cliente.page').then( m => m.VistaClientePage)
+  },
+  {
+    path: 'proveedores',
+    loadComponent: () => import('./pages/proveedores/proveedores.page').then( m => m.ProveedoresPage)
   },
 
 ];

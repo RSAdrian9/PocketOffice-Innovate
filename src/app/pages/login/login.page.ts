@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { navigate } from 'ionicons/icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +14,14 @@ import { IonicModule } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  constructor( private router: Router) { }
 
   ngOnInit() {
   }
 
 
   login() {
-    console.log("Login");
+    this.router.navigate(['/home']);
   }
 
 }
