@@ -17,7 +17,7 @@ export const routes: Routes = [
   },
   {
     path: 'clientes',
-    loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientePage)
+    loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientesPage)
   },
   {
     path: 'lista-contactos',
@@ -73,7 +73,7 @@ export const routes: Routes = [
   },
   {
     path: 'cliente',
-    loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientePage)
+    loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientesPage)
   },
   {
     path: 'datos-albaranes',
