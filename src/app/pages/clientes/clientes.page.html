@@ -1,58 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title slot="start">Clientes</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon src="assets/icons/opciones.svg"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>cliente</ion-title>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true">
-  <div class="container-search">
-    <ion-searchbar show-cancel-button="focus" placeholder="Buscar..."></ion-searchbar>
-  </div>
-
-  <ion-list>
-    <ion-item>
-      <ion-select placeholder="Seleccionar">
-        <div slot="label">Actividad <ion-text></ion-text></div>
-        <ion-select-option value="conActividad">Con Actividad</ion-select-option>
-        <ion-select-option value="sinActividad">Sin Actividad</ion-select-option>
-        <ion-select-option value="todos">Todos</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
-
-  <ion-list>
-    <ion-item>
-      <ion-select placeholder="Seleccionar">
-        <div slot="label">Riesgo Cliente <ion-text></ion-text></div>
-        <ion-select-option value="conRiesgo">Con Riesgo</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
-
-  <div>
-    <ion-list>
-      <ion-item *ngFor="let cliente of this.clientes" (click)="verDetallesCliente(cliente)">
-        <ion-item>
-          <div>
-            <h1>{{cliente.nom}}</h1>
-            <ion-item lines="none" style="padding:0px !important;margin: 0px !important;">
-              <p style="color: gray;">{{cliente.cod}}</p>
-              <p id="riesgo" *ngIf="this.comprobarDiferencia(cliente)=='color: red;'"
-                [style]="this.comprobarDiferencia(cliente)">
-                Riesgo <ion-icon name="warning-outline"></ion-icon>
-              </p>
-            </ion-item>
-          </div>
-        </ion-item>
-        <ion-icon slot="end" name="eye-outline" (click)="verDetallesCliente(cliente)"></ion-icon>
-      </ion-item>
-    </ion-list>
-  </div>
-
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">cliente</ion-title>
+    </ion-toolbar>
+  </ion-header>
 </ion-content>
