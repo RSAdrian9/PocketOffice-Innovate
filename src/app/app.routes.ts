@@ -17,7 +17,7 @@ export const routes: Routes = [
   },
   {
     path: 'clientes',
-    loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientesPage)
+    loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientePage)
   },
   {
     path: 'lista-contactos',
@@ -71,10 +71,6 @@ export const routes: Routes = [
     path: 'resumen-mensual-ventas',
     loadComponent: () => import('./pages/resumen-mensual-ventas/resumen-mensual-ventas.page').then( m => m.ResumenMensualVentasPage)
   },
-  {
-    path: 'cliente',
-    loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientesPage)
-  },
   {
     path: 'datos-albaranes',
     loadComponent: () => import('./pages/datos-albaranes/datos-albaranes.page').then( m => m.DatosAlbaranesPage)
