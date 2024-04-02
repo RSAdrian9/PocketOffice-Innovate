@@ -49,6 +49,17 @@
      ion-menu-button {
       color: #6d226d;
     }
+
+  /* Estilos para las tarjetas de cliente */
+  .cardBorderRed{
+    border: 3px solid red;
+  }
+
+  .cardBorderGray{
+    border: 1px solid gray;
+}
+  /* Estilos para las tarjetas de cliente */
+
     
     .colorItemMenu{
         --ripple-color:#6d226d;
@@ -58,6 +69,7 @@
       .colorico{
         color: #6d226d !important;
       }
+
     .btn{
       --background: #6d226d;
     }

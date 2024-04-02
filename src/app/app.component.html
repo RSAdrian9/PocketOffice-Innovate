@@ -1,20 +1,49 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
+    <ion-menu (ionWillOpen)="this.openMenu()" (ionWillClose)="this.closeMenu()" contentId="main-content" type="overlay">
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Innovate</ion-list-header>
-          <ion-note>info&#64;innovatesl.com</ion-note>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <!-- Si el icono es un SVG -->
-                <ion-icon *ngIf="p.icon.includes('.svg')" [src]="p.icon"></ion-icon>
-              <!-- Si el icono es de Ionicons -->
-                <ion-icon *ngIf="!p.icon.includes('.svg')" [ios]="p.icon" [md]="p.icon"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+        <ion-list id="inbox-list">
+          <ion-list-header>Innovate</ion-list-header>          
+          <ion-item-divider>
+            <ion-label> Maestros </ion-label>
+          </ion-item-divider>
+          <ion-menu-toggle auto-hide="false" *ngFor="let opcion of opcionesMenu; let i = index">
+            
+            <ion-item class="colorItemMenu item-inner" routerDirection="root" [routerLink]="[opcion.url]" routerLinkActive="selected">
+              <ion-icon class="colorico" slot="start" [ios]="opcion.icon" [md]="opcion.icon" [src]="opcion.icon"></ion-icon>
+              <ion-label style="overflow: unset; ">{{ opcion.title }}</ion-label>              
             </ion-item>
+                        
           </ion-menu-toggle>
+          <div *ngIf="this.mostrarOpcionesCliente">
+            <ion-item-divider>
+              <ion-label> Informes </ion-label>
+            </ion-item-divider>
+            <ion-menu-toggle auto-hide="false" *ngFor="let opcion of opcionesClientes; let i = index">
+  
+              <ion-item class="colorItemMenu item-inner" routerDirection="root" [routerLink]="[opcion.url]" routerLinkActive="selected">
+                <ion-icon class="colorico" slot="start" [ios]="opcion.icon" [md]="opcion.icon" [src]="opcion.icon"></ion-icon>
+                <ion-label style="overflow: unset; ">{{ opcion.title }}</ion-label>              
+              </ion-item>
+                          
+            </ion-menu-toggle>
+          </div>
+
+          <div *ngIf="this.mostrarOpcionesProveedor">
+            <ion-item-divider>
+              <ion-label> Informes </ion-label>
+            </ion-item-divider>
+            <ion-menu-toggle auto-hide="false" *ngFor="let opcion of opcionesProveedores; let i = index">
+  
+              <ion-item class="colorItemMenu item-inner" routerDirection="root" [routerLink]="[opcion.url]" routerLinkActive="selected">
+                <ion-icon class="colorico" slot="start" [ios]="opcion.icon" [md]="opcion.icon" [src]="opcion.icon"></ion-icon>
+                <ion-label style="overflow: unset; ">{{ opcion.title }}</ion-label>              
+              </ion-item>
+                          
+            </ion-menu-toggle>
+          </div>
+
         </ion-list>
       </ion-content>
     </ion-menu>

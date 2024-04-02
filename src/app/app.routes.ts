@@ -7,17 +7,12 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'folder/:id',
-    loadComponent: () =>
-      import('./folder/folder.page').then((m) => m.FolderPage),
-  },
-  {
     path: 'home',
     loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
   },
   {
     path: 'clientes',
-    loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientePage)
+    loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientesPage)
   },
   {
     path: 'lista-contactos',
@@ -172,7 +167,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/situacion-riesgos/situacion-riesgos.page').then( m => m.SituacionRiesgosPage)
   },
   {
-    path: 'vista-cliente',
+    path: 'vista-cliente/:codigo',
     loadComponent: () => import('./pages/vista-cliente/vista-cliente.page').then( m => m.VistaClientePage)
   },
   {
