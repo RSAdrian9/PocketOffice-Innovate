@@ -1,13 +1,35 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>cliente</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Clientes</ion-title>
+    <ion-button fill="outline" slot="end"><ion-icon name="search-outline"></ion-icon></ion-button>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar (ionChange)="this.filtrarClientes($event)" showCancelButton="focus" class="custom"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">cliente</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card *ngFor="let cliente of this.clientes" [ngClass]="this.comprobarDiferencia(cliente)==true ? 'cardBorderRed':'cardBorderGray'">
+    <ion-item [routerLink]="['/vista-cliente/'+cliente.cod]" routerLinkActive="selected">
+      <ion-card-header>
+        <ion-card-title>{{cliente.nom}}</ion-card-title>
+        <ion-card-subtitle style="color: gray;">{{cliente.cod}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+
+      </ion-card-content>
+    </ion-item>
+    <ion-item>
+      <ion-icon *ngIf="this.comprobarDiferencia(cliente)==true" name="alert-circle" color="danger"></ion-icon>
+      <ion-icon slot="end" name="eye-outline"></ion-icon>
+    </ion-item>
+  </ion-card>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content loadingText="Cargando Clientes..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

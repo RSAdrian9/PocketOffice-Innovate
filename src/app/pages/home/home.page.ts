@@ -5,8 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { logOut, peopleSharp, reload } from 'ionicons/icons';
 import { Router } from '@angular/router';
-import { IonButton, IonInput, IonItem, IonLabel, IonTitle, IonToolbar, IonHeader, IonContent,
-  IonNote, IonList, IonImg } from '@ionic/angular/standalone';
+import { IonButton, IonInput, IonItem, IonLabel, IonTitle, IonToolbar, IonHeader, IonContent, IonNote, IonList, IonImg } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
