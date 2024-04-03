@@ -32,6 +32,14 @@
 
 :root{
 
+  .cardBorderRed{
+    border: 3px solid red;
+  }
+
+  .cardBorderGray{
+    border: 1px solid gray;
+  }
+
     .bottom{
       position: fixed;
       left: 0;

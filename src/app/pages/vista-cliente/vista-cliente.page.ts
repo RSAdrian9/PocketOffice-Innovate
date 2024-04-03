@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit,  inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, Platform } from '@ionic/angular';
@@ -18,6 +18,7 @@ import { IonItem, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, Io
   providers: [DatePipe],
   imports: [IonicModule, CommonModule, FormsModule, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonImg, IonList, IonIcon, IonItem ]
 })
+
 export class VistaClientePage implements OnInit {
 
   public codigoCliente!: string;
@@ -34,12 +35,18 @@ export class VistaClientePage implements OnInit {
     private utils: UtilitiesService
   ) { 
     addIcons({ callOutline, mailOutline, globeOutline });
+    
   }
 
   ngOnInit() {
-    this.codigoCliente = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
+    this.codigoCliente = this.activatedRoute.snapshot.paramMap.get('codigo') as string;    
     this.pageController('/vista-cliente');    
     this.cargarDatosCliente();
+  }
+
+  ionViewDidEnter(){
+    this.codigoCliente = this.activatedRoute.snapshot.paramMap.get('codigo') as string;    
+    this.pageController('/vista-cliente');
   }
 
   private cargarDatosCliente() {

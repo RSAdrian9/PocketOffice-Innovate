@@ -4,14 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, Platform } from '@ionic/angular';
 import { TransferirDatosService } from 'src/app/services/transferir-datos.service';
 import { ActivatedRoute } from '@angular/router';
+
 @Component({
-  selector: 'app-rentabilidad',
-  templateUrl: './rentabilidad.page.html',
-  styleUrls: ['./rentabilidad.page.scss'],
+  selector: 'app-situacion-riesgo',
+  templateUrl: './situacion-riesgo.page.html',
+  styleUrls: ['./situacion-riesgo.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class RentabilidadPage implements OnInit {
+export class SituacionRiesgoPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   codigo: string = ''
 

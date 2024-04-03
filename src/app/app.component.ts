@@ -75,6 +75,10 @@ export class AppComponent {
     this.active = false;
   }
 
+  setRuta(ruta: string) {
+    this.transferirService.sendObjectSource({ ruta: ruta });
+  }
+
   openMenu() {
     this.active = true;
     this.transferirService.$getObjectSource.subscribe(res => {
@@ -121,7 +125,6 @@ export class AppComponent {
     ]
   }
 
-
   opcionesMenuCliente() {
     let codigo = '';
     this.transferirService.$getObjectSource.subscribe(res => {
@@ -132,13 +135,13 @@ export class AppComponent {
         { title: 'Datos Bancarios', url: '/bancos/cliente/' + codigo, icon: 'card-sharp' },
         { title: 'Direcciones', url: '/direcciones/cliente/' + codigo, icon: 'compass-outline' },
         { title: 'Historial', url: '/historial/cliente/' + codigo, icon: 'clipboard-outline' },
-        { title: 'Listado Facturas', url: '/listado-facturas/cliente/' + codigo, icon: 'assets/icons/bill.svg' },
-        { title: 'Listado Albaranes', url: '/listado-albaranes/cliente/' + codigo, icon: 'assets/icons/delivery-note.svg' },
-        { title: 'Listado Presupuestos', url: '/listado-presupuestos/cliente/' + codigo, icon: 'assets/icons/finanzas.svg' },
-        { title: 'Listado Pedidos', url: '/listado-pedidos/cliente/' + codigo, icon: 'assets/icons/caja.svg' },
+        { title: 'Listado Facturas', url: '/facturas/cliente/' + codigo, icon: 'assets/icons/bill.svg' },
+        { title: 'Listado Albaranes', url: '/albaranes/cliente/' + codigo, icon: 'assets/icons/delivery-note.svg' },
+        { title: 'Listado Presupuestos', url: '/presupuestos/cliente/' + codigo, icon: 'assets/icons/finanzas.svg' },
+        { title: 'Listado Pedidos', url: '/pedidos/cliente/' + codigo, icon: 'assets/icons/caja.svg' },
         { title: 'Efectos', url: '/efectos/cliente/' + codigo, icon: 'assets/icons/flujo-de-efectivo.svg' },
         { title: 'Mayor de Cuentas', url: '/mayor/cliente/' + codigo, icon: 'assets/icons/mayor.svg' },
-        { title: 'Situación de Riesgo', url: '/situaciones-riesgo/' + codigo, icon: 'assets/icons/caution-sign.svg' },
+        { title: 'Situación de Riesgo', url: '/situacion-riesgo/' + codigo, icon: 'assets/icons/caution-sign.svg' },
         { title: 'Rentabilidad', url: '/rentabilidad/' + codigo, icon: 'assets/icons/money-bag.svg' },
         { title: 'Resumen Mensual de Ventas', url: '/resumen-mensual-ventas/cliente/' + codigo, icon: 'assets/icons/sales.svg' }
       ];
@@ -148,18 +151,23 @@ export class AppComponent {
   }
 
   opcionesMenuProveedor() {
-    this.opcionesProveedores = [
-      { title: 'Contactos', url: '/contactos/:tipo/:codigo', icon: 'assets/icons/cuaderno.svg' },
-      { title: 'Datos Bancarios', url: '/bancos/:tipo/:codigo', icon: 'card-sharp' },
-      { title: 'Direcciones', url: '/direcciones/:tipo/:codigo', icon: 'compass-outline' },
-      { title: 'Historial', url: '/historial/:tipo/:codigo', icon: 'clipboard-outline' },
-      { title: 'Listado Facturas', url: '/listado-facturas/:tipo/:codigo', icon: 'assets/icons/bill.svg' },
-      { title: 'Listado Albaranes', url: '/listado-albaranes/:tipo/:codigo', icon: 'assets/icons/delivery-note.svg' },
-      { title: 'Listado Presupuestos', url: '/listado-presupuestos/:tipo/:codigo', icon: 'assets/icons/finanzas.svg' },
-      { title: 'Listado Pedidos', url: '/listado-pedidos/:tipo/:codigo', icon: 'assets/icons/caja.svg' },
-      { title: 'Efectos', url: '/efectos/:tipo/:codigo', icon: 'assets/icons/flujo-de-efectivo.svg' },
-      { title: 'Mayor de Cuentas', url: '/mayor/:tipo/:codigo', icon: 'assets/icons/mayor.svg' },
-      { title: 'Resumen Mensual de Ventas', url: '/resumen-mensual-ventas/:tipo/:codigo', icon: 'assets/icons/sales.svg' }
-    ];
+    let codigo = '';
+    this.transferirService.$getObjectSource.subscribe(res => {
+      //console.log(res);
+      codigo = res.codigo;
+      this.opcionesProveedores = [
+        { title: 'Contactos', url: '/contactos/proveedor/' + codigo, icon: 'assets/icons/cuaderno.svg' },
+        { title: 'Datos Bancarios', url: '/bancos/proveedor/' + codigo, icon: 'card-sharp' },
+        { title: 'Direcciones', url: '/direcciones/proveedor/' + codigo, icon: 'compass-outline' },
+        { title: 'Historial', url: '/historial/proveedor/' + codigo, icon: 'clipboard-outline' },
+        { title: 'Listado Facturas', url: '/facturas/proveedor/' + codigo, icon: 'assets/icons/bill.svg' },
+        { title: 'Listado Albaranes', url: '/albaranes/proveedor/' + codigo, icon: 'assets/icons/delivery-note.svg' },
+        { title: 'Listado Presupuestos', url: '/presupuestos/proveedor/' + codigo, icon: 'assets/icons/finanzas.svg' },
+        { title: 'Listado Pedidos', url: '/pedidos/proveedor/' + codigo, icon: 'assets/icons/caja.svg' },
+        { title: 'Efectos', url: '/efectos/proveedor/' + codigo, icon: 'assets/icons/flujo-de-efectivo.svg' },
+        { title: 'Mayor de Cuentas', url: '/mayor/proveedor/' + codigo, icon: 'assets/icons/mayor.svg' },
+        { title: 'Resumen Mensual de Ventas', url: '/resumen-mensual-ventas/proveedor/' + codigo, icon: 'assets/icons/sales.svg' }
+      ];
+    });
   }
 }

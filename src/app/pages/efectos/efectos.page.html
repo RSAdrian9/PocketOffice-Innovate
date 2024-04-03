@@ -1,9 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>efectos</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Efectos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
+  <p>Tipo: {{this.tipo}}</p>
+  <p>Cliente/Proveedor: {{this.codigo}}</p>
 </ion-content>

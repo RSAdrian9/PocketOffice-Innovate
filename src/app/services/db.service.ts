@@ -58,11 +58,9 @@ export class DbService {
 
   async copiarBBDDExternaAInterna() {
 
-    const externalDatabasePath = this.directorioDB + '/' + this.nombreDB;
-
     const fileExists = await Filesystem.readFile({
-      path: externalDatabasePath,
-      directory: Directory.ExternalStorage
+      path: this.nombreDB,
+      directory: Directory.External
     });
 
     const internalDatabasePath = this.nombreDB;
@@ -100,9 +98,9 @@ export class DbService {
     console.log(test);
   }  
 
-  public async getClientesParaLista() {
+  public async getClientesParaLista(filtro: string) {
     var clientes: clienteTmp[] = [];
-    var sentencia = "SELECT t1.id, t1.cod, t1.nom, t1.historia, (SELECT COUNT(cod) FROM CLIENT WHERE (cod IN (SELECT cli FROM ALBARA WHERE strftime('%Y', fec)=strftime('%Y',DATE('now'))) OR cod IN (SELECT cli FROM CABPRE WHERE strftime('%Y',fec)=strftime('%Y',DATE('now'))) OR cod IN (SELECT cue FROM FACEMI WHERE strftime('%Y',fee)=strftime('%Y',DATE('now')))) AND cod = t1.cod) AS activo, (SELECT rie FROM SITUAC AS t2 WHERE t1.cod=t2.cod) AS riesgo, (SELECT total FROM SITUAC AS t2 WHERE t1.cod=t2.cod) AS total FROM CLIENT AS t1 WHERE t1.cod = '050069' ORDER BY t1.nom";
+    var sentencia = "SELECT t1.id, t1.cod, t1.nom, t1.historia, (SELECT COUNT(cod) FROM CLIENT WHERE (cod IN (SELECT cli FROM ALBARA WHERE strftime('%Y', fec)=strftime('%Y',DATE('now'))) OR cod IN (SELECT cli FROM CABPRE WHERE strftime('%Y',fec)=strftime('%Y',DATE('now'))) OR cod IN (SELECT cue FROM FACEMI WHERE strftime('%Y',fee)=strftime('%Y',DATE('now')))) AND cod = t1.cod) AS activo, (SELECT rie FROM SITUAC AS t2 WHERE t1.cod=t2.cod) AS riesgo, (SELECT total FROM SITUAC AS t2 WHERE t1.cod=t2.cod) AS total FROM CLIENT AS t1 "+filtro+" ORDER BY t1.nom ";
     
     clientes = (await this.db.query(sentencia)).values as clienteTmp[];
     
