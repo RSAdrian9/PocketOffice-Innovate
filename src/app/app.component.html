@@ -10,7 +10,7 @@
           </ion-item-divider>
           <ion-menu-toggle auto-hide="false" *ngFor="let opcion of opcionesMenu; let i = index">
             
-            <ion-item class="colorItemMenu item-inner" routerDirection="root" [routerLink]="[opcion.url]" routerLinkActive="selected">
+            <ion-item class="colorItemMenu item-inner" routerDirection="root" [routerLink]="[opcion.url]" (click)="this.setRuta(opcion.url)" routerLinkActive="selected">
               <ion-icon class="colorico" slot="start" [ios]="opcion.icon" [md]="opcion.icon" [src]="opcion.icon"></ion-icon>
               <ion-label style="overflow: unset; ">{{ opcion.title }}</ion-label>              
             </ion-item>

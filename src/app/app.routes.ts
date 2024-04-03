@@ -7,6 +7,10 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
+  },
+  {
     path: 'home',
     loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
   },
@@ -15,164 +19,95 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/clientes/clientes.page').then( m => m.ClientesPage)
   },
   {
-    path: 'lista-contactos',
-    loadComponent: () => import('./pages/lista-contactos/lista-contactos.page').then( m => m.ListaContactosPage)
-  },
-  {
-    path: 'lista-bancos',
-    loadComponent: () => import('./pages/lista-bancos/lista-bancos.page').then( m => m.ListaBancosPage)
-  },
-  {
-    path: 'lista-direcciones',
-    loadComponent: () => import('./pages/lista-direcciones/lista-direcciones.page').then( m => m.ListaDireccionesPage)
-  },
-  {
-    path: 'historial',
-    loadComponent: () => import('./pages/historial/historial.page').then( m => m.HistorialPage)
-  },
-  {
-    path: 'lista-facturas',
-    loadComponent: () => import('./pages/lista-facturas/lista-facturas.page').then( m => m.ListaFacturasPage)
-  },
-  {
-    path: 'lista-albaranes',
-    loadComponent: () => import('./pages/lista-albaranes/lista-albaranes.page').then( m => m.ListaAlbaranesPage)
-  },
-  {
-    path: 'lista-presupuestos',
-    loadComponent: () => import('./pages/lista-presupuestos/lista-presupuestos.page').then( m => m.ListaPresupuestosPage)
-  },
-  {
-    path: 'lista-pedidos',
-    loadComponent: () => import('./pages/lista-pedidos/lista-pedidos.page').then( m => m.ListaPedidosPage)
-  },
-  {
-    path: 'efectos',
-    loadComponent: () => import('./pages/efectos/efectos.page').then( m => m.EfectosPage)
-  },
-  {
-    path: 'mayor',
-    loadComponent: () => import('./pages/mayor/mayor.page').then( m => m.MayorPage)
-  },
-  {
-    path: 'situacion-riesgos',
-    loadComponent: () => import('./pages/situacion-riesgos/situacion-riesgos.page').then( m => m.SituacionRiesgosPage)
-  },
-  {
-    path: 'rentabilidad',
-    loadComponent: () => import('./pages/rentabilidad/rentabilidad.page').then( m => m.RentabilidadPage)
-  },
-  {
-    path: 'resumen-mensual-ventas',
-    loadComponent: () => import('./pages/resumen-mensual-ventas/resumen-mensual-ventas.page').then( m => m.ResumenMensualVentasPage)
-  },
-  {
-    path: 'datos-albaranes',
-    loadComponent: () => import('./pages/datos-albaranes/datos-albaranes.page').then( m => m.DatosAlbaranesPage)
-  },
-  {
-    path: 'datos-bancarios',
-    loadComponent: () => import('./pages/datos-bancarios/datos-bancarios.page').then( m => m.DatosBancariosPage)
-  },
-  {
-    path: 'datos-contactos',
-    loadComponent: () => import('./pages/datos-contactos/datos-contactos.page').then( m => m.DatosContactosPage)
-  },
-  {
-    path: 'datos-direcciones',
-    loadComponent: () => import('./pages/datos-direcciones/datos-direcciones.page').then( m => m.DatosDireccionesPage)
-  },
-  {
-    path: 'datos-facturas',
-    loadComponent: () => import('./pages/datos-facturas/datos-facturas.page').then( m => m.DatosFacturasPage)
-  },
-  {
-    path: 'datos-pedidos',
-    loadComponent: () => import('./pages/datos-pedidos/datos-pedidos.page').then( m => m.DatosPedidosPage)
-  },
-  {
-    path: 'datos-presupuestos',
-    loadComponent: () => import('./pages/datos-presupuestos/datos-presupuestos.page').then( m => m.DatosPresupuestosPage)
-  },
-  {
-    path: 'efectos',
-    loadComponent: () => import('./pages/efectos/efectos.page').then( m => m.EfectosPage)
-  },
-  {
-    path: 'efectos-datos',
-    loadComponent: () => import('./pages/efectos-datos/efectos-datos.page').then( m => m.EfectosDatosPage)
-  },
-  {
-    path: 'historial',
-    loadComponent: () => import('./pages/historial/historial.page').then( m => m.HistorialPage)
-  },
-  {
-    path: 'home',
-    loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
-  },
-  {
-    path: 'lista-albaranes',
-    loadComponent: () => import('./pages/lista-albaranes/lista-albaranes.page').then( m => m.ListaAlbaranesPage)
-  },
-  {
-    path: 'lista-bancos',
-    loadComponent: () => import('./pages/lista-bancos/lista-bancos.page').then( m => m.ListaBancosPage)
-  },
-  {
-    path: 'lista-contactos',
-    loadComponent: () => import('./pages/lista-contactos/lista-contactos.page').then( m => m.ListaContactosPage)
-  },
-  {
-    path: 'lista-direcciones',
-    loadComponent: () => import('./pages/lista-direcciones/lista-direcciones.page').then( m => m.ListaDireccionesPage)
-  },
-  {
-    path: 'lista-facturas',
-    loadComponent: () => import('./pages/lista-facturas/lista-facturas.page').then( m => m.ListaFacturasPage)
-  },
-  {
-    path: 'lista-pedidos',
-    loadComponent: () => import('./pages/lista-pedidos/lista-pedidos.page').then( m => m.ListaPedidosPage)
-  },
-  {
-    path: 'lista-presupuestos',
-    loadComponent: () => import('./pages/lista-presupuestos/lista-presupuestos.page').then( m => m.ListaPresupuestosPage)
-  },
-  {
-    path: 'login',
-    loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
-  },
-  {
-    path: 'mayor',
-    loadComponent: () => import('./pages/mayor/mayor.page').then( m => m.MayorPage)
-  },
-  {
-    path: 'mayor-datos',
-    loadComponent: () => import('./pages/mayor-datos/mayor-datos.page').then( m => m.MayorDatosPage)
-  },
-  {
-    path: 'pdf',
-    loadComponent: () => import('./pages/pdf/pdf.page').then( m => m.PdfPage)
-  },
-  {
-    path: 'rentabilidad',
-    loadComponent: () => import('./pages/rentabilidad/rentabilidad.page').then( m => m.RentabilidadPage)
-  },
-  {
-    path: 'resumen-mensual-ventas',
-    loadComponent: () => import('./pages/resumen-mensual-ventas/resumen-mensual-ventas.page').then( m => m.ResumenMensualVentasPage)
-  },
-  {
-    path: 'situacion-riesgos',
-    loadComponent: () => import('./pages/situacion-riesgos/situacion-riesgos.page').then( m => m.SituacionRiesgosPage)
+    path: 'proveedores',
+    loadComponent: () => import('./pages/proveedores/proveedores.page').then( m => m.ProveedoresPage)
   },
   {
     path: 'vista-cliente/:codigo',
     loadComponent: () => import('./pages/vista-cliente/vista-cliente.page').then( m => m.VistaClientePage)
   },
   {
-    path: 'proveedores',
-    loadComponent: () => import('./pages/proveedores/proveedores.page').then( m => m.ProveedoresPage)
+    path: 'vista-proveedor/:codigo',
+    loadComponent: () => import('./pages/vista-proveedor/vista-proveedor.page').then( m => m.VistaProveedorPage)
   },
-
+  {
+    path: 'contactos/:tipo/:codigo',
+    loadComponent: () => import('./pages/contactos/contactos.page').then( m => m.ContactosPage)
+  },
+  {
+    path: 'albaranes/:tipo/:codigo',
+    loadComponent: () => import('./pages/albaranes/albaranes.page').then( m => m.AlbaranesPage)
+  },
+  {
+    path: 'bancos/:tipo/:codigo',
+    loadComponent: () => import('./pages/bancos/bancos.page').then( m => m.BancosPage)
+  },
+  {
+    path: 'direcciones/:tipo/:codigo',
+    loadComponent: () => import('./pages/direcciones/direcciones.page').then( m => m.DireccionesPage)
+  },
+  {
+    path: 'facturas/:tipo/:codigo',
+    loadComponent: () => import('./pages/facturas/facturas.page').then( m => m.FacturasPage)
+  },
+  {
+    path: 'pedidos/:tipo/:codigo',
+    loadComponent: () => import('./pages/pedidos/pedidos.page').then( m => m.PedidosPage)
+  },
+  {
+    path: 'presupuestos/:tipo/:codigo',
+    loadComponent: () => import('./pages/presupuestos/presupuestos.page').then( m => m.PresupuestosPage)
+  },
+  {
+    path: 'mayor/:tipo/:codigo',
+    loadComponent: () => import('./pages/mayor/mayor.page').then( m => m.MayorPage)
+  },
+  {
+    path: 'rentabilidad/:codigo',
+    loadComponent: () => import('./pages/rentabilidad/rentabilidad.page').then( m => m.RentabilidadPage)
+  },
+  {
+    path: 'resumen-mensual-ventas/:tipo/:codigo',
+    loadComponent: () => import('./pages/resumen-mensual-ventas/resumen-mensual-ventas.page').then( m => m.ResumenMensualVentasPage)
+  },
+  {
+    path: 'situacion-riesgo/:codigo',
+    loadComponent: () => import('./pages/situacion-riesgo/situacion-riesgo.page').then( m => m.SituacionRiesgoPage)
+  },
+  {
+    path: 'historial/:tipo/:codigo',
+    loadComponent: () => import('./pages/historial/historial.page').then( m => m.HistorialPage)
+  },
+  {
+    path: 'efectos/:tipo/:codigo',
+    loadComponent: () => import('./pages/efectos/efectos.page').then( m => m.EfectosPage)
+  },
+  {
+    path: 'vista-proveedor',
+    loadComponent: () => import('./pages/vista-proveedor/vista-proveedor.page').then( m => m.VistaProveedorPage)
+  },
+  {
+    path: 'contactos',
+    loadComponent: () => import('./pages/contactos/contactos.page').then( m => m.ContactosPage)
+  },
+  {
+    path: 'bancos',
+    loadComponent: () => import('./pages/bancos/bancos.page').then( m => m.BancosPage)
+  },
+  {
+    path: 'albaranes',
+    loadComponent: () => import('./pages/albaranes/albaranes.page').then( m => m.AlbaranesPage)
+  },
+  {
+    path: 'direcciones',
+    loadComponent: () => import('./pages/direcciones/direcciones.page').then( m => m.DireccionesPage)
+  },
+  {
+    path: 'facturas',
+    loadComponent: () => import('./pages/facturas/facturas.page').then( m => m.FacturasPage)
+  },
+  {
+    path: 'pedidos',
+    loadComponent: () => import('./pages/pedidos/pedidos.page').then( m => m.PedidosPage)
+  },
 ];
