@@ -1,0 +1,9 @@
+<ion-list>
+  <ion-item-divider>Operaciones recientes</ion-item-divider>
+  <ion-item><ion-checkbox justify="space-between" [(ngModel)]="this.checkConActividad" (ionChange)="this.controladorCheckConActividad($event)">Con Actividad</ion-checkbox></ion-item>
+  <ion-item><ion-checkbox justify="space-between" [(ngModel)]="this.checkSinActividad" (ionChange)="this.controladorCheckSinActividad($event)">Sin Actividad</ion-checkbox></ion-item>
+  <ion-item-divider>Situación de Riesgo</ion-item-divider>
+  <ion-item><ion-checkbox justify="space-between" [(ngModel)]="this.checkConRiesgo" (ionChange)="this.controladorCheckConRiesgo($event)">Con Riesgo</ion-checkbox></ion-item>
+  
+</ion-list>
+<ion-button (click) = "this.aplicarFiltros()" expand="block">Aplicar</ion-button>

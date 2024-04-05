@@ -4,5 +4,5 @@ export interface clienteTmp {
     nom: string,
     activo: number,
     riesgo: number,
-    total: number
-}
+    totalimp: number  
+  }

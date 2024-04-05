@@ -1,23 +1,15 @@
-// Botón Clientes
-.button-container-clientes {
-    margin-top: 80px;
-    margin-bottom: 80px;
-    font-size: 7.5em;
-    padding: 12px 24px;
+.green{
+    --background: green;
 }
 
-// Botón Proveedores
-.button-container-proveedores {
-    margin-top: 80px;
-    margin-bottom: 80px;
+.orange{
+    --background: orange;
 }
 
-// Botones Desloguearse y actualizar
-.button-container-bottom {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-  }
-  
+.blue{
+    --background: blue;
+}
+
+.purple{
+    --background: purple;
+}

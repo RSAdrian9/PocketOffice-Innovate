@@ -7,12 +7,12 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'login',
-    loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
-  },
-  {
     path: 'home',
     loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
   },
   {
     path: 'clientes',
@@ -83,31 +83,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/efectos/efectos.page').then( m => m.EfectosPage)
   },
   {
-    path: 'vista-proveedor',
-    loadComponent: () => import('./pages/vista-proveedor/vista-proveedor.page').then( m => m.VistaProveedorPage)
-  },
-  {
-    path: 'contactos',
-    loadComponent: () => import('./pages/contactos/contactos.page').then( m => m.ContactosPage)
-  },
-  {
-    path: 'bancos',
-    loadComponent: () => import('./pages/bancos/bancos.page').then( m => m.BancosPage)
-  },
-  {
-    path: 'albaranes',
-    loadComponent: () => import('./pages/albaranes/albaranes.page').then( m => m.AlbaranesPage)
-  },
-  {
-    path: 'direcciones',
-    loadComponent: () => import('./pages/direcciones/direcciones.page').then( m => m.DireccionesPage)
-  },
-  {
-    path: 'facturas',
-    loadComponent: () => import('./pages/facturas/facturas.page').then( m => m.FacturasPage)
-  },
-  {
-    path: 'pedidos',
-    loadComponent: () => import('./pages/pedidos/pedidos.page').then( m => m.PedidosPage)
+    path: 'ajustes',
+    loadComponent: () => import('./pages/ajustes/ajustes.page').then( m => m.AjustesPage)
   },
 ];

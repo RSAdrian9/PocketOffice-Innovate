@@ -1,46 +1,33 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <div class="custom-header">
-      <img src="assets/icons/logoYNombre.png">
-    </div>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-img style="height: 50%; width: 50%;" src="../../../assets/icons/logoYNombre.png"></ion-img>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="ion-text-center" id="buttons">
-    <div class="button-container-clientes">
-      <ion-button size="large" class="ion-color-primary" (click)="goToClientes()">
-        <ion-icon name="people-sharp"></ion-icon>
+  <ion-list>
+    <div *ngFor="let opcion of this.opcionesVentanaPrincipal">
+      <ion-card *ngIf="opcion.mostrar" class="{{opcion.clase}}">
+        <ion-card-header>
+          <div style="width: 100%; vertical-align: middle;">
+            <div class="ion-float-left" style="padding-right: 2%;">
+              <ion-icon [src]="opcion.icono" style="font-size: 150%; color: white;"></ion-icon>
+            </div>
+            <div class="ion-float-left">
+              <ion-card-title style="color: white; font-weight: bold;">{{opcion.nombre}}</ion-card-title>
+            </div>
+          </div>
+        </ion-card-header>
         <ion-card-content>
-          <ion-label>Clientes</ion-label>
+          <div class="{{opcion.posicionTexto}}" >
+            <h2 style="font-size: xx-large; font-weight: bold; color: white;">{{opcion.datos}} @if(opcion.tipo =='moneda'){€}</h2>
+          </div>
         </ion-card-content>
-      </ion-button>
+      </ion-card>
     </div>
 
-    <div class="button-container-proveedores">
-      <ion-button size="large" class="ion-color-primary" (click)="goToProveedores()">
-        <ion-icon src="assets/icons/home/proveedor-hotelero.svg"></ion-icon>
-        <ion-card-content>
-          <ion-label>Proveedores</ion-label>
-        </ion-card-content>
-      </ion-button>
-    </div>
-
-    <div class="button-container-bottom">
-      <ion-button size="large" class="ion-color-primary" (click)="logout()">
-        <ion-icon name="log-out"></ion-icon>
-        <ion-card-content>
-          <ion-label>Logout</ion-label>
-        </ion-card-content>
-      </ion-button>
-      
-      <ion-button size="large" class="ion-color-primary" (click)="actualizar()">
-        <ion-icon name="reload"></ion-icon>
-        <ion-card-content>
-          <ion-label>Actualizar</ion-label>
-        </ion-card-content>
-      </ion-button>
-    </div>
-    
-  </div>
+  </ion-list>
 </ion-content>
