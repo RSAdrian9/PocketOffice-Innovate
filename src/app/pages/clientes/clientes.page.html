@@ -5,13 +5,19 @@
     </ion-buttons>
     <ion-title>Clientes</ion-title>
     <ion-buttons slot="end">
-      <ion-button style="height: 2px;" (click)="mostrarBusqueda = !mostrarBusqueda"><ion-icon name="search"></ion-icon></ion-button>
-      <ion-button style="height: 2px;"(click)="presentPopover($event)"><ion-icon name="funnel"></ion-icon></ion-button>
+      <ion-button style="height: 2px;" (click)="mostrarBusqueda = !mostrarBusqueda">
+        <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="search"></ion-icon>
+      </ion-button>
+      <ion-button style="height: 2px;" (click)="presentPopover($event)">
+        <div class="icon-container">
+          <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
+          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0 " class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
+        </div>
+      </ion-button>
     </ion-buttons>
     <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
-
-  <ion-toolbar *ngIf="!mostrarBusqueda" >
+  <ion-toolbar *ngIf="!mostrarBusqueda">
     <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarClientes($event)"
       placeholder="Buscar"></ion-searchbar>
   </ion-toolbar>

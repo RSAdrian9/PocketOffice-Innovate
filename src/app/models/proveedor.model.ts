@@ -1,13 +1,13 @@
-import { albaranes } from "./albaranes";
-import { banco } from "./banco";
-import { contacto } from "./contacto";
-import { direccion } from "./direccion";
-import { efectos } from "./efectos";
-import { estados } from "./estados";
-import { facturas } from "./facturas";
-import { mayor } from "./mayor";
-import { pedidos } from "./pedidos";
-import { presupuestos } from "./presupuestos";
+import { albaranes } from "./albaranes.model";
+import { banco } from "./banco.model";
+import { contacto } from "./contacto.model";
+import { direccion } from "./direccion.model";
+import { efectos } from "./efectos.model";
+import { estados } from "./estados.model";
+import { facturas } from "./facturas.model";
+import { mayor } from "./mayor.model";
+import { pedidos } from "./pedidos.model";
+
 
 export interface proveedor {
     actividad?:string,
