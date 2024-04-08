@@ -8,7 +8,7 @@ import { TransferirDatosService } from './services/transferir-datos.service';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 import { Router } from '@angular/router';
 import { DbService } from './services/db.service';
-
+import { ToastService } from './services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +17,7 @@ import { DbService } from './services/db.service';
   standalone: true,
   imports: [RouterLink, RouterLinkActive, CommonModule, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonItemDivider, IonButton],
 })
+
 export class AppComponent {
   mostrarOpcionesCliente: boolean = false;
   mostrarOpcionesProveedor: boolean = false;
@@ -35,18 +36,24 @@ export class AppComponent {
     { title: '', url: '', icon: '' }
   ];
 
-  constructor(private transferirService: TransferirDatosService, private platform: Platform, private router: Router, private dbService: DbService) {
+  constructor(
+    private transferirService: TransferirDatosService,
+    private platform: Platform,
+    private router: Router,
+    private toastService: ToastService,
+    private dbService: DbService
+  ) {
     addIcons({ businessSharp, peopleSharp, cardSharp, compassOutline, clipboardOutline });
     this.platform.ready().then(() => {
       this.router.navigateByUrl('/home');
     });
     this.initializeApp();
+
   }
 
   initializeApp() {
     if (this.platform.is("android") || this.platform.is("ios")) {
       let androidPermissions: AndroidPermissions = new AndroidPermissions();
-
 
       androidPermissions.requestPermissions(
         [
@@ -55,8 +62,13 @@ export class AppComponent {
           androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE
         ]
       ).then((result) => {
-        
-        this.dbService.initializePlugin();
+
+        this.tienePermisos = result.hasPermission;
+        if(this.tienePermisos){
+          this.dbService.initializePlugin();
+        }else{
+          this.toastService.mostrarToast('No has aceptado los permisos por lo tanto no se ha podido crear y conectar con la base de datos', 1500, 'bottom', 'stacked');
+        }       
 
       })
     }
@@ -170,4 +182,5 @@ export class AppComponent {
       ];
     });
   }
+
 }
