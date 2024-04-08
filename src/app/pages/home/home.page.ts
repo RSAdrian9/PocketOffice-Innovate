@@ -71,10 +71,10 @@ export class HomePage implements OnInit {
 
   cargarTarjetasInicio() {
     this.opcionesVentanaPrincipal = [
-      { id: 1, nombre: 'Ventas últimos 12 meses', icono: 'assets/imgs/sales.svg', datos: '17800', tipo: 'moneda', posicionTexto: 'ion-text-end', clase: 'green', mostrar: true },
-      { id: 2, nombre: 'Compras últimos 12 meses', icono: 'assets/imgs/delivery-note.svg', datos: '11600', tipo: 'moneda', posicionTexto: 'ion-text-end', clase: 'orange', mostrar: true },
-      { id: 3, nombre: 'Efectos pendientes de cobro', icono: 'assets/imgs/flujo-de-efectivo.svg', datos: '25', tipo: 'texto', posicionTexto: 'ion-text-center', clase: 'blue', mostrar: true },
-      { id: 4, nombre: 'Ratio de cobro', icono: 'assets/imgs/bill.svg', datos: '', tipo: 'texto', posicionTexto: 'ion-text-center', clase: 'purple', mostrar: false }
+      { id: 1, nombre: 'Ventas últimos 12 meses', icono: 'assets/icons/sales.svg', datos: '17800', tipo: 'moneda', posicionTexto: 'ion-text-end', clase: 'green', mostrar: true },
+      { id: 2, nombre: 'Compras últimos 12 meses', icono: 'assets/icons/delivery-note.svg', datos: '11600', tipo: 'moneda', posicionTexto: 'ion-text-end', clase: 'orange', mostrar: true },
+      { id: 3, nombre: 'Efectos pendientes de cobro', icono: 'assets/icons/flujo-de-efectivo.svg', datos: '25', tipo: 'texto', posicionTexto: 'ion-text-center', clase: 'blue', mostrar: true },
+      { id: 4, nombre: 'Ratio de cobro', icono: 'assets/icons/bill.svg', datos: '', tipo: 'texto', posicionTexto: 'ion-text-center', clase: 'purple', mostrar: false }
     ]
   }
 
