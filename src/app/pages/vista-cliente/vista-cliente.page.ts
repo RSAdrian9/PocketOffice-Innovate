@@ -1,4 +1,4 @@
-import { Component, OnInit,  inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, Platform } from '@ionic/angular';
@@ -16,7 +16,7 @@ import { IonItem, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, Io
   styleUrls: ['./vista-cliente.page.scss'],
   standalone: true,
   providers: [DatePipe],
-  imports: [IonicModule, CommonModule, FormsModule, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonImg, IonList, IonIcon, IonItem ]
+  imports: [IonicModule, CommonModule, FormsModule, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonImg, IonList, IonIcon, IonItem]
 })
 
 export class VistaClientePage implements OnInit {
@@ -31,21 +31,21 @@ export class VistaClientePage implements OnInit {
     private navC: NavController,
     private transferirService: TransferirDatosService,
     private dbService: DbService,
-    private datepipe: DatePipe,    
+    private datepipe: DatePipe,
     private utils: UtilitiesService
-  ) { 
+  ) {
     addIcons({ callOutline, mailOutline, globeOutline });
-    
+
   }
 
   ngOnInit() {
-    this.codigoCliente = this.activatedRoute.snapshot.paramMap.get('codigo') as string;    
-    this.pageController('/vista-cliente');    
+    this.codigoCliente = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
     this.cargarDatosCliente();
+    this.pageController('/vista-cliente');
   }
 
-  ionViewDidEnter(){
-    this.codigoCliente = this.activatedRoute.snapshot.paramMap.get('codigo') as string;    
+  ionViewDidEnter() {
+    this.codigoCliente = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
     this.pageController('/vista-cliente');
   }
 
@@ -58,7 +58,9 @@ export class VistaClientePage implements OnInit {
 
   pageController(route: string) {
     this.transferirService.sendObjectSource({ ruta: route });
-    this.transferirService.sendObjectSource({ codigo: this.codigoCliente })
+    this.transferirService.sendObjectSource({ codigo: this.codigoCliente });
+    //*this.transferirService.sendObjectSource({ nombreclipro: this.cliente.nom });*/
+
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navC.navigateBack('/clientes');
       this.transferirService.sendObjectSource({ ruta: '/clientes' });

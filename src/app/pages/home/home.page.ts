@@ -1,21 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { App } from '@capacitor/app';
-import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonImg, IonButton, IonBadge, IonIcon, Platform, AlertController, IonRouterOutlet, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, ModalController } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonImg, IonButton, IonBadge, IonIcon, Platform, AlertController, IonRouterOutlet, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, ModalController, IonFab, IonFabButton, IonFabList } from '@ionic/angular/standalone';
 
 
 import { addIcons } from 'ionicons';
-import { funnel } from 'ionicons/icons';
-import { ModalGraficaComponent } from '../../components/modal-grafica/modal-grafica.component';
-import { DownloadService } from '../../services/download.service';
-import { TransferirDatosService } from '../../services/transferir-datos.service';
+import { funnel, chevronUpCircle, downloadOutline, settingsOutline } from 'ionicons/icons';
+import { ModalGraficaComponent } from 'src/app/components/modal-grafica/modal-grafica.component';
+import { DownloadService } from 'src/app/services/download.service';
+import { FilesystemService } from 'src/app/services/filesystem.service';
+import { TransferirDatosService } from 'src/app/services/transferir-datos.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonImg, IonButton, IonButton, IonBadge, IonIcon, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardContent]
+  imports: [CommonModule, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonImg, IonButton, IonButton, IonBadge, IonIcon, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonFab, IonFabButton, IonFabList]
 })
 export class HomePage implements OnInit {
   public opcionesVentanaPrincipal: any = [
@@ -27,9 +28,9 @@ export class HomePage implements OnInit {
     private alertCtrl: AlertController,
     private transferirService: TransferirDatosService,
     private routerOutlet: IonRouterOutlet,
-    private downloadService: DownloadService
+    private filesystemService: FilesystemService
   ) {
-    addIcons({ funnel });
+    addIcons({ funnel, chevronUpCircle, downloadOutline, settingsOutline });
   }
 
   ngOnInit() {
@@ -83,16 +84,18 @@ export class HomePage implements OnInit {
   }
 
   pruebas() {
-    this.downloadService.descargarPaqueteDatos();
+    //this.downloadService.descargarYDescomprimirPaqueteDatos();
+    this.filesystemService.crearDirectorioTmp();
   }
 
-  async abrirModal(id: number, titulo:string, tipoGrafica: string) {
+  async abrirModal(id: number, titulo: string, tipoGrafica: string) {
     console.log('desde home: ' + tipoGrafica);
     const modal = await this.modalCtrl.create({
       component: ModalGraficaComponent,
       componentProps: { id: id, titulo: titulo, tipoGrafica: tipoGrafica }
 
     });
+
     modal.onDidDismiss()
       .then((data) => {
 

@@ -10,6 +10,7 @@ export class TransferirDatosService {
 
   $getObjectSource = this.objectSource.asObservable();
   $getListSource = this.listSource.asObservable();
+  nombreCliente: any;
 
   constructor() { }
 
