@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Contactos</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" (click)="navigateToClienteDetails(contactos)">
       <ion-label>{{ this.nombre }}</ion-label>
     </ion-buttons>
   </ion-toolbar>

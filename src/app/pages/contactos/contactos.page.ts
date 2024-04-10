@@ -90,4 +90,12 @@ export class ContactosPage implements OnInit {
     });
   }
 
+  navigateToClienteDetails(contacto: any) {
+    if (this.tipo === 'cliente') {
+      this.navC.navigateForward('/vista-cliente/' + this.codigo);
+    } else if (this.tipo === 'proveedor') {
+      this.navC.navigateForward('/vista-proveedor/' + this.codigo);
+    }
+  }
+
 }
