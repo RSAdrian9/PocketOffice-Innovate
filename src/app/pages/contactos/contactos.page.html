@@ -4,10 +4,18 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Contactos</ion-title>
+    <ion-buttons slot="end">
+      <ion-label>{{ this.nombre }}</ion-label>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <p>Tipo: {{this.tipo}}</p>
-  <p>Cliente/Proveedor: {{this.codigo}}</p>
+  <ion-list>
+    <ion-card *ngFor="let contacto of contactos">
+      <ion-card-header>
+        <ion-title>{{ contacto.nom }}</ion-title>
+      </ion-card-header>
+    </ion-card>
+  </ion-list>
 </ion-content>
