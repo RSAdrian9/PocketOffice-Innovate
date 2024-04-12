@@ -6,14 +6,13 @@ import { TransferirDatosService } from 'src/app/services/transferir-datos.servic
 import { ActivatedRoute } from '@angular/router';
 import { DbService } from 'src/app/services/db.service';
 import { contacto } from 'src/app/models/contacto.model';
-import { IonButton } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-contactos',
   templateUrl: './contactos.page.html',
   styleUrls: ['./contactos.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, IonButton]
+  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ContactosPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);

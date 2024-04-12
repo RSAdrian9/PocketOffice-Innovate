@@ -4,10 +4,46 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Datos Bancarios</ion-title>
+    <ion-buttons slot="end" (click)="navigateToClienteDetails(bancos)">
+      <ion-label>{{ this.nombre }}</ion-label>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <p>Tipo: {{this.tipo}}</p>
-  <p>Cliente/Proveedor: {{this.codigo}}</p>
+  <ion-list>
+    <ion-card *ngFor="let banco of bancos">
+      <ion-item>
+        <p class="title titleSize">Habitual: </p>
+        <ion-label>{{ banco.hab }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Banco: </p>
+        <ion-title>{{ banco.nom }}</ion-title>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Cuenta: </p>
+        <ion-label>{{ banco.cu1 }}/{{ banco.cu2 }}/{{ banco.cu3 }}/{{ banco.cu4 }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">IBAN: </p>
+        <ion-label>{{ banco.iban }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">SWIFT/BIC: </p>
+        <ion-label>{{ banco.bic }}</ion-label>
+      </ion-item>
+      <!--  
+        <ion-label>{{ banco.dir }}</ion-label>
+        <ion-label>{{ banco.pob }}</ion-label>
+        <ion-label>{{ banco.pro }}</ion-label>
+        <ion-label>{{ banco.pais }}</ion-label>
+        <ion-label>{{ banco.bban }}</ion-label>
+        <ion-label>{{ banco.trem }}</ion-label>
+        <ion-label>{{ banco.nman }}</ion-label>
+        <ion-label>{{ banco.epri }}</ion-label>
+        <ion-label>{{ banco.fman }}</ion-label> 
+        -->
+    </ion-card>
+  </ion-list>
 </ion-content>

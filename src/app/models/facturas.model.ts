@@ -1,4 +1,5 @@
 export interface facturas {
+    cue?:String,
     num?:String,
     fee2?:string,
     basmon?:String,
@@ -7,7 +8,6 @@ export interface facturas {
     toceu?:String,
     impend?:String,
     est?:String,
-    numpro?:String,
     pdf?:String,
     rutapdf?:String
 }
