@@ -87,7 +87,7 @@ export class BancosPage implements OnInit {
     });
   }
 
-  navigateToClienteDetails(banco: any) {
+  navigateToClienteDetails() {
     if (this.tipo === 'cliente') {
       this.navC.navigateForward('/vista-cliente/' + this.codigo);
     } else if (this.tipo === 'proveedor') {
