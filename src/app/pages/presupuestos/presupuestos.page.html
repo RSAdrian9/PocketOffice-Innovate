@@ -3,11 +3,73 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Listado Presupuestos</ion-title>
+    <ion-title>Presupuestos</ion-title>
+    <ion-buttons slot="end" (click)="goBack()">
+      <ion-label>{{ this.nombre }}</ion-label>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-searchbar #input showCancelButton="focus" debounce="500" placeholder="Buscar"></ion-searchbar>
+      <ion-button style="height: 2px;">
+        <div class="icon-container">
+          <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
+          <ion-badge class="badge"></ion-badge>
+        </div>
+      </ion-button> 
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <p>Tipo: {{this.tipo}}</p>
-  <p>Cliente/Proveedor: {{this.codigo}}</p>
+  <ion-list>
+    <ion-card *ngFor="let presupuesto of presupuestos">
+      <ion-item>
+        <p class="title titleSize">Número: </p>
+        <ion-label>{{ presupuesto.num }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Fecha: </p>
+        <ion-label>{{ presupuesto.fec2 }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Base imponible: </p>
+        <ion-label>{{ presupuesto.baseu }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Descripción: </p>
+        <ion-label>{{ presupuesto.des }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Cargado en: </p>
+        <ion-label>{{ presupuesto.doc }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Estado: </p>
+        <ion-label>{{ presupuesto.est }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">PDF: </p>
+        <ion-label>{{ presupuesto.pdf }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Total albaran: </p>
+        <ion-label>{{ presupuesto.rutapdf }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Total: </p>
+        <ion-label>{{ presupuesto.toteu }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Total impuestos: </p>
+        <ion-label>{{ presupuesto.totimpu }}</ion-label>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content loadingText="Cargando Clientes..."
+      loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
