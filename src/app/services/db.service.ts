@@ -190,8 +190,8 @@ export class DbService {
     return bancos;
   }
 
-  public async getHistorial(tipo: string, codigo: string) {
-    var historial: string = "";
+  public async getHistoria(tipo: string, codigo: string) {
+    var historia: string = "";
     var sentencia = "";
 
     if (tipo == 'CL') {
@@ -202,10 +202,10 @@ export class DbService {
 
     const result = await this.db.query(sentencia);
     if (result.values && result.values.length > 0) {
-      historial = result.values[0];
+      historia = result.values[0].historia;
     }
 
-    return historial;
+    return historia;
   }
 
   public async getListadoFacturas(tipo: string, codigo: string, filtro: string) {

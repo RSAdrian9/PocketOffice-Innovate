@@ -15,14 +15,13 @@ import { DbService } from 'src/app/services/db.service';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class BancosPage implements OnInit {
-
   private activatedRoute = inject(ActivatedRoute);
   codigo: string = ''
   tipo: string = ''
   bancos: banco[] = [];
   nombre: string = '';
 
-  constructor(    
+  constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
     private navC: NavController,
@@ -69,30 +68,27 @@ export class BancosPage implements OnInit {
     }
   }
 
-  pageController() {
-    this.cargarBancos();
-    this.transferirService.sendObjectSource({ codigo: this.codigo })
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      switch (this.tipo) {
-        case 'cliente':
-          this.navC.navigateBack('/vista-cliente/' + this.codigo);
-          this.transferirService.sendObjectSource({ ruta: '/vista-cliente' });
-          break;
-        case 'proveedor':
-          this.navC.navigateBack('/vista-proveedor/' + this.codigo);
-          this.transferirService.sendObjectSource({ ruta: '/vista-proveedor' });
-          break;
-      }
-
-    });
+  goBack() {
+    switch (this.tipo) {
+      case 'cliente':
+        this.navC.navigateBack('/vista-cliente/' + this.codigo);
+        this.transferirService.sendObjectSource({ ruta: '/vista-cliente' });
+        break;
+      case 'proveedor':
+        this.navC.navigateBack('/vista-proveedor/' + this.codigo);
+        this.transferirService.sendObjectSource({ ruta: '/vista-proveedor' });
+        break;
+    }
   }
 
-  navigateToClienteDetails() {
-    if (this.tipo === 'cliente') {
-      this.navC.navigateForward('/vista-cliente/' + this.codigo);
-    } else if (this.tipo === 'proveedor') {
-      this.navC.navigateForward('/vista-proveedor/' + this.codigo);
-    }
+
+  pageController() {
+    this.cargarBancos();
+
+    this.transferirService.sendObjectSource({ codigo: this.codigo })
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.goBack();
+    });
   }
 
 }
