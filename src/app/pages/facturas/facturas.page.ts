@@ -32,7 +32,7 @@ export class FacturasPage implements OnInit {
   public mostrarBusqueda: boolean = false;
   public filtros: any = { texto: '', estCobro: '0', fechaDesde: '', fechaHasta: '', nFiltrosAplicados: 0 };
 
-  constructor(    
+  constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
     private navC: NavController,
@@ -43,8 +43,8 @@ export class FacturasPage implements OnInit {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
     console.log(this.activatedRoute.snapshot.params);
-    
-    this.pageController();        
+
+    this.pageController();
   }
 
   onViewDidEnter() {
@@ -194,21 +194,26 @@ export class FacturasPage implements OnInit {
 
   }
 
+  goBack() {
+    switch (this.tipo) {
+      case 'cliente':
+        this.navC.navigateBack('/vista-cliente/' + this.codigo);
+        this.transferirService.sendObjectSource({ ruta: '/vista-cliente' });
+        break;
+      case 'proveedor':
+        this.navC.navigateBack('/vista-proveedor/' + this.codigo);
+        this.transferirService.sendObjectSource({ ruta: '/vista-proveedor' });
+        break;
+    }
+  }
+
+
   pageController() {
     this.cargarFacturas('');
+
     this.transferirService.sendObjectSource({ codigo: this.codigo })
     this.platform.backButton.subscribeWithPriority(10, () => {
-      switch (this.tipo) {
-        case 'cliente':
-          this.navC.navigateBack('/vista-cliente/' + this.codigo);
-          this.transferirService.sendObjectSource({ ruta: '/vista-cliente' });
-          break;
-        case 'proveedor':
-          this.navC.navigateBack('/vista-proveedor/' + this.codigo);
-          this.transferirService.sendObjectSource({ ruta: '/vista-proveedor' });
-          break;
-      }
-
+      this.goBack();
     });
   }
 
@@ -221,14 +226,6 @@ export class FacturasPage implements OnInit {
       }, 500);
     } else {
 
-    }
-  }
-
-  navigateToClienteDetails() {
-    if (this.tipo === 'cliente') {
-      this.navC.navigateForward('/vista-cliente/' + this.codigo);
-    } else if (this.tipo === 'proveedor') {
-      this.navC.navigateForward('/vista-proveedor/' + this.codigo);
     }
   }
 
