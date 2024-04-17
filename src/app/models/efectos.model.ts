@@ -11,5 +11,6 @@ export interface efectos {
     impeu?: string,
     pageu?: string,
     rem?: string,
-    vto?: string
+    vto?: string,
+    num?: string
 }

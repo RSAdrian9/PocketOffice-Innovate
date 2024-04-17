@@ -80,6 +80,15 @@ export class PresupuestosPage implements OnInit {
         break;
     }
 
+    for (let i = 0; i < this.presupuestosPorPagina; i++) {
+      if (this.presupuestos.length < this.presupuestosAUX.length) {
+        this.presupuestos.push(this.presupuestosAUX[this.registros + i]);
+        this.hayMasPresupuestos = true;
+      } else {
+        this.hayMasPresupuestos = false;
+      }
+    }
+
   }
 
   goBack() {

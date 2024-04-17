@@ -14,7 +14,7 @@ import { DbService } from 'src/app/services/db.service';
   templateUrl: './pedidos.page.html',
   styleUrls: ['./pedidos.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule , IonList, IonInfiniteScroll, IonInfiniteScrollContent,
+  imports: [IonicModule, CommonModule, FormsModule, IonList, IonInfiniteScroll, IonInfiniteScrollContent,
   ]
 })
 export class PedidosPage implements OnInit {
@@ -25,7 +25,7 @@ export class PedidosPage implements OnInit {
   pedido: pedidos[] = [];
   nombre: string = '';
 
-  public presupuestos: Array<pedidos> = [];
+  public pedidos: Array<pedidos> = [];
   private pedidosAUX: Array<pedidos> = [];
   private filtroBusqueda: string = '';
   private pedidosPorPagina: number = 10;
@@ -35,7 +35,7 @@ export class PedidosPage implements OnInit {
   public mostrarBusqueda: boolean = false;
   public filtros: any = { texto: '', estCobro: '0', facturadoSi: '', facturadoNo: '', nFiltrosAplicados: 0 };
 
-  constructor(    
+  constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
     private navC: NavController,
@@ -46,8 +46,8 @@ export class PedidosPage implements OnInit {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
     console.log(this.activatedRoute.snapshot.params);
-    
-    this.pageController();        
+
+    this.pageController();
   }
 
   onViewDidEnter() {
@@ -81,9 +81,18 @@ export class PedidosPage implements OnInit {
         });
         break;
     }
+
+    for (let i = 0; i < this.pedidosPorPagina; i++) {
+      if (this.pedidos.length < this.pedidosAUX.length) {
+        this.pedidos.push(this.pedidosAUX[this.registros + i]);
+        this.hayMasPedidos = true;
+      } else {
+        this.hayMasPedidos = false;
+      }
+    }
   }
 
-  
+
   goBack() {
     this.navC.navigateBack('/vista-cliente/' + this.codigo);
     this.transferirService.sendObjectSource({ ruta: '/vista-cliente' });

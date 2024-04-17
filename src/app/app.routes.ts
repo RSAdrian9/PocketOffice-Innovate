@@ -86,4 +86,8 @@ export const routes: Routes = [
     path: 'ajustes',
     loadComponent: () => import('./pages/ajustes/ajustes.page').then( m => m.AjustesPage)
   },
+  {
+    path: 'vista-efecto',
+    loadComponent: () => import('./pages/vista-efecto/vista-efecto.page').then( m => m.VistaEfectoPage)
+  },
 ];

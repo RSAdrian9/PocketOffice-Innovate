@@ -4,10 +4,51 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Efectos</ion-title>
+    <ion-buttons slot="end" (click)="goBack()">
+      <ion-label>{{ this.nombre }}</ion-label>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-searchbar #input showCancelButton="focus" debounce="500" placeholder="Buscar"></ion-searchbar>
+      <ion-button style="height: 2px;">
+        <div class="icon-container">
+          <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
+          <ion-badge class="badge"></ion-badge>
+        </div>
+      </ion-button> 
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <p>Tipo: {{this.tipo}}</p>
-  <p>Cliente/Proveedor: {{this.codigo}}</p>
+  <ion-list>
+    <ion-card *ngFor="let efecto of efectos" [routerLink]="['vista-efecto/'+this.tipo+'/'+this.codigo+'/'+efecto.num]" routerLinkActive="selected">
+      <ion-item>
+        <p class="title titleSize">Fecha: </p>
+        <ion-label> {{ efecto.fec2 }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Nº Factura: </p>
+        <ion-label> {{ efecto.fac }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">F.Vencimiento: </p>
+        <ion-label> {{ efecto.vto }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <p class="title titleSize">Importe: </p>
+        <ion-label> {{ efecto.impeu }}</ion-label>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+
+
+  @if(hayMasEfectos){
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content loadingText="Cargando Clientes..."
+        loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    }
 </ion-content>

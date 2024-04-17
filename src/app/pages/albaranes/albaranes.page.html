@@ -83,8 +83,10 @@
     </ion-card>
   </ion-list>
 
-  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-    <ion-infinite-scroll-content loadingText="Cargando Clientes..."
-      loadingSpinner="bubbles"></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  @if(hayMasAlbaranes){
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content loadingText="Cargando Clientes..."
+        loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    }
 </ion-content>

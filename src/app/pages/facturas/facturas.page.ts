@@ -192,6 +192,15 @@ export class FacturasPage implements OnInit {
         break;
     }
 
+    for (let i = 0; i < this.facturasPorPagina; i++) {
+      if (this.facturas.length < this.facturasAUX.length) {
+        this.facturas.push(this.facturasAUX[this.registros + i]);
+        this.hayMasFacturas = true;
+      } else {
+        this.hayMasFacturas = false;
+      }
+    }
+
   }
 
   goBack() {
