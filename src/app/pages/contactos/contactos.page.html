@@ -3,19 +3,43 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Contactos</ion-title>
-    <ion-buttons slot="end" (click)="navigateToClienteDetails(contactos)">
-      <ion-label>{{ this.nombre }}</ion-label>
-    </ion-buttons>
+    <ion-title style="padding-left:0 ;">Contactos</ion-title>
+    <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-card *ngFor="let contacto of contactos">
-      <ion-card-header>
-        <ion-title>{{ contacto.nom }}</ion-title>
-      </ion-card-header>
+    <ion-card *ngFor="let contacto of this.contactos" class="cardBorderGray">
+      <ion-item>
+        <ion-card-header>
+          <ion-card-title>Nombre: {{contacto.nom}}</ion-card-title>
+        </ion-card-header>
+      </ion-item>
+      <ion-item>Cargo: {{contacto.car}}</ion-item>
+      <ion-item>
+        <p class="title titleSize">Teléfono:</p>
+        <p class="paddingL">{{contacto.tel}}</p>
+        <ion-button size="" [disabled]="this.valid(contacto.tel)" class="btn btn_margin"
+          (click)='callNumber(contacto.tel)' slot="end">
+          <ion-icon name="call-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item>Extensión: {{contacto.ext}}</ion-item>
+      <ion-item>
+        <p class="title titleSize">E-Mail:</p>
+        <ion-button size="" [disabled]="this.valid(contacto.email)" class="btn btn_margin"
+          (click)='mailto(contacto.email)' slot="end">
+          <ion-icon name="mail-outline"></ion-icon>
+        </ion-button>
+        <p class="paddingL">{{contacto.email}}</p>
+      </ion-item>
+      <ion-item>Observaciones:</ion-item>
+      <ion-item>
+        <p>{{contacto.ob1}}</p>
+        <p>{{contacto.ob2}}</p>
+        <p>{{contacto.ob3}}</p>
+      </ion-item>
     </ion-card>
   </ion-list>
 </ion-content>

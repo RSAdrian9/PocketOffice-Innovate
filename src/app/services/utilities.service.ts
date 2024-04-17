@@ -7,7 +7,7 @@ export class UtilitiesService {
 
   constructor() { }
 
-  valid(e: String): boolean {
+  valid(e?: String): boolean {
     let flag: boolean = false
     if (e == null || e == undefined) {
       flag = true

@@ -28,7 +28,8 @@ export class HomePage implements OnInit {
     private alertCtrl: AlertController,
     private transferirService: TransferirDatosService,
     private routerOutlet: IonRouterOutlet,
-    private filesystemService: FilesystemService
+    private filesystemService: FilesystemService,
+    private downloadService: DownloadService,
   ) {
     addIcons({ funnel, chevronUpCircle, downloadOutline, settingsOutline });
   }
@@ -81,6 +82,10 @@ export class HomePage implements OnInit {
       { id: 3, nombre: 'Efectos pendientes de cobro', icono: 'assets/imgs/flujo-de-efectivo.svg', datos: '25', tipo: 'texto', posicionTexto: 'ion-text-center', clase: 'blue', mostrar: true, tipoGrafica: 'sectores' },
       { id: 4, nombre: 'Ratio de cobro', icono: 'assets/imgs/bill.svg', datos: '', tipo: 'texto', posicionTexto: 'ion-text-center', clase: 'purple', mostrar: false, tipoGrafica: '' }
     ]
+  }
+
+  descargarPaqueteDeDatos(){
+    this.downloadService.descargarYDescomprimirPaqueteDatos();
   }
 
   pruebas() {

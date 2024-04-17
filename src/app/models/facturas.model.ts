@@ -1,14 +1,14 @@
 export interface facturas {
-    num?:String,
+    num?:string,
+    numpro:string,
     fee2?:string,
-    basmon?:String,
-    totmon?:String,
-    totimpu?:String,
-    rutapdf?:String,
-    toceu?:String,
-    impend?:String,
-    pdf?:String,
-
-    cue?:String,
-    est?:String,
+    basmon?:string,
+    totimpu?:string,
+    totmon?:string,
+    toceu?:string,
+    impend?:string,
+    est?:string,
+    cue?:string,
+    pdf:string,
+    rutapdf?:string
 }

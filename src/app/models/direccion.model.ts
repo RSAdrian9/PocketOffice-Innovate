@@ -13,4 +13,5 @@ export interface direccion {
     pro?: string,
     rut?: string,
     tel?: string,
+    nomrut?: string
 }

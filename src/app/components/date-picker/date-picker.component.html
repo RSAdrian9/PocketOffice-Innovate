@@ -1,0 +1,14 @@
+<div style="margin: auto;">
+  <ion-item-divider>Fecha {{this.tipo}}</ion-item-divider>
+  <div>
+    <ion-datetime #datetime presentation="date" [(ngModel)]="this.fechaSeleccionada" firstDayOfWeek="1"
+      displayFormat="DD/MM/YYYY" />
+  </div>
+  <ion-item-divider>
+    <ion-buttons>
+      <ion-button color="danger" (click)="this.reestablecer()">Reestablecer</ion-button>
+      <ion-button color="primary" (click)="this.cancelar()">Cancelar</ion-button>
+      <ion-button color="primary" (click)="this.aceptar()">Aceptar</ion-button>
+    </ion-buttons>
+  </ion-item-divider>
+</div>

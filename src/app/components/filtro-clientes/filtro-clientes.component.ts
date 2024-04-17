@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-filtro',
-  templateUrl: './filtro.component.html',
-  styleUrls: ['./filtro.component.scss'],
+  selector: 'app-filtro-clientes',
+  templateUrl: './filtro-clientes.component.html',
+  styleUrls: ['./filtro-clientes.component.scss'],
   standalone: true,
   imports: [FormsModule, CommonModule, IonItem, IonList, IonItemDivider, IonCheckbox, IonButton]
 })
-export class FiltroComponent implements OnInit {
+export class FiltroClientesComponent implements OnInit {
   filtros: any = { texto: '', actividad: '0', riesgo: '0', nFiltrosAplicados: 0 };
   checkConActividad: boolean = false;
   checkSinActividad: boolean = false;
@@ -34,7 +34,7 @@ export class FiltroComponent implements OnInit {
     this.filtros.actividad = data.actividad;
     this.filtros.riesgo = data.riesgo;
     this.filtros.nFiltrosAplicados = data.nFiltrosAplicados;
-    
+
     switch (this.filtros.actividad) {
       case '1':
         this.checkConActividad = true;
@@ -44,7 +44,7 @@ export class FiltroComponent implements OnInit {
         break;
     }
 
-    if(this.filtros.riesgo=='1'){
+    if (this.filtros.riesgo == '1') {
       this.checkConRiesgo = true;
     }
   }
@@ -79,7 +79,7 @@ export class FiltroComponent implements OnInit {
     }
   }
 
-  
+
 
   aplicarFiltros() {
     this.nFiltrosAplicados = 0;
@@ -100,11 +100,11 @@ export class FiltroComponent implements OnInit {
     } else {
       this.valorRiesgo = '0';
     }
-    
+
     let texto = this.filtros.texto;
-    
+
     this.filtros = { texto: texto, actividad: this.valorActividad, riesgo: this.valorRiesgo, nFiltrosAplicados: this.nFiltrosAplicados }
-    
+
     this.popoverController.dismiss(this.filtros);
   }
 

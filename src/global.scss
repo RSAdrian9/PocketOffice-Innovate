@@ -35,6 +35,18 @@
     border: 1px solid gray;
   }
 
+  .cardBorderGreen {
+    border: 1px solid #73DF67;
+  }
+
+  .cardBorderOrange {
+    border: 1px solid #EB612F;
+  }
+
+  .cardBorderCian {
+    border: 1px solid #50BEF3;
+  }
+
   .icon-container {
     position: relative;
     display: inline-block;
@@ -43,11 +55,15 @@
   .badge {
     position: absolute;
     top: -5px;
-    /* Adjust this value to position the badge vertically */
     right: -5px;
-    /* Adjust this value to position the badge horizontally */
     background-color: red;
-    /* Customize badge color */
+  }
+
+  .badge_float_button {
+    position: absolute;
+    top: -15px;
+    right: -27px;    
+    background-color: transparent;
   }
 
 
@@ -165,5 +181,9 @@
 
   .item-inner {
     --inner-padding-end: 0px;
+  }
+
+  .noBackground {
+    --background: transparent;
   }
 }

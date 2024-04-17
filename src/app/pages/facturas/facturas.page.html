@@ -3,71 +3,82 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Facturas</ion-title>
-    <ion-buttons slot="end" (click)="goBack()">
-      <ion-label>{{ this.nombre }}</ion-label>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-title>Listado Facturas</ion-title>
+    <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
 
+  </ion-toolbar>
   <ion-toolbar>
     <ion-buttons>
-      <ion-searchbar #input showCancelButton="focus" debounce="500" placeholder="Buscar"></ion-searchbar>
-      <ion-button style="height: 2px;">
+      <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarFacturas($event)"
+        placeholder="Buscar"></ion-searchbar>
+      <ion-button style="height: 2px;" (click)="presentPopover($event)">
         <div class="icon-container">
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
-          <ion-badge class="badge"></ion-badge>
+          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0 "
+            class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
-      </ion-button> 
+      </ion-button>
     </ion-buttons>
+    <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-card *ngFor="let factura of facturas">
+
+    <ion-card *ngFor="let factura of this.facturas" class="{{this.comprobarFactura(factura)}}">
       <ion-item>
         <p class="title titleSize">Número: </p>
-        <ion-label>{{ factura.num }}</ion-label>
+        <p class="paddingL">{{factura.num}}</p>
+      </ion-item>
+      <div *ngIf="factura.numpro!=undefined || factura.numpro!=null">
+        <ion-item>
+          <p class="title titleSize">Factura Proveedor: </p>
+          <p class="paddingL">{{factura.numpro}}</p>
+        </ion-item>
+      </div>
+      <ion-item>
+        <p class="title titleSize">Fecha Factura: </p>
+        <p class="paddingL">{{factura.fee2}} </p>
       </ion-item>
       <ion-item>
-        <p class="title titleSize">Fecha: </p>
-        <ion-label>{{ factura.fee2 }}</ion-label>
+        <p class="title titleSize">Total Base: </p>
+        <p class="paddingL">{{factura.basmon}}€</p>
       </ion-item>
       <ion-item>
-        <p class="title titleSize">Base imponible: </p>
-        <ion-label>{{ factura.basmon }}</ion-label>
+        <p class="title titleSize">Total Impuesto: </p>
+        <p class="paddingL">{{factura.totimpu}}€</p>
       </ion-item>
       <ion-item>
-        <p class="title titleSize">Total monetario: </p>
-        <ion-label>{{ factura.totmon }}</ion-label>
+        <p class="title titleSize">Total Factura: </p>
+        <p class="paddingL">{{factura.totmon}}€</p>
       </ion-item>
       <ion-item>
-        <p class="title titleSize">Total impuestos: </p>
-        <ion-label>{{ factura.totimpu }}</ion-label>
+        <p class="title titleSize">COBRADO :</p>
+        <p class="paddingL">{{factura.toceu}}€</p>
       </ion-item>
       <ion-item>
-        <p class="title titleSize">Total factura: </p>
-        <ion-label>{{ factura.rutapdf }}</ion-label>
+        <p class="title titleSize">PENDIENTE: </p>
+        <p class="paddingL">{{factura.impend}}€</p>
       </ion-item>
-      <ion-item>
-        <p class="title titleSize">Importe cobrado: </p>
-        <ion-label>{{ factura.toceu }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Importe pendiente: </p>
-        <ion-label>{{ factura.impend }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">PDF: </p>
-        <ion-label>{{ factura.pdf }}</ion-label>
-      </ion-item>
-    </ion-card>
-  </ion-list>
 
+      <ion-button *ngIf="factura.pdf !='0'" class="pdfBtn" expand="full">PDF
+        <ion-icon style="padding-left: 5px;" src="../../../assets/imgs/pdf.svg"></ion-icon>
+      </ion-button>
+    </ion-card>
+
+  </ion-list>
   @if(hayMasFacturas){
-    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-      <ion-infinite-scroll-content loadingText="Cargando Clientes..."
-        loadingSpinner="bubbles"></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-    }
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content loadingText="Cargando Facturas..."
+      loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  }
+
 </ion-content>
+
+<ion-footer >
+  <ion-toolbar style="border-top:1px solid gray">
+    <ion-title>Total: {{this.importeFacturas}}€</ion-title>
+  </ion-toolbar>
+</ion-footer>
