@@ -4,17 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, Platform } from '@ionic/angular';
 import { TransferirDatosService } from 'src/app/services/transferir-datos.service';
 import { ActivatedRoute } from '@angular/router';
-import { banco } from 'src/app/models/banco.model';
 import { DbService } from 'src/app/services/db.service';
+import { banco } from 'src/app/models/banco.model';
+import { addIcons } from 'ionicons';
+import { checkmarkOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-bancos',
   templateUrl: './bancos.page.html',
   styleUrls: ['./bancos.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule/*, IonList, IonItem, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent*/]
 })
 export class BancosPage implements OnInit {
+
   private activatedRoute = inject(ActivatedRoute);
   codigo: string = ''
   tipo: string = ''
@@ -26,11 +29,14 @@ export class BancosPage implements OnInit {
     private transferirService: TransferirDatosService,
     private navC: NavController,
     private dbService: DbService
-  ) { }
+  ) {
+    addIcons({ checkmarkOutline });
+  }
 
   ngOnInit() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
+
     this.pageController();
 
   }
@@ -38,6 +44,7 @@ export class BancosPage implements OnInit {
   onViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
+
     this.pageController();
   }
 
@@ -68,6 +75,14 @@ export class BancosPage implements OnInit {
     }
   }
 
+  pageController() {
+    this.cargarBancos();
+    this.transferirService.sendObjectSource({ codigo: this.codigo })
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.goBack();
+    });
+  }
+
   goBack() {
     switch (this.tipo) {
       case 'cliente':
@@ -79,16 +94,6 @@ export class BancosPage implements OnInit {
         this.transferirService.sendObjectSource({ ruta: '/vista-proveedor' });
         break;
     }
-  }
-
-
-  pageController() {
-    this.cargarBancos();
-
-    this.transferirService.sendObjectSource({ codigo: this.codigo })
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      this.goBack();
-    });
   }
 
 }

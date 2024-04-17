@@ -7,7 +7,7 @@ import { addIcons } from 'ionicons';
 import { alertCircle, eyeOutline, funnel, search } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { TransferirDatosService } from 'src/app/services/transferir-datos.service';
-import { FiltroComponent } from 'src/app/components/filtro/filtro.component';
+import { FiltroClientesComponent } from 'src/app/components/filtro-clientes/filtro-clientes.component';
 
 
 @Component({
@@ -119,7 +119,7 @@ export class ClientesPage implements OnInit {
 
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
-      component: FiltroComponent,
+      component: FiltroClientesComponent,
       componentProps: this.filtros,
       event: ev,
       translucent: true

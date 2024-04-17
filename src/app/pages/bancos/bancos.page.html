@@ -4,33 +4,33 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Datos Bancarios</ion-title>
-    <ion-buttons slot="end" (click)="goBack()">
-      <ion-label>{{ this.nombre }}</ion-label>
-    </ion-buttons>
+    <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-card *ngFor="let banco of bancos">
+    <ion-card *ngFor="let banco of bancos" class="cardBorderGray">
       <ion-item>
-        <p class="title titleSize">Habitual: </p>
-        <ion-label>{{ banco.hab }}</ion-label>
+        <p class="title titleSize">Habitual:</p>
+        <ion-item *ngIf="banco.hab=='S'">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-item>
       </ion-item>
       <ion-item>
-        <p class="title titleSize">Banco: </p>
+        <p class="title titleSize">Banco:</p>
         <ion-title>{{ banco.nom }}</ion-title>
       </ion-item>
       <ion-item>
-        <p class="title titleSize">Cuenta: </p>
+        <p class="title titleSize">Cuenta:</p>
         <ion-label>{{ banco.cu1 }}/{{ banco.cu2 }}/{{ banco.cu3 }}/{{ banco.cu4 }}</ion-label>
       </ion-item>
       <ion-item>
-        <p class="title titleSize">IBAN: </p>
+        <p class="title titleSize">IBAN:</p>
         <ion-label>{{ banco.iban }}</ion-label>
       </ion-item>
       <ion-item>
-        <p class="title titleSize">SWIFT/BIC: </p>
+        <p class="title titleSize">SWIFT/BIC:</p>
         <ion-label>{{ banco.bic }}</ion-label>
       </ion-item>
       <!--  
