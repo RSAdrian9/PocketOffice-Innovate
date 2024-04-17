@@ -33,7 +33,7 @@ export class AlbaranesPage implements OnInit {
   public mostrarBusqueda: boolean = false;
   public filtros: any = { texto: '', estCobro: '0', facturadoSi: '', facturadoNo: '', nFiltrosAplicados: 0 };
 
-  constructor(    
+  constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
     private navC: NavController,
@@ -45,7 +45,7 @@ export class AlbaranesPage implements OnInit {
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
     console.log(this.activatedRoute.snapshot.params);
 
-    this.pageController();        
+    this.pageController();
   }
 
   onViewDidEnter() {
@@ -96,6 +96,15 @@ export class AlbaranesPage implements OnInit {
           this.nombre = nombre;
         });
         break;
+    }
+
+    for (let i = 0; i < this.albaranesPorPagina; i++) {
+      if (this.albaranes.length < this.albaranesAUX.length) {
+        this.albaranes.push(this.albaranesAUX[this.registros + i]);
+        this.hayMasAlbaranes = true;
+      } else {
+        this.hayMasAlbaranes = false;
+      }
     }
 
   }
