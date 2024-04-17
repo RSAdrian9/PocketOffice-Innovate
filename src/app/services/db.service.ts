@@ -252,7 +252,7 @@ export class DbService {
     let sentencia: string;
 
     if (tipo == 'CL') {
-      sentencia = "SELECT num, IIF(aof='F','FACTURA '||doc,IIF(aof='A','ALBARÁN '||doc,'')) AS doc, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, totimpu, (SELECT des FROM ESTADO WHERE id=est) AS est, ser, pdf,IIF(pdf=1,'https://appgp.mjhudesings.com/documentos/clientes/'||cli||'/PEDIDO NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM CABPED WHERE cli='" + codigo + "' ORDER BY fec DESC;"
+      sentencia = "SELECT num, IIF(aof='F','FACTURA '||doc,IIF(aof='A','ALBARÁN '||doc,'')) AS doc, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, totimpu, IFNULL((SELECT des FROM ESTADO WHERE id=est),'') AS est, ser, pdf,IIF(pdf=1,'https://appgp.mjhudesings.com/documentos/clientes/'||cli||'/PEDIDO NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM CABPED WHERE cli='" + codigo + "' ORDER BY fec DESC;"
     } else {
       sentencia = "SELECT num, IIF(aof='F','FACTURA '||doc,IIF(aof='A','ALBARÁN '||doc,'')) AS doc, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, totimpu, ser, pdf,IIF(pdf=1,'https://appgp.mjhudesings.com/documentos/clientes/'||cli||'/PEDIDO NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM CAPEPR WHERE cli='" + codigo + "' ORDER BY fec DESC;"
     }
