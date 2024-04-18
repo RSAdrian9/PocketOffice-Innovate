@@ -1,13 +1,67 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>vista-efecto</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Datos Efecto</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">vista-efecto</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item>
+    <p class="title titleSize">Nº Efecto::</p>
+    <p class="paddingL">{{this.efecto.num}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Fecha:</p>
+    <p class="paddingL">{{this.efecto.fec2}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Banco: </p>
+    <p class="paddingL">{{this.efecto.ban}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Banco efecto: </p>
+    <p class="paddingL">{{this.efecto.banefe}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Devuelto: </p>
+    <p class="paddingL">{{this.efecto.dev}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Documento agrupación: </p>
+    <p class="paddingL">{{this.efecto.efe_docagr}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Tipo de agrupación: </p>
+    <p class="paddingL">{{this.efecto.efe_tipagr}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Estado: </p>
+    <p class="paddingL">{{this.efecto.est}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Nº Factura: </p>
+    <p class="paddingL">{{this.efecto.fac}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Importe pendiente:</p>
+    <p class="paddingL">{{this.efecto.impend}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Importe:</p>
+    <p class="paddingL">{{this.efecto.impeu}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Importe pagado:</p>
+    <p class="paddingL">{{this.efecto.pageu}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Remesa:</p>
+    <p class="paddingL">{{this.efecto.rem}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">F.Vencimiento:</p>
+    <p class="paddingL">{{this.efecto.vto}}</p>
+  </ion-item>
 </ion-content>

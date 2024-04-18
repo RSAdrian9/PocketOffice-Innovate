@@ -324,6 +324,18 @@ export class DbService {
     return efectos;
   }
 
+  public async getDatosEfecto(tipo: string, codigo: string, numero: string) {
+    var efecto: any;
+    let sentencia: string = "SELECT num, SUBSTR(fac,3,9) AS fac, strftime('%d/%m/%Y',fec) AS fec2, (SELECT des FROM BANCOS WHERE cue= ban) AS ban, strftime('%d/%m/%Y',vto) AS vto, rem, IIF(dev='S', 'DEVUELTO',IIF(dev='N','NO DEVUELTO','NO DEVUELTO')) AS dev, impeu, pageu, impend, IFNULL(((SELECT nom FROM ENTIDA WHERE cod=cu1)||' '||cu1||' '||cu2||' '||cu3||' '|| cu4),'') AS banefe, IIF(efe_tipagr='A', 'EFECTO AGRUPADO', IIF(efe_tipagr='G','EFECTO DE AGRUPACIÓN', 'NINGUNA')) AS efe_tipagr, efe_docagr, est FROM EFECTO WHERE cue='" + codigo + "' AND  tip = '" + tipo + "' AND num = '" + numero + "';";
+
+    const result = await this.db.query(sentencia);
+    if (result.values && result.values.length > 0) {
+      efecto = result.values[0];
+    }
+
+    return efecto;
+  }
+
   public async getListadoMayorDeCuentas(tipo: string, codigo: string, filtro: string) {
     var lineasMayor: mayor[] = [];
     let sentencia: string = "SELECT num, con, strftime('%d/%m/%Y',fec) AS fec2, cla, sig, impeu , deb, hab, sal, 'AÑO '||anio AS anio2 FROM APUNXX WHERE SUBSTR(cue,-6)='" + codigo + "'  AND cla = '" + tipo + "' ORDER BY anio DESC, num;"

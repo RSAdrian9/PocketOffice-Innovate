@@ -48,7 +48,7 @@ export class AlbaranesPage implements OnInit {
     this.pageController();
   }
 
-  onViewDidEnter() {
+  ionViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
     this.pageController();

@@ -49,9 +49,11 @@ export class EfectosPage implements OnInit {
     this.pageController();        
   }
 
-  onViewDidEnter() {
+  ionViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
+    console.log(this.activatedRoute.snapshot.params);
+    
     this.pageController();
   }
 
@@ -80,6 +82,16 @@ export class EfectosPage implements OnInit {
         });
         break;
     }
+
+    for (let i = 0; i < this.efectosPorPagina; i++) {
+      if (this.efectos.length < this.efectosAUX.length) {
+        this.efectos.push(this.efectosAUX[this.registros + i]);
+        this.hayMasEfectos = true;
+      } else {
+        this.hayMasEfectos = false;
+      }
+    }
+
   }
 
   
