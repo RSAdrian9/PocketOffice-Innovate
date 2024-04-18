@@ -4,9 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Efectos</ion-title>
-    <ion-buttons slot="end" (click)="goBack()">
-      <ion-label>{{ this.nombre }}</ion-label>
-    </ion-buttons>
+    <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
   </ion-toolbar>
 
   <ion-toolbar>
