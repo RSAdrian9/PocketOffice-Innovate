@@ -41,7 +41,7 @@ export class BancosPage implements OnInit {
 
   }
 
-  onViewDidEnter() {
+  ionViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
 

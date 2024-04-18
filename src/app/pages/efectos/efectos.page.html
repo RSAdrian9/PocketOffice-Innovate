@@ -22,22 +22,22 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-card *ngFor="let efecto of efectos" [routerLink]="['vista-efecto/'+this.tipo+'/'+this.codigo+'/'+efecto.num]" routerLinkActive="selected">
+    <ion-card *ngFor="let efecto of efectos" [routerLink]="['/vista-efecto/'+this.tipo+'/'+this.codigo+'/'+efecto.num]" routerLinkActive="selected">
       <ion-item>
         <p class="title titleSize">Fecha: </p>
-        <ion-label> {{ efecto.fec2 }}</ion-label>
+        <ion-label class="paddingL"> {{ efecto.fec2 }}</ion-label>
       </ion-item>
       <ion-item>
         <p class="title titleSize">Nº Factura: </p>
-        <ion-label> {{ efecto.fac }}</ion-label>
+        <ion-label class="paddingL"> {{ efecto.fac }}</ion-label>
       </ion-item>
       <ion-item>
         <p class="title titleSize">F.Vencimiento: </p>
-        <ion-label> {{ efecto.vto }}</ion-label>
+        <ion-label class="paddingL"> {{ efecto.vto }}</ion-label>
       </ion-item>
       <ion-item>
         <p class="title titleSize">Importe: </p>
-        <ion-label> {{ efecto.impeu }}</ion-label>
+        <ion-label class="paddingL"> {{ efecto.impeu }}</ion-label>
       </ion-item>
     </ion-card>
   </ion-list>
