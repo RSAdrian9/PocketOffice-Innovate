@@ -345,6 +345,18 @@ export class DbService {
     return lineasMayor;
   }
 
+  public async getDatosMayorDeCuentas(tipo: string, codigo: string, numero: string) {
+    var mayor: any;
+    let sentencia: string = "SELECT num, con, strftime('%d/%m/%Y',fec) AS fec2, cla, sig, impeu , deb, hab, sal, 'AÑO '||anio AS anio2 FROM APUNXX WHERE SUBSTR(cue,-6)='" + codigo + "'  AND cla = '" + tipo + "' AND num = '" + numero + "' ORDER BY anio DESC, num;"
+
+    const result = await this.db.query(sentencia);
+    if (result.values && result.values.length > 0) {
+      mayor = result.values[0];
+    }
+
+    return mayor;
+  }
+
   public async getSituacionDeRiesgo(codigo: string) {
     var situacion: situacionriesgo = {};
     let sentencia: string = "SELECT rie, sal, totalb, totped, total, diferencia, nefetot, totefetot, neferem, toteferem, nefepen, totefepen, nefedev, totefedev, nfacpen, totfacpen FROM SITUAC WHERE cod='" + codigo + "';"
