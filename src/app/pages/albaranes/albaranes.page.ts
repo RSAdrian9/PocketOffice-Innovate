@@ -26,7 +26,7 @@ export class AlbaranesPage implements OnInit {
   public albaranes: Array<albaranes> = [];
   private albaranesAUX: Array<albaranes> = [];
   private filtroBusqueda: string = '';
-  private albaranesPorPagina: number = 10;
+  private albaranesPorPagina: number = 5;
   private registros: number = 0;
   public hayMasAlbaranes: boolean = true;
   public consultaRealizada: boolean = false;

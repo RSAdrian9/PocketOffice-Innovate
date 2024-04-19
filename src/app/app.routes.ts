@@ -90,4 +90,8 @@ export const routes: Routes = [
     path: 'vista-efecto/:tipo/:codigo/:numero',
     loadComponent: () => import('./pages/vista-efecto/vista-efecto.page').then( m => m.VistaEfectoPage)
   },
+  {
+    path: 'vista-mayor/:tipo/:codigo/:numero',
+    loadComponent: () => import('./pages/vista-mayor/vista-mayor.page').then( m => m.VistaMayorPage)
+  },
 ];

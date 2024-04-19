@@ -8,7 +8,6 @@ import { IonList, IonInfiniteScroll, InfiniteScrollCustomEvent, IonInfiniteScrol
 import { pedidos } from 'src/app/models/pedidos.model';
 import { DbService } from 'src/app/services/db.service';
 
-
 @Component({
   selector: 'app-pedidos',
   templateUrl: './pedidos.page.html',
@@ -22,13 +21,12 @@ export class PedidosPage implements OnInit {
   codigo: string = ''
   tipo: string = ''
   filtro: string = ''
-  pedido: pedidos[] = [];
   nombre: string = '';
 
   public pedidos: Array<pedidos> = [];
   private pedidosAUX: Array<pedidos> = [];
   private filtroBusqueda: string = '';
-  private pedidosPorPagina: number = 10;
+  private pedidosPorPagina: number = 5;
   private registros: number = 0;
   public hayMasPedidos: boolean = true;
   public consultaRealizada: boolean = false;
@@ -59,36 +57,46 @@ export class PedidosPage implements OnInit {
   async cargarPedidos() {
     switch (this.tipo) {
       case 'cliente':
+        this.consultaRealizada = false;
         this.dbService.getListadoPedidos('CL', this.codigo, this.filtro).then((pedidos) => {
-          console.log(pedidos);
-          this.pedido = pedidos;
-        }).catch((err) => {
-          console.log(err);
+          this.pedidosAUX = pedidos;
+          this.consultaRealizada = true;
+          this.registros = this.pedidos.length;
+
+          for (let i = 0; i < this.pedidosPorPagina; i++) {
+            if (this.pedidos.length < this.pedidosAUX.length) {
+              this.pedidos.push(this.pedidosAUX[this.registros + i]);
+              this.hayMasPedidos = true;
+            } else {
+              this.hayMasPedidos = false;
+            }
+          }
+
         });
         this.dbService.getNombreCliente(this.codigo).then((nombre) => {
           this.nombre = nombre;
         });
         break;
       case 'proveedor':
+        this.consultaRealizada = false;
         this.dbService.getListadoPedidos('PR', this.codigo, this.filtro).then((pedidos) => {
-          console.log(pedidos);
-          this.pedido = pedidos;
-        }).catch((err) => {
-          console.log(err);
+          this.pedidosAUX = pedidos;
+          this.consultaRealizada = true;
+          this.registros = this.pedidos.length;
+
+          for (let i = 0; i < this.pedidosPorPagina; i++) {
+            if (this.pedidos.length < this.pedidosAUX.length) {
+              this.pedidos.push(this.pedidosAUX[this.registros + i]);
+              this.hayMasPedidos = true;
+            } else {
+              this.hayMasPedidos = false;
+            }
+          }
         });
         this.dbService.getNombreCliente(this.codigo).then((nombre) => {
           this.nombre = nombre;
         });
         break;
-    }
-
-    for (let i = 0; i < this.pedidosPorPagina; i++) {
-      if (this.pedidos.length < this.pedidosAUX.length) {
-        this.pedidos.push(this.pedidosAUX[this.registros + i]);
-        this.hayMasPedidos = true;
-      } else {
-        this.hayMasPedidos = false;
-      }
     }
   }
 

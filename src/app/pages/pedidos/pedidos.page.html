@@ -17,12 +17,13 @@
         </div>
       </ion-button> 
     </ion-buttons>
+    <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-card *ngFor="let pedido of pedido">
+    <ion-card *ngFor="let pedido of pedidos">
       <ion-item>
         <p class="title titleSize">Número: </p>
         <ion-label class="paddingL">{{ pedido.num }}</ion-label>
@@ -64,7 +65,7 @@
 
   @if(hayMasPedidos){
     <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-      <ion-infinite-scroll-content loadingText="Cargando Clientes..."
+      <ion-infinite-scroll-content loadingText="Cargando pedidos..."
         loadingSpinner="bubbles"></ion-infinite-scroll-content>
     </ion-infinite-scroll>
     }
