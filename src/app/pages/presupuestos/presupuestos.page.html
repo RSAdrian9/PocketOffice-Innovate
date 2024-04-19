@@ -17,6 +17,7 @@
         </div>
       </ion-button> 
     </ion-buttons>
+    <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
@@ -68,7 +69,7 @@
 
   @if(hayMasPresupuestos){
     <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-      <ion-infinite-scroll-content loadingText="Cargando Clientes..."
+      <ion-infinite-scroll-content loadingText="Cargando presupuestos..."
         loadingSpinner="bubbles"></ion-infinite-scroll-content>
     </ion-infinite-scroll>
     }

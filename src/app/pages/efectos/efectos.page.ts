@@ -13,7 +13,7 @@ import { DbService } from 'src/app/services/db.service';
   templateUrl: './efectos.page.html',
   styleUrls: ['./efectos.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterModule, IonList, IonInfiniteScroll, IonInfiniteScrollContent,  
+  imports: [IonicModule, CommonModule, FormsModule, RouterModule, IonList, IonInfiniteScroll, IonInfiniteScrollContent,
   ]
 })
 export class EfectosPage implements OnInit {
@@ -34,7 +34,7 @@ export class EfectosPage implements OnInit {
   public filtros: any = { texto: '', estCobro: '0', facturadoSi: '', facturadoNo: '', nFiltrosAplicados: 0 };
 
 
-  constructor(    
+  constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
     private navC: NavController,
@@ -45,37 +45,56 @@ export class EfectosPage implements OnInit {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
     console.log(this.activatedRoute.snapshot.params);
-    
-    this.pageController();        
+
+    this.pageController();
   }
 
   ionViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
     console.log(this.activatedRoute.snapshot.params);
-    
+
     this.pageController();
   }
 
   async cargarEfectos() {
     switch (this.tipo) {
       case 'cliente':
+        this.consultaRealizada = false;
         this.dbService.getListadoEfectos('C', this.codigo, this.filtro).then((efectos) => {
-          console.log(efectos);
-          this.efectos = efectos;
-        }).catch((err) => {
-          console.log(err);
+          this.efectosAUX = efectos;
+          this.consultaRealizada = true;
+          this.registros = this.efectos.length;
+
+          for (let i = 0; i < this.efectosPorPagina; i++) {
+            if (this.efectos.length < this.efectosAUX.length) {
+              this.efectos.push(this.efectosAUX[this.registros + i]);
+              this.hayMasEfectos = true;
+            } else {
+              this.hayMasEfectos = false;
+            }
+          }
+
         });
         this.dbService.getNombreCliente(this.codigo).then((nombre) => {
           this.nombre = nombre;
         });
         break;
       case 'proveedor':
+        this.consultaRealizada = false;
         this.dbService.getListadoEfectos('P', this.codigo, this.filtro).then((efectos) => {
-          console.log(efectos);
-          this.efectos = efectos;
-        }).catch((err) => {
-          console.log(err);
+          this.efectosAUX = efectos;
+          this.consultaRealizada = true;
+          this.registros = this.efectos.length;
+
+          for (let i = 0; i < this.efectosPorPagina; i++) {
+            if (this.efectos.length < this.efectosAUX.length) {
+              this.efectos.push(this.efectosAUX[this.registros + i]);
+              this.hayMasEfectos = true;
+            } else {
+              this.hayMasEfectos = false;
+            }
+          }
         });
         this.dbService.getNombreCliente(this.codigo).then((nombre) => {
           this.nombre = nombre;
@@ -83,18 +102,9 @@ export class EfectosPage implements OnInit {
         break;
     }
 
-    for (let i = 0; i < this.efectosPorPagina; i++) {
-      if (this.efectos.length < this.efectosAUX.length) {
-        this.efectos.push(this.efectosAUX[this.registros + i]);
-        this.hayMasEfectos = true;
-      } else {
-        this.hayMasEfectos = false;
-      }
-    }
-
   }
 
-  
+
   goBack() {
     this.navC.navigateBack('/vista-cliente/' + this.codigo);
     this.transferirService.sendObjectSource({ ruta: '/vista-cliente' });

@@ -21,7 +21,6 @@ export class PresupuestosPage implements OnInit {
   codigo: string = ''
   tipo: string = ''
   filtro: string = ''
-  presupuesto: presupuestos[] = [];
   nombre: string = '';
 
   public presupuestos: Array<presupuestos> = [];
@@ -78,15 +77,6 @@ export class PresupuestosPage implements OnInit {
           this.nombre = nombre;
         });
         break;
-    }
-
-    for (let i = 0; i < this.presupuestosPorPagina; i++) {
-      if (this.presupuestos.length < this.presupuestosAUX.length) {
-        this.presupuestos.push(this.presupuestosAUX[this.registros + i]);
-        this.hayMasPresupuestos = true;
-      } else {
-        this.hayMasPresupuestos = false;
-      }
     }
 
   }

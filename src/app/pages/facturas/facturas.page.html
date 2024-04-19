@@ -5,8 +5,8 @@
     </ion-buttons>
     <ion-title>Listado Facturas</ion-title>
     <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
-
   </ion-toolbar>
+  
   <ion-toolbar>
     <ion-buttons>
       <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarFacturas($event)"

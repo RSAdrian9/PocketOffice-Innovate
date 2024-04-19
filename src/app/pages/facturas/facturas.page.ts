@@ -26,7 +26,7 @@ export class FacturasPage implements OnInit {
   public facturas: Array<facturas> = [];
   private facturasAUX: Array<facturas> = [];
   private filtroBusqueda: string = '';
-  private facturasPorPagina: number = 25;
+  private facturasPorPagina: number = 10;
   private registros: number = 0;
   public hayMasFacturas: boolean = true;
   public consultaRealizada: boolean = false;
