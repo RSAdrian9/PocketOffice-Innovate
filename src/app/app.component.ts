@@ -9,6 +9,7 @@ import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions
 import { Router } from '@angular/router';
 import { DbService } from './services/db.service';
 import { ToastService } from './services/toast.service';
+import { FilesystemService } from './services/filesystem.service';
 
 @Component({
   selector: 'app-root',
