@@ -1,22 +1,11 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'ionic-app-base',
+  appId: 'io.innovate.pocketoffice',
+  appName: 'Pocket Office Business V2',
   webDir: 'www',
   server: {
     androidScheme: 'https'
-  },
-  cordova: {
-    preferences: {
-      ScrollEnabled: 'false',
-      BackupWebStorage: 'none',
-      SplashMaintainAspectRatio: 'true',
-      FadeSplashScreenDuration: '300',
-      SplashShowOnlyFirstTime: 'false',
-      SplashScreen: 'screen',
-      SplashScreenDelay: '3000'
-    }
   }
 };
 

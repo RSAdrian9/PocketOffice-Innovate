@@ -7,6 +7,40 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"> 
-  <p>Cliente: {{this.codigo}}</p>
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Importe compras:</ion-card-title>
+      <p class="paddingL">{{ rentabilidad.impcom }}</p>
+    </ion-card-header>
+
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Importe ventas:</ion-card-title>
+      <p class="paddingL">{{ rentabilidad.impven }}</p>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Beneficios:</ion-card-title>
+      <p class="paddingL">{{ rentabilidad.benefi }}</p>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>% Sobre la venta:</ion-card-title>
+      <p class="paddingL">{{ rentabilidad.besove }}</p>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>% Sobre la compra:</ion-card-title>
+      <p class="paddingL">{{ rentabilidad.besoco }}</p>
+    </ion-card-header>
+  </ion-card>
 </ion-content>

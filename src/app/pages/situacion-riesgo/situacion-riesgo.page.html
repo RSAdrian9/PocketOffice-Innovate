@@ -4,9 +4,73 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Situación de riesgo</ion-title>
+    <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">  
-  <p>Cliente: {{this.codigo}}</p>
+<ion-content [fullscreen]="true">
+  <ion-item class="ion-text-center title titleRiesgo">
+    <ion-label>SITUACIÓN DE RIESGO</ion-label>
+  </ion-item>
+  <ion-item>
+    <p>Riesgo del Cliente:</p>
+    <ion-label class="paddingL">{{ situacion.rie }}</ion-label>
+  </ion-item>
+  <ion-item>
+    <p>Pendiente en contabilidad:</p>
+    <ion-label class="paddingL">{{ situacion.sal }}</ion-label>
+  </ion-item>
+  <ion-item>
+    <p>Pendiente en albaranes:</p>
+    <ion-label class="paddingL">{{ situacion.totalb }}</ion-label>
+  </ion-item>
+  <ion-item>
+    <p>Pendiente en pedidos:</p>
+    <ion-label class="paddingL">{{ situacion.totped }}</ion-label>
+  </ion-item>
+  <ion-item>
+    <p>Total:</p>
+    <ion-label class="paddingL">{{ situacion.total }}</ion-label>
+  </ion-item>
+  <hr> <!-- linea divisoria roja-->
+  <ion-item>
+    <p>Diferencia:</p>
+    <ion-label class="paddingL">{{ situacion.diferencia }}</ion-label>
+  </ion-item>
+  <ion-item class="ion-text-center title titleRiesgo">
+    <ion-label>INFORMACIÓN ADICIONAL DE LA EMPRESA ACTUAL</ion-label>
+  </ion-item>
+
+  <ion-grid [fixed]="true">
+    <ion-row class="ion-text-center title rowRiesgo">
+      <ion-col>Título</ion-col>
+      <ion-col>Nº</ion-col>
+      <ion-col>Importe</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Total efectos</ion-col>
+      <ion-col>{{ situacion.nefetot }}</ion-col>
+      <ion-col>{{ situacion.totefetot }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Efectos remesados</ion-col>
+      <ion-col>{{ situacion.neferem }}</ion-col>
+      <ion-col>{{ situacion.toteferem }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Efectos pendientes</ion-col>
+      <ion-col>{{ situacion.nefepen }}</ion-col>
+      <ion-col>{{ situacion.totefepen }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Efectos devueltos</ion-col>
+      <ion-col>{{ situacion.nefedev }}</ion-col>
+      <ion-col>{{ situacion.totefedev }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Facturas pendientes</ion-col>
+      <ion-col>{{ situacion.nfacpen }}</ion-col>
+      <ion-col>{{ situacion.totfacpen }}</ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

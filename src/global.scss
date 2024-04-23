@@ -146,33 +146,6 @@
     display: none;
   }
 
-  ion-grid {
-    --ion-grid-column-padding: 10px;
-    border-collapse: collapse;
-    border-style: hidden;
-
-    ion-row:first-child {
-      background-color: #6d226d;
-      color: #ffffff !important;
-      font-weight: bold;
-    }
-
-    ion-col {
-      text-align: center;
-      font-size: 13px;
-      border: 1px solid black;
-      border-bottom: 0;
-      border-right: 0;
-    }
-
-    ion-col:last-child {
-      border-right: 1px solid black;
-    }
-
-    ion-row:last-child {
-      border-bottom: 1px solid black;
-    }
-  }
 
   hr {
     height: 1px;
