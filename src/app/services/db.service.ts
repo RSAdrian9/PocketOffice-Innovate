@@ -17,6 +17,7 @@ import { efectos } from '../models/efectos.model';
 import { mayor } from '../models/mayor.model';
 import { situacionriesgo } from '../models/situacionriesgo.model';
 import { rentabilidad } from '../models/rentabilidad.model';
+import { resumen } from '../models/resumen.model';
 import { ToastService } from './toast.service';
 
 @Injectable({
@@ -382,12 +383,12 @@ export class DbService {
   }
 
   public async getResumenMensual(tipo: string, codigo: string) {
-    var resumen: any = {};
-    let sentencia: string = "SELECT trim1, trim2, trim3, trim4, total, trim1iva, trim2iva, trim3iva, trim4iva, totaliva  FROM RESUME WHERE cod='" + codigo + "'AND cla='" + tipo + "';"
+    var resumen: resumen = {};
+    let sentencia: string = "SELECT trim1, enero, febrero, marzo, trim2, abril, mayo, junio, trim3, julio, agosto, septiembre, trim4, octubre, noviembre, diciembre, total, trim1iva, eneroiva, febreroiva, marzoiva, trim2iva, abriliva, mayoiva, junioiva, trim3iva, julioiva, agostoiva, septiembreiva, trim4iva, octubreiva, noviembreiva, diciembreiva, totaliva  FROM RESUME WHERE cod='" + codigo + "'AND cla='" + tipo + "';"
 
     const result = await this.db.query(sentencia);
     if (result.values && result.values.length > 0) {
-      resumen = result.values[0] as any;
+      resumen = result.values[0] as resumen;
     }
 
     return resumen;

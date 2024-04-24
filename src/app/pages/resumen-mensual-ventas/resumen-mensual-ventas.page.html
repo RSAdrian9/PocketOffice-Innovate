@@ -4,10 +4,210 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Resumen mensual de ventas</ion-title>
+    <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
   </ion-toolbar>
+
+  <ion-toolbar>
+    <div class="icon-container">
+      <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
+      <ion-select (ionChange)="controlSelectIVA($event)" placeholder="Selección" value="{{ this.iva }}">
+        <ion-select-option value="1">Sin IVA</ion-select-option>
+        <ion-select-option value="2">Con IVA</ion-select-option>
+      </ion-select>
+    </div>
+  </ion-toolbar>
+
 </ion-header>
 
+<!-- CONTENIDO SIN IVA -->
+
 <ion-content [fullscreen]="true">
-  <p>Tipo: {{this.tipo}}</p>
-  <p>Cliente/Proveedor: {{this.codigo}}</p>
+  <div *ngIf="this.iva.toString() === '1'">
+    <ion-button class="btn" expand="block" (click)="control_boton_trim1()">
+      <div class="button-content">
+        <span>Trimestre 1:</span>
+        <span>{{ resumen.trim1 }}</span>
+      </div>
+    </ion-button>
+    <ion-card *ngIf="this.ocultar_trim1">
+      <ion-card-content class="content">
+        <span class="mes">Enero:</span>
+        <span class="variable">{{ resumen.enero }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Febrero:</span>
+        <span class="variable">{{ resumen.febrero }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Marzo:</span>
+        <span class="variable">{{ resumen.marzo }}</span>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button class="btn" expand="block" (click)="control_boton_trim2()">
+      <div class="button-content">
+        <span>Trimestre 2:</span>
+        <span>{{ resumen.trim2 }}</span>
+      </div>
+    </ion-button>
+    <ion-card *ngIf="this.ocultar_trim2">
+      <ion-card-content class="content">
+        <span class="mes">Abril:</span>
+        <span class="variable">{{ resumen.abril }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Mayo:</span>
+        <span class="variable">{{ resumen.mayo }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Junio:</span>
+        <span class="variable">{{ resumen.junio }}</span>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button class="btn" expand="block" (click)="control_boton_trim3()">
+      <div class="button-content">
+        <span>Trimestre 3:</span>
+        <span>{{ resumen.trim3 }}</span>
+      </div>
+    </ion-button>
+    <ion-card *ngIf="this.ocultar_trim3">
+      <ion-card-content class="content">
+        <span class="mes">Julio:</span>
+        <span class="variable">{{ resumen.julio }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Agosto:</span>
+        <span class="variable">{{ resumen.agosto }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Septiembre:</span>
+        <span class="variable">{{ resumen.septiembre }}</span>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button class="btn" expand="block" (click)="control_boton_trim4()">
+      <div class="button-content">
+        <span>Trimestre 4:</span>
+        <span>{{ resumen.trim4 }}</span>
+      </div>
+    </ion-button>
+    <ion-card *ngIf="this.ocultar_trim4">
+      <ion-card-content class="content">
+        <span class="mes">Octubre:</span>
+        <span class="variable">{{ resumen.octubre }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Noviembre:</span>
+        <span class="variable">{{ resumen.noviembre }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Diciembre:</span>
+        <span class="variable">{{ resumen.diciembre }}</span>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- CONTENIDO CON IVA -->
+
+  <div *ngIf="this.iva.toString() === '2'">
+    <ion-button class="btn" expand="block" (click)="control_boton_trim1()">
+      <div class="button-content">
+        <span>Trimestre 1:</span>
+        <span>{{ resumen.trim1iva }}</span>
+      </div>
+    </ion-button>
+    <ion-card *ngIf="this.ocultar_trim1">
+      <ion-card-content class="content">
+        <span class="mes">Enero:</span>
+        <span class="variable">{{ resumen.eneroiva }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Febrero:</span>
+        <span class="variable">{{ resumen.febreroiva }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Marzo:</span>
+        <span class="variable">{{ resumen.marzoiva }}</span>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button class="btn" expand="block" (click)="control_boton_trim2()">
+      <div class="button-content">
+        <span>Trimestre 2:</span>
+        <span>{{ resumen.trim2iva }}</span>
+      </div>
+    </ion-button>
+    <ion-card *ngIf="this.ocultar_trim2">
+      <ion-card-content class="content">
+        <span class="mes">Abril:</span>
+        <span class="variable">{{ resumen.abriliva }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Mayo:</span>
+        <span class="variable">{{ resumen.mayoiva }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Junio:</span>
+        <span class="variable">{{ resumen.junioiva }}</span>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button class="btn" expand="block" (click)="control_boton_trim3()">
+      <div class="button-content">
+        <span>Trimestre 3:</span>
+        <span>{{ resumen.trim3iva }}</span>
+      </div>
+    </ion-button>
+    <ion-card *ngIf="this.ocultar_trim3">
+      <ion-card-content class="content">
+        <span class="mes">Julio:</span>
+        <span class="variable">{{ resumen.julioiva }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Agosto:</span>
+        <span class="variable">{{ resumen.agostoiva }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Septiembre:</span>
+        <span class="variable">{{ resumen.septiembreiva }}</span>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button class="btn" expand="block" (click)="control_boton_trim4()">
+      <div class="button-content">
+        <span>Trimestre 4:</span>
+        <span>{{ resumen.trim4iva }}</span>
+      </div>
+    </ion-button>
+    <ion-card *ngIf="this.ocultar_trim4">
+      <ion-card-content class="content">
+        <span class="mes">Octubre:</span>
+        <span class="variable">{{ resumen.octubreiva }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Noviembre:</span>
+        <span class="variable">{{ resumen.noviembreiva }}</span>
+      </ion-card-content>
+      <ion-card-content class="content">
+        <span class="mes">Diciembre:</span>
+        <span class="variable">{{ resumen.diciembreiva }}</span>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar style="border-top: 1px solid gray">
+    <!-- TOOLBAR SIN IVA -->
+    <div class="footer-content" *ngIf="this.iva.toString() === '1'">
+      <span class="total">Total:</span>
+      <span class="variable">{{ resumen.total }}€</span>
+    </div>
+    <!-- TOOLBAR CON IVA -->
+    <div class="footer-content" *ngIf="this.iva.toString() === '2'">
+      <span class="total">Total:</span>
+      <span class="variable">{{ resumen.totaliva }}€</span>
+    </div>
+  </ion-toolbar>
+</ion-footer>

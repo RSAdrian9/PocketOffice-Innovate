@@ -1,0 +1,68 @@
+.icon-container {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+ion-icon {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+
+.button-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    margin-bottom: 10px;
+}
+
+.button-content span {
+    margin-right: 80px;
+    margin-left: 80px;
+}
+
+/* Estilos a cada card */
+
+ion-card-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mes {
+    flex: 1;
+    text-align: left;
+}
+
+.variable {
+    flex: 1;
+    text-align: right;
+}
+
+/* Estilos para el footer */
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 16px;
+    /* Ajusta el padding según sea necesario */
+}
+
+.total {
+    flex: 1;
+    text-align: left;
+    font-weight: bold;
+}
+
+.variable {
+    flex: 1;
+    text-align: right;
+}
