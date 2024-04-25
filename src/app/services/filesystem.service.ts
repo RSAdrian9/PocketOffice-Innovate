@@ -9,21 +9,27 @@ export class FilesystemService {
 
   constructor() { }
 
+  public async solicitarPermisos(){
+    Filesystem.requestPermissions().then((data)=>{
+      console.log(data);
+    })
+    Filesystem.checkPermissions().then((data)=>{
+      console.log(data);
+    })
+  }
+
   public async crearDirectorioTmp() {
     const fileExists = await Filesystem.readdir({
       path: this.directorioTmp,
       directory: Directory.External
-    }).then((dir) => {
-      console.log('El directorio temp ya existe');
-    }).catch((err)=>{
-      console.log('El directorio temp no existe');
+    }).then((dir) => {      
+    }).catch((err)=>{      
       this.crearDirectorio(this.directorioTmp, Directory.External);
     });
-
   }
 
   public async copiarBBDDExternaAInterna(nombreDB: string) {
-
+    
     const data = await this.compruebaFicheroExiste(nombreDB, Directory.External);
     await this.crearFichero(nombreDB, Directory.Data, data.data);
   }
@@ -63,9 +69,7 @@ export class FilesystemService {
       path: nombre,
       url: endpoint,
       directory: directorio
-    });
-
-
+    });    
   }
 
   public async crearDirectorio(nombre:string, directorio: Directory ){
@@ -73,6 +77,11 @@ export class FilesystemService {
       path: nombre,
       directory: directorio
     });
+  }
+
+  public async devuelveRutaFichero(nombreFichero:string, directorio: Directory){
+    let ruta = await Filesystem.getUri({path:nombreFichero, directory: directorio});
+    return ruta.uri;
   }
 
 

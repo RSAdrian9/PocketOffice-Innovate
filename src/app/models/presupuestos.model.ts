@@ -1,13 +1,14 @@
 export interface presupuestos {
     num?: string,
-    fec2?: string,
-    aof?: string,
-    baseu?: string,
     des?: string,
-    doc?: string, 
-    est?: string,
-    pdf?: string,
-    rutapdf?: string,
+    aof?: string,
+    tipdoc?: string,
+    doc?: string,
+    fec2?: string,
+    baseu?: string,
     toteu?: string,
-    totimpu?: string
+    totimpu?: string,
+    est?: string,   
+    pdf?: string,
+    rutapdf?: string
 }

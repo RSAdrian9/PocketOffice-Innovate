@@ -6,7 +6,7 @@ import { TransferirDatosService } from 'src/app/services/transferir-datos.servic
 import { ActivatedRoute } from '@angular/router';
 import { facturas } from 'src/app/models/facturas.model';
 import { DbService } from 'src/app/services/db.service';
-import { Platform, NavController, InfiniteScrollCustomEvent, IonInfiniteScroll, IonInfiniteScrollContent, PopoverController, IonBadge, IonButton } from '@ionic/angular/standalone';
+import { Platform, NavController, InfiniteScrollCustomEvent, IonInfiniteScroll, IonInfiniteScrollContent, PopoverController, IonBadge, IonButton, IonItem, IonItemDivider, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/angular/standalone';
 import { FiltroFacturasComponent } from 'src/app/components/filtro-facturas/filtro-facturas.component';
 
 @Component({
@@ -15,7 +15,7 @@ import { FiltroFacturasComponent } from 'src/app/components/filtro-facturas/filt
   styleUrls: ['./facturas.page.scss'],
   standalone: true,
   providers: [DatePipe],
-  imports: [IonicModule, CommonModule, FormsModule, IonInfiniteScroll, IonInfiniteScrollContent, IonBadge, IonButton]
+  imports: [IonicModule, CommonModule, FormsModule, IonInfiniteScroll, IonInfiniteScrollContent, IonBadge, IonButton, IonItem, IonItemDivider, IonGrid, IonRow, IonCol, IonIcon]
 })
 export class FacturasPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
@@ -26,7 +26,7 @@ export class FacturasPage implements OnInit {
   public facturas: Array<facturas> = [];
   private facturasAUX: Array<facturas> = [];
   private filtroBusqueda: string = '';
-  private facturasPorPagina: number = 10;
+  private facturasPorPagina: number = 25;
   private registros: number = 0;
   public hayMasFacturas: boolean = true;
   public consultaRealizada: boolean = false;
@@ -71,7 +71,8 @@ export class FacturasPage implements OnInit {
   }
 
   pageController() {
-    this.cargarFacturas('');
+    this.filtroBusqueda = this.devuelveFiltroSentencia(this.filtros);
+    this.cargarFacturas(this.filtroBusqueda);
 
     this.transferirService.sendObjectSource({ codigo: this.codigo })
     this.platform.backButton.subscribeWithPriority(10, () => {
@@ -246,6 +247,7 @@ export class FacturasPage implements OnInit {
         this.consultaRealizada = false;
         this.dbService.getListadoFacturas('PR', this.codigo, filtro).then((facturas) => {
           this.facturasAUX = facturas;
+          this.calcularImporteFacturas();
           this.consultaRealizada = true;
           this.registros = this.facturas.length;
 
@@ -258,7 +260,7 @@ export class FacturasPage implements OnInit {
             }
           }
         });
-        this.dbService.getNombreCliente(this.codigo).then((nombre) => {
+        this.dbService.getNombreProveedor(this.codigo).then((nombre) => {
           this.nombre = nombre;
         });
         this.dbService.getSeriesDocumento('PR', 'factura', this.codigo).then((series) => {
@@ -305,14 +307,19 @@ export class FacturasPage implements OnInit {
 
   comprobarFactura(factura: facturas): string {
     if (factura.est == "3") {
-      return "cardBorderGreen";
+      return "rowBackgroundGreen";
     } else if (factura.est == "1") {
-      return "cardBorderRed";
+      return "rowBackgroundRed";
     } else if (factura.est == "2") {
-      return "cardBorderCian";
+      return "rowBackgroundCian";
     } else {
-      return "cardBorderGray";
+      return "rowBackgroundGray";
     }
+  }
+
+  formatearNumero(numero: any){
+    let numeroFormateado = parseFloat(numero).toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    return numeroFormateado;
   }
 
 }

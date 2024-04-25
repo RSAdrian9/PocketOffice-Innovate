@@ -3,19 +3,21 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Presupuestos</ion-title>
+    <ion-title>Listado Presupuestos</ion-title>
     <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
-  </ion-toolbar>
 
+  </ion-toolbar>
   <ion-toolbar>
     <ion-buttons>
-      <ion-searchbar #input showCancelButton="focus" debounce="500" placeholder="Buscar"></ion-searchbar>
-      <ion-button style="height: 2px;">
+      <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarPresupuestos($event)"
+        placeholder="Buscar"></ion-searchbar>
+      <ion-button style="height: 2px;" (click)="presentPopover($event)">
         <div class="icon-container">
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
-          <ion-badge class="badge"></ion-badge>
+          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0 "
+            class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
-      </ion-button> 
+      </ion-button>
     </ion-buttons>
     <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
@@ -23,54 +25,75 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-card *ngFor="let presupuesto of presupuestos">
-      <ion-item>
-        <p class="title titleSize">Número: </p>
-        <ion-label class="paddingL">{{ presupuesto.num }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Fecha: </p>
-        <ion-label class="paddingL">{{ presupuesto.fec2 }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Base imponible: </p>
-        <ion-label class="paddingL">{{ presupuesto.baseu }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Descripción: </p>
-        <ion-label class="paddingL">{{ presupuesto.des }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Cargado en: </p>
-        <ion-label class="paddingL">{{ presupuesto.doc }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Estado: </p>
-        <ion-label class="paddingL">{{ presupuesto.est }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">PDF: </p>
-        <ion-label class="paddingL">{{ presupuesto.pdf }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Total albaran: </p>
-        <ion-label class="paddingL">{{ presupuesto.rutapdf }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Total: </p>
-        <ion-label class="paddingL">{{ presupuesto.toteu }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Total impuestos: </p>
-        <ion-label class="paddingL">{{ presupuesto.totimpu }}</ion-label>
-      </ion-item>
-    </ion-card>
-  </ion-list>
 
+    <ion-card *ngFor="let presupuesto of this.presupuestos" class="cardBorder">
+
+      <ion-grid [fixed]="true">
+        <ion-row class="row_icon">
+          <ion-col>
+            <ion-icon src="assets/imgs/finanzas.svg" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="divider">DATOS PRESUPUESTO</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Nº Presupuesto</ion-col>
+          <ion-col>Fecha</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{presupuesto.num}}</ion-col>
+          <ion-col>{{presupuesto.fec2}}</ion-col>
+        </ion-row>
+        <ion-row class="row_titulos">
+          <ion-col>Estado</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{presupuesto.est}}</ion-col>
+        </ion-row>
+        <ion-row class="row_titulos" *ngIf="presupuesto.aof != ''">
+          <ion-col>{{presupuesto.tipdoc}}</ion-col>
+        </ion-row>
+        <ion-row *ngIf="presupuesto.aof != ''">
+          <ion-col>{{presupuesto.doc}}</ion-col>
+        </ion-row>
+        <ion-row class="row_titulos" *ngIf="presupuesto.des != ''">
+          <ion-col>Descripción</ion-col>
+        </ion-row>
+        <ion-row *ngIf="presupuesto.des != ''">
+          <ion-col>{{presupuesto.des}}</ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+      <div class="divider">IMPORTES</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Base Imp.</ion-col>
+          <ion-col>Impuestos</ion-col>
+          <ion-col>Total</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{this.formatearNumero(presupuesto.baseu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(presupuesto.totimpu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(presupuesto.toteu)}}€</ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card>
+
+  </ion-list>
   @if(hayMasPresupuestos){
-    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-      <ion-infinite-scroll-content loadingText="Cargando presupuestos..."
-        loadingSpinner="bubbles"></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-    }
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content loadingText="Cargando Presupuestos..."
+      loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  }
+
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar style="border-top:1px solid gray">
+    <ion-title>Total: {{this.formatearNumero(this.importePresupuestos)}}€</ion-title>
+  </ion-toolbar>
+</ion-footer>

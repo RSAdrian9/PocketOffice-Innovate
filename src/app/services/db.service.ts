@@ -217,6 +217,33 @@ export class DbService {
     return historia;
   }
 
+  public async getEstadosPedidos(tipo: string, codigo: string) {
+    var estados: any[] = [];
+    let sentencia = "";
+
+    switch (tipo) {
+      case 'CL':
+        sentencia = "SELECT 'Todos' AS id, 'Todos' AS [des] UNION ALL SELECT id, [des] FROM ESTPED WHERE id IN (SELECT est FROM CABPED WHERE cli='" + codigo + "');";
+        break;
+      case 'PR':
+        sentencia = "SELECT 'Todos' AS id, 'Todos' AS [des] UNION ALL SELECT id, [des] FROM ESTPED WHERE id IN (SELECT est FROM CAPEPR WHERE cli='" + codigo + "');";
+        break;
+    }
+
+    estados = (await this.db.query(sentencia)).values as any[];
+
+    return estados;
+  }
+
+  public async getEstadosPresupuestos(codigo: string) {
+    var estados: any[] = [];
+    let sentencia = "SELECT 'Todos' AS id, 'Todos' AS [des] UNION ALL SELECT id, [des] FROM ESTADO WHERE id IN (SELECT est FROM CABPRE WHERE cli='" + codigo + "');";
+
+    estados = (await this.db.query(sentencia)).values as any[];
+
+    return estados;
+  }
+
   public async getSeriesDocumento(tipo: string, documento: string, codigo: string) {
     var series: any[] = [];
     let sentencia = "";
@@ -224,37 +251,38 @@ export class DbService {
     switch (documento) {
       case 'factura':
 
-        if (tipo == 'CL') {
-          sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACEMI WHERE cue ='"+codigo+"'";
-        } else {
-          sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACREC WHERE cue ='"+codigo+"'";
-        }
+      if (tipo == 'CL') {
+        sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACEMI WHERE cue ='" + codigo + "'";
+      } else {
+        sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACREC WHERE cue ='" + codigo + "'";
+      }
 
         break;
       case 'albaran':
 
-        if (tipo == 'CL') {
-          sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBARA WHERE cli ='"+codigo+"'";
-        } else {
-          sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBENT WHERE cli ='"+codigo+"'";
-        }
+      if (tipo == 'CL') {
+        sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBARA WHERE cli ='" + codigo + "'";
+      } else {
+        sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBENT WHERE cli ='" + codigo + "'";
+      }
 
         break;
       case 'pedido':
 
-        if (tipo == 'CL') {
-          sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPED WHERE cli ='"+codigo+"'";
-        } else {
-          sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CAPEPR WHERE cli ='"+codigo+"'";
-        }
 
-        break;      
-      case 'presupuesto':
+      if (tipo == 'CL') {
+        sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPED WHERE cli ='" + codigo + "'";
+      } else {
+        sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CAPEPR WHERE cli ='" + codigo + "'";
+      }
 
-        sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPRE WHERE cli ='"+codigo+"'";
+      break;
+    case 'presupuesto':
 
-        break;
-    }
+      sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPRE WHERE cli ='" + codigo + "'";
+
+      break;
+  }
 
     series = (await this.db.query(sentencia)).values as any[];
 
@@ -282,9 +310,9 @@ export class DbService {
     let sentencia: string;
 
     if (tipo == 'CL') {
-      sentencia = "SELECT num, fac, n_f, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, cobeu, totimpu, impend, est, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cli||'/ALBARAN NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM ALBARA WHERE cli='" + codigo + "' ORDER BY fec DESC;"
+      sentencia = "SELECT num, fac, IIF(fac=1 AND (LTRIM(RTRIM(n_f))='' OR LTRIM(RTRIM(n_f)) ='/'),'NO FACTURABLE', n_f) AS n_f, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, cobeu, totimpu, impend, est, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cli||'/ALBARAN NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM ALBARA WHERE cli='" + codigo + "' " + filtro;
     } else {
-      sentencia = "SELECT num, fac, apr AS numpro, n_f, strftime('%d/%m/%Y',fec) AS fec2,baseu, toteu, cobeu, totimpu, impend, est, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/proveedores/'||cli||'/ALBARAN NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM ALBENT WHERE cli='" + codigo + "' ORDER BY fec DESC;"
+      sentencia = "SELECT num, fac, apr AS numpro, IIF(fac=1 AND (LTRIM(RTRIM(n_f))='' OR LTRIM(RTRIM(n_f)) ='/'),'NO FACTURABLE', n_f) AS n_f, strftime('%d/%m/%Y',fec) AS fec2,baseu, toteu, cobeu, totimpu, impend, est, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/proveedores/'||cli||'/ALBARAN NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM ALBENT WHERE cli='" + codigo + "' " + filtro;
     }
 
     albaranes = (await this.db.query(sentencia)).values as albaranes[];
@@ -294,7 +322,7 @@ export class DbService {
 
   public async getListadoPresupuestos(codigo: string, filtro: string) {
     var presupuestos: presupuestos[] = [];
-    let sentencia: string = "SELECT num, lit AS des, IIF(aof='F','FACTURA '||doc, IIF(aof='A','ALBARÁN '|| doc,'')) AS doc, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, totimpu, (SELECT des FROM ESTADO WHERE id=est) AS est, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cli||'/PRESUPUESTO NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM CABPRE WHERE cli='" + codigo + "' ORDER BY fec DESC;";
+    let sentencia: string = "SELECT num, LTRIM(RTRIM(lit)) AS des, LTRIM(RTRIM(aof)) AS aof, IIF(aof='F','Nº Factura', IIF(aof='A','Nº Albarán',IIF(aof='P','Nº Pedido',''))) AS tipdoc, doc, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, totimpu, (SELECT des FROM ESTADO WHERE id=est) AS est, pdf, IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cli||'/PRESUPUESTO NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM CABPRE WHERE cli='" + codigo + "' " + filtro;
 
     presupuestos = (await this.db.query(sentencia)).values as presupuestos[];
 
@@ -306,9 +334,9 @@ export class DbService {
     let sentencia: string;
 
     if (tipo == 'CL') {
-      sentencia = "SELECT num, IIF(aof='F','FACTURA '||doc,IIF(aof='A','ALBARÁN '||doc,'')) AS doc, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, totimpu, IFNULL((SELECT des FROM ESTADO WHERE id=est),'') AS est, ser, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cli||'/PEDIDO NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM CABPED WHERE cli='" + codigo + "' ORDER BY fec DESC;"
+      sentencia = "SELECT num, LTRIM(RTRIM(aof)) AS aof, IIF(aof='F','Nº Factura',IIF(aof='A','Nº Albarán','')) AS tipdoc, doc, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, totimpu, IFNULL((SELECT des FROM ESTADO WHERE id=est),'') AS est, ser, pdf, IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cli||'/PEDIDO NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM CABPED WHERE cli='" + codigo + "' " + filtro;
     } else {
-      sentencia = "SELECT num, IIF(aof='F','FACTURA '||doc,IIF(aof='A','ALBARÁN '||doc,'')) AS doc, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, totimpu, ser, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cli||'/PEDIDO NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM CAPEPR WHERE cli='" + codigo + "' ORDER BY fec DESC;"
+      sentencia = "SELECT num, LTRIM(RTRIM(aof)) AS aof, IIF(aof='F','Nº Factura',IIF(aof='A','Nº Albarán','')) AS tipdoc, doc, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, totimpu, ser, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cli||'/PEDIDO NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM CAPEPR WHERE cli='" + codigo + "' " + filtro;
     }
 
     pedidos = (await this.db.query(sentencia)).values as pedidos[];
@@ -318,7 +346,7 @@ export class DbService {
 
   public async getListadoEfectos(tipo: string, codigo: string, filtro: string) {
     var efectos: efectos[] = [];
-    let sentencia: string = "SELECT num, SUBSTR(fac,3,9) AS fac, strftime('%d/%m/%Y',fec) AS fec2, (SELECT des FROM BANCOS WHERE cue= ban) AS ban, strftime('%d/%m/%Y',vto) AS vto, rem, IIF(dev='S', 'DEVUELTO',IIF(dev='N','NO DEVUELTO','NO DEVUELTO')) AS dev, impeu, pageu, impend, ((SELECT nom FROM ENTIDA WHERE cod=cu1)||' '||cu1||' '||cu2||' '||cu3||' '|| cu4) AS banefe, IIF(efe_tipagr='A', 'EFECTO AGRUPADO', IIF(efe_tipagr='G','EFECTO DE AGRUPACIÓN', 'NINGUNA')) AS efe_tipagr, efe_docagr, est FROM EFECTO WHERE cue='" + codigo + "' AND  tip = '" + tipo + "' ORDER BY fec DESC;";
+    let sentencia: string = "SELECT num, SUBSTR(fac,3,9) AS fac, strftime('%d/%m/%Y',fec) AS fec2, (SELECT des FROM BANCOS WHERE cue= ban) AS ban, strftime('%d/%m/%Y',vto) AS vto, rem, IIF(dev='S', 'DEVUELTO',IIF(dev='N','NO DEVUELTO','NO DEVUELTO')) AS dev, impeu, pageu, impend, ((SELECT nom FROM ENTIDA WHERE cod=cu1)||' '||cu1||' '||cu2||' '||cu3||' '|| cu4) AS banefe, IIF(efe_tipagr='A', 'EFECTO AGRUPADO', IIF(efe_tipagr='G','EFECTO DE AGRUPACIÓN', 'NINGUNA')) AS efe_tipagr, efe_docagr, est FROM EFECTO WHERE cue='" + codigo + "' AND  tip = '" + tipo + "' " + filtro;
 
     efectos = (await this.db.query(sentencia)).values as efectos[];
 
