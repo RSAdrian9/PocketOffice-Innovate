@@ -8,8 +8,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-button (click)="this.pruebas()" expand="full">PRUEBAS</ion-button>
+  
   <ion-list>
-    <div *ngFor="let opcion of opcionesVentanaPrincipal">
+    <div *ngFor="let opcion of this.opcionesVentanaPrincipal">
       <ion-card (click)="this.abrirModal(opcion.id, opcion.nombre, opcion.tipoGrafica)" *ngIf="opcion.mostrar" class="{{opcion.clase}}">
         <ion-card-header>
           <div style="width: 100%; vertical-align: middle;">
@@ -22,13 +24,15 @@
           </div>
         </ion-card-header>
         <ion-card-content>
-          <div class="{{opcion.posicionTexto}}">
+          <div class="{{opcion.posicionTexto}}" >
             <h2 style="font-size: xx-large; font-weight: bold; color: white;">{{opcion.datos}} @if(opcion.tipo =='moneda'){€}</h2>
           </div>
         </ion-card-content>
       </ion-card>
     </div>
+
   </ion-list>
+
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>
       <ion-icon name="chevron-up-circle"></ion-icon>

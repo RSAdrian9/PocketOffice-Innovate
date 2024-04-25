@@ -6,14 +6,21 @@
       <ion-select-option *ngFor="let serie of series" value="{{serie.serie}}">{{serie.serie}}</ion-select-option>      
     </ion-select>
   </ion-item>
-  <ion-item-divider>Estado de cobro</ion-item-divider>
+  <ion-item-divider>Servido</ion-item-divider>
   <ion-item>
-    <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.estCobro}}"
+    <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.servido}}"
+      (ionChange)="this.controladorSelectServido($event)">
+      <ion-select-option value="Todos">Todos</ion-select-option>
+      <ion-select-option value="">Sin servir</ion-select-option>
+      <ion-select-option value="1">Parcialmente servido</ion-select-option>
+      <ion-select-option value="2">Servido</ion-select-option>
+    </ion-select>
+  </ion-item>  
+  <ion-item-divider>Estado</ion-item-divider>
+  <ion-item>
+    <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.estado}}"
       (ionChange)="this.controladorSelectEstado($event)">
-      <ion-select-option value="0">Todas</ion-select-option>
-      <ion-select-option value="1">Pendientes</ion-select-option>
-      <ion-select-option value="2">Parc. Cobradas</ion-select-option>
-      <ion-select-option value="3">Cobradas</ion-select-option>
+      <ion-select-option *ngFor="let estado of estados" value="{{estado.id}}">{{estado.des}}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item-divider>Rango de fechas</ion-item-divider>

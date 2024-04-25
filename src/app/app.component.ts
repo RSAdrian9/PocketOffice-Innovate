@@ -5,7 +5,6 @@ import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonN
 import { addIcons } from 'ionicons';
 import { businessSharp, peopleSharp, cardSharp, compassOutline, clipboardOutline } from 'ionicons/icons';
 import { TransferirDatosService } from './services/transferir-datos.service';
-import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 import { Router } from '@angular/router';
 import { DbService } from './services/db.service';
 import { ToastService } from './services/toast.service';
@@ -42,39 +41,24 @@ export class AppComponent {
     private platform: Platform,
     private router: Router,
     private toastService: ToastService,
-    private dbService: DbService
+    private dbService: DbService,
+    private filesystem: FilesystemService
   ) {
     addIcons({ businessSharp, peopleSharp, cardSharp, compassOutline, clipboardOutline });
-    this.platform.ready().then(() => {
-      this.router.navigateByUrl('/home');
-    });
+
     this.initializeApp();
 
   }
 
   initializeApp() {
     if (this.platform.is("android") || this.platform.is("ios")) {
-      let androidPermissions: AndroidPermissions = new AndroidPermissions();
-
-      androidPermissions.requestPermissions(
-        [
-          androidPermissions.PERMISSION.INTERNET,
-          androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE,
-          androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE
-        ]
-      ).then((result) => {
-
-        this.tienePermisos = result.hasPermission;
-        if(this.tienePermisos){
-          this.dbService.initializePlugin();
-        }else{
-          this.toastService.mostrarToast('No has aceptado los permisos por lo tanto no se ha podido crear y conectar con la base de datos', 1500, 'bottom', 'stacked');
-        }       
-
-      })
+      
+      this.filesystem.crearDirectorioTmp();
+      this.dbService.initializePlugin();
     }
-
   }
+
+  
 
   ngOnInit(): void {
     this.pageController('/home');

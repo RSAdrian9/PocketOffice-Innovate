@@ -2,27 +2,37 @@
   <ion-item-divider *ngIf="this.series.length > 1">Serie documento</ion-item-divider>
   <ion-item *ngIf="this.series.length > 1">
     <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.serie}}"
-      (ionChange)="this.controladorSelectSerie($event)" >
-      <ion-select-option *ngFor="let serie of series" value="{{serie.serie}}">{{serie.serie}}</ion-select-option>      
+      (ionChange)="this.controladorSelectSerie($event)">
+      <ion-select-option *ngFor="let serie of series" value="{{serie.serie}}">{{serie.serie}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item-divider>Facturado</ion-item-divider>
+  <ion-item>
+    <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.facturado}}"
+      (ionChange)="this.controladorSelectFacturado($event)">
+      <ion-select-option value="0">Todos</ion-select-option>
+      <ion-select-option value="1">No</ion-select-option>
+      <ion-select-option value="2">Si</ion-select-option>
+      <ion-select-option value="3">No facturable</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item-divider>Estado de cobro</ion-item-divider>
   <ion-item>
     <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.estCobro}}"
       (ionChange)="this.controladorSelectEstado($event)">
-      <ion-select-option value="0">Todas</ion-select-option>
+      <ion-select-option value="0">Todos</ion-select-option>
       <ion-select-option value="1">Pendientes</ion-select-option>
       <ion-select-option value="2">Parc. Cobradas</ion-select-option>
       <ion-select-option value="3">Cobradas</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item-divider>Rango de fechas</ion-item-divider>
-  <ion-item>    
+  <ion-item>
     <div class="icon-container">
       Desde: {{formatearFecha(this.filtros.fechaDesde)}}
       <ion-badge *ngIf="this.filtros.fechaDesde !=''" class="badge_float_button">
-        <ion-icon style="color:red; position: relative; font-weight: bold; font-size: 1.5em;"
-          name="trash-bin" (click)="this.borrarFiltroFecha('desde')"></ion-icon>
+        <ion-icon style="color:red; position: relative; font-weight: bold; font-size: 1.5em;" name="trash-bin"
+          (click)="this.borrarFiltroFecha('desde')"></ion-icon>
       </ion-badge>
     </div>
     <ion-button size="" class="btn btn_margin" (click)="this.abrirModalFecha('desde')" slot="end">
@@ -33,8 +43,8 @@
     <div class="icon-container">
       Hasta: {{formatearFecha(this.filtros.fechaHasta)}}
       <ion-badge *ngIf="this.filtros.fechaHasta !=''" class="badge_float_button">
-        <ion-icon style="color:red; position: relative; font-weight: bold; font-size: 1.5em;"
-          name="trash-bin" (click)="this.borrarFiltroFecha('hasta')"></ion-icon>
+        <ion-icon style="color:red; position: relative; font-weight: bold; font-size: 1.5em;" name="trash-bin"
+          (click)="this.borrarFiltroFecha('hasta')"></ion-icon>
       </ion-badge>
     </div>
     <ion-button size="" class="btn btn_margin" (click)="this.abrirModalFecha('hasta')" slot="end">

@@ -3,19 +3,21 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Albaranes</ion-title>
+    <ion-title>Listado Albaranes</ion-title>
     <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
-  </ion-toolbar>
 
+  </ion-toolbar>
   <ion-toolbar>
     <ion-buttons>
-      <ion-searchbar #input showCancelButton="focus" debounce="500" placeholder="Buscar"></ion-searchbar>
-      <ion-button style="height: 2px;">
+      <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarAlbaranes($event)"
+        placeholder="Buscar"></ion-searchbar>
+      <ion-button style="height: 2px;" (click)="presentPopover($event)">
         <div class="icon-container">
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
-          <ion-badge class="badge"></ion-badge>
+          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0 "
+            class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
-      </ion-button> 
+      </ion-button>
     </ion-buttons>
     <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
@@ -23,69 +25,73 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-card *ngFor="let albaran of albaranes">
-      <ion-item>
-        <p class="title titleSize">Número: </p>
-        <ion-label class="paddingL">{{ albaran.num }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Fecha: </p>
-        <ion-label class="paddingL">{{ albaran.fec2 }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Base imponible: </p>
-        <ion-label class="paddingL">{{ albaran.baseu }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Total impuestos: </p>
-        <ion-label class="paddingL">{{ albaran.totimpu }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Total factura: </p>
-        <ion-label class="paddingL">{{ albaran.rutapdf }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Importe cobrado: </p>
-        <ion-label class="paddingL">{{ albaran.cobeu }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Importe pendiente: </p>
-        <ion-label class="paddingL">{{ albaran.impend }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Total: </p>
-        <ion-label class="paddingL">{{ albaran.toteu }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">PDF: </p>
-        <ion-label class="paddingL">{{ albaran.pdf }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Estado: </p>
-        <ion-label class="paddingL">{{ albaran.est }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Facturado: </p>
-        <ion-label class="paddingL">{{ albaran.fac }}</ion-label>
-      </ion-item>
 
-      <!-- solo en el proveedor
-      <ion-item>
-        <p class="title titleSize">N° : </p>
-        <ion-label class="paddingL">{{ albaran.numpro }}</ion-label>
-      </ion-item>
-      -->
-      <ion-item>
-        <p class="title titleSize">Número factura: </p>
-        <ion-label class="paddingL">{{ albaran.n_f }}</ion-label>
-      </ion-item>
+    <ion-card *ngFor="let albaran of this.albaranes" class="cardBorder">
+
+      <ion-grid [fixed]="true">
+        <ion-row class="row_icon">
+          <ion-col>
+            <ion-icon src="assets/imgs/delivery-note.svg" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="divider">DATOS ALBARÁN</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Nº Albarán</ion-col>
+          <ion-col *ngIf="albaran.numpro!=undefined || albaran.numpro!=null">Nº Alb. Proveedor</ion-col>
+          <ion-col>Fecha</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{albaran.num}}</ion-col>
+          <ion-col *ngIf="albaran.numpro!=undefined || albaran.numpro!=null">{{albaran.numpro}}</ion-col>
+          <ion-col>{{albaran.fec2}}</ion-col>
+        </ion-row>
+        <ion-row  *ngIf="albaran.fac == '1'" class="row_titulos">
+          <ion-col>Nº Factura.</ion-col>
+        </ion-row>
+        <ion-row  *ngIf="albaran.fac == '1'" class="{{this.comprobarAlbaranNofacturable(albaran)}}">
+          <ion-col>{{albaran.n_f}}</ion-col>          
+        </ion-row>
+      </ion-grid>
+      
+
+      <div class="divider">IMPORTES</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Base Imp.</ion-col>
+          <ion-col>Impuestos</ion-col>
+          <ion-col>Total</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{this.formatearNumero(albaran.baseu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(albaran.totimpu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(albaran.toteu)}}€</ion-col>
+        </ion-row>
+        <ion-row class="row_titulos">
+          <ion-col>Cobrado</ion-col>
+          <ion-col>Pendiente</ion-col>
+        </ion-row>
+        <ion-row class="{{this.comprobarAlbaran(albaran)}}">
+          <ion-col>{{this.formatearNumero(albaran.cobeu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(albaran.impend)}}€</ion-col>
+        </ion-row>
+      </ion-grid>      
+
     </ion-card>
-  </ion-list>
 
+  </ion-list>
   @if(hayMasAlbaranes){
-    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-      <ion-infinite-scroll-content loadingText="Cargando albaranes..."
-        loadingSpinner="bubbles"></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-    }
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content loadingText="Cargando Albaranes..."
+      loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  }
+
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar style="border-top:1px solid gray">
+    <ion-title>Total: {{this.formatearNumero(this.importeAlbaranes)}}€</ion-title>
+  </ion-toolbar>
+</ion-footer>

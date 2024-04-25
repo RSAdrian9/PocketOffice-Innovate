@@ -1,0 +1,163 @@
+.divider {
+    font-size: larger;
+    color: black;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.divider::before,
+.divider::after {
+    flex: 1;
+    content: '';
+    padding: 1px;
+    background-color: #6d226d;
+    margin: 7px;
+    border-radius: 15px;
+}
+
+ion-grid {
+    --ion-grid-column-padding: 10px;
+    border-collapse: collapse;
+    border-style: hidden;
+
+    ion-col {
+        text-align: center;
+        font-size: larger;
+        color: black;
+        margin: 1px;
+        border-radius: 5px;
+    }
+
+    .row_icon ion-col {
+        border: none;
+    }
+
+    .row_icon ion-col ion-icon {
+        font-size: 100px;
+        color: #6d226d;
+    }
+
+    .row_separador ion-col {
+        color: white !important;
+        background-color: black;
+    }
+
+    .row_titulos ion-col {
+        color: white !important;
+        background-color: #6d226d;
+    }
+
+    .rowBackgroundRed ion-col {
+        color: white !important;
+        background-color: red;
+    }
+
+    .rowBackgroundGray ion-col {
+        color: white !important;
+        background-color: gray;
+    }
+
+    .rowBackgroundGreen ion-col {
+        color: white !important;
+        background-color: #73DF67;
+    }
+
+    .rowBackgroundOrange ion-col {
+        color: white !important;
+        background-color: #EB612F;
+    }
+
+    .rowBackgroundCian ion-col {
+        color: white !important;
+        background-color: #50BEF3;
+    }
+
+}
+
+.cardBorder {
+    border: 1px solid gray;
+}
+
+@media (prefers-color-scheme: dark) {
+    .divider {
+        font-size: larger;
+        color: white;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+
+    .divider::before,
+    .divider::after {
+        flex: 1;
+        content: '';
+        padding: 1px;
+        background-color: #6d226d;
+        margin: 7px;
+        border-radius: 15px;
+    }
+
+    ion-grid {
+        --ion-grid-column-padding: 10px;
+        border-collapse: collapse;
+        border-style: hidden;
+
+        ion-col {
+            text-align: center;
+            font-size: larger;
+            color: white;
+            margin: 1px;
+            border-radius: 5px;
+        }
+
+        .row_icon ion-col {
+            border: none;
+        }
+
+        .row_icon ion-col ion-icon {
+            font-size: 100px;
+            color: #6d226d;
+        }
+
+        .row_separador ion-col {
+            color: white !important;
+            background-color: black;
+        }
+
+        .row_titulos ion-col {
+            color: white !important;
+            background-color: #6d226d;
+        }
+
+        .rowBackgroundRed ion-col {
+            color: white !important;
+            background-color: red;
+        }
+
+        .rowBackgroundGray ion-col {
+            color: white !important;
+            background-color: gray;
+        }
+
+        .rowBackgroundGreen ion-col {
+            color: white !important;
+            background-color: #73DF67;
+        }
+
+        .rowBackgroundOrange ion-col {
+            color: white !important;
+            background-color: #EB612F;
+        }
+
+        .rowBackgroundCian ion-col {
+            color: white !important;
+            background-color: #50BEF3;
+        }
+
+    }
+
+
+}

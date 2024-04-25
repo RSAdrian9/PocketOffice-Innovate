@@ -7,6 +7,7 @@ import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent,
 import { addIcons } from 'ionicons';
 import { funnel, chevronUpCircle, downloadOutline, settingsOutline } from 'ionicons/icons';
 import { ModalGraficaComponent } from 'src/app/components/modal-grafica/modal-grafica.component';
+import { DbService } from 'src/app/services/db.service';
 import { DownloadService } from 'src/app/services/download.service';
 import { FilesystemService } from 'src/app/services/filesystem.service';
 import { TransferirDatosService } from 'src/app/services/transferir-datos.service';
@@ -28,8 +29,9 @@ export class HomePage implements OnInit {
     private alertCtrl: AlertController,
     private transferirService: TransferirDatosService,
     private routerOutlet: IonRouterOutlet,
-    private filesystemService: FilesystemService,
     private downloadService: DownloadService,
+    private filesystemService: FilesystemService,
+    private dbService: DbService
   ) {
     addIcons({ funnel, chevronUpCircle, downloadOutline, settingsOutline });
   }
@@ -42,6 +44,7 @@ export class HomePage implements OnInit {
   ionViewDidEnter() {
     this.pageController('/home');
   }
+  
 
   pageController(route: string) {
     this.transferirService.sendObjectSource({ ruta: route });
@@ -69,11 +72,7 @@ export class HomePage implements OnInit {
       ],
     });
     alert.present();
-  }
-
-  testFtp() {
-    //this.ftpService.conectarFtp();
-  }
+  }  
 
   cargarTarjetasInicio() {
     this.opcionesVentanaPrincipal = [
@@ -90,7 +89,8 @@ export class HomePage implements OnInit {
 
   pruebas() {
     //this.downloadService.descargarYDescomprimirPaqueteDatos();
-    this.filesystemService.crearDirectorioTmp();
+    //this.dbService.connectDatabase();
+    //this.filesystemService.solicitarPermisos();
   }
 
   async abrirModal(id: number, titulo: string, tipoGrafica: string) {

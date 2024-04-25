@@ -1,13 +1,14 @@
 export interface pedidos {
-    baseu?: string,
-    doc?: string,
-    est?: string,
-    fec2?: string,
     num?: string,
-    pdf?: string,
-    rutapdf?: string,
+    aof?:string,
+    tipdoc?:string,
+    doc?: string,
+    fec2?: string,
+    baseu?: string,
     toteu?: string,
     totimpu?: string,
+    est?: string,
     ser?: string
-
+    pdf?: string,
+    rutapdf?: string
 }
