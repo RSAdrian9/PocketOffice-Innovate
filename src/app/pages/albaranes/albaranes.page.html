@@ -92,6 +92,9 @@
 
 <ion-footer>
   <ion-toolbar style="border-top:1px solid gray">
-    <ion-title>Total: {{this.formatearNumero(this.importeAlbaranes)}}€</ion-title>
+    <div class="footer-content">
+      <span class="total">Total:</span>
+      <span class="variable">{{this.formatearNumero(this.importeAlbaranes)}}€</span>
+    </div>
   </ion-toolbar>
 </ion-footer>

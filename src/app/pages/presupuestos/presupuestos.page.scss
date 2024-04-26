@@ -80,6 +80,25 @@ ion-grid {
     border: 1px solid gray;
 }
 
+/* Estilos para el footer */
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 16px;
+}
+
+.total {
+    flex: 1;
+    text-align: left;
+    font-weight: bold;
+}
+
+.variable {
+    flex: 1;
+    text-align: right;
+}
+
 @media (prefers-color-scheme: dark) {
     .divider {
         font-size: larger;
@@ -157,6 +176,25 @@ ion-grid {
             background-color: #50BEF3;
         }
 
+    }
+
+    /* Estilos para el footer */
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 16px;
+    }
+
+    .total {
+        flex: 1;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .variable {
+        flex: 1;
+        text-align: right;
     }
 
 
