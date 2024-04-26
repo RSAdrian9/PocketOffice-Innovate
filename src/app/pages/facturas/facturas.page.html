@@ -70,7 +70,7 @@
           <ion-col>{{this.formatearNumero(factura.impend)}}€</ion-col>
         </ion-row>
       </ion-grid>
-      
+
     </ion-card>
 
   </ion-list>
@@ -85,6 +85,9 @@
 
 <ion-footer>
   <ion-toolbar style="border-top:1px solid gray">
-    <ion-title>Total: {{this.formatearNumero(this.importeFacturas)}}€</ion-title>
+    <div class="footer-content">
+      <span class="total">Total:</span>
+      <span class="variable">{{this.formatearNumero(this.importeFacturas)}}€</span>
+    </div>
   </ion-toolbar>
 </ion-footer>
