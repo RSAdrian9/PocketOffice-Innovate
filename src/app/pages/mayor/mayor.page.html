@@ -30,15 +30,15 @@
       </ion-item>
       <ion-item>
         <p class="title titleSize">Debe: </p>
-        <ion-label class="paddingL"> {{ mayor.deb }}</ion-label>
+        <ion-label class="paddingL">{{this.formatearNumero(mayor.deb)}}€</ion-label>
       </ion-item>
       <ion-item>
         <p class="title titleSize">Haber: </p>
-        <ion-label class="paddingL"> {{ mayor.hab }}</ion-label>
+        <ion-label class="paddingL">{{this.formatearNumero(mayor.hab)}}€</ion-label>
       </ion-item>
       <ion-item>
         <p class="title titleSize">Saldo: </p>
-        <ion-label class="paddingL"> {{ mayor.sal }}</ion-label>
+        <ion-label class="paddingL">{{this.formatearNumero(mayor.sal)}}€</ion-label>
       </ion-item>
     </ion-card>
   </ion-list>

@@ -26,84 +26,84 @@
     <ion-button class="btn" expand="block" (click)="control_boton_trim1()">
       <div class="button-content">
         <span>Trimestre 1:</span>
-        <span>{{ resumen.trim1 }}</span>
+        <span>{{this.formatearNumero(resumen.trim1)}}€</span>
       </div>
     </ion-button>
     <ion-card *ngIf="this.ocultar_trim1">
       <ion-card-content class="content">
         <span class="mes">Enero:</span>
-        <span class="variable">{{ resumen.enero }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.enero)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Febrero:</span>
-        <span class="variable">{{ resumen.febrero }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.febrero)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Marzo:</span>
-        <span class="variable">{{ resumen.marzo }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.marzo)}}€</span>
       </ion-card-content>
     </ion-card>
 
     <ion-button class="btn" expand="block" (click)="control_boton_trim2()">
       <div class="button-content">
         <span>Trimestre 2:</span>
-        <span>{{ resumen.trim2 }}</span>
+        <span>{{this.formatearNumero(resumen.trim2)}}€</span>
       </div>
     </ion-button>
     <ion-card *ngIf="this.ocultar_trim2">
       <ion-card-content class="content">
         <span class="mes">Abril:</span>
-        <span class="variable">{{ resumen.abril }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.abril)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Mayo:</span>
-        <span class="variable">{{ resumen.mayo }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.mayo)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Junio:</span>
-        <span class="variable">{{ resumen.junio }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.junio)}}€</span>
       </ion-card-content>
     </ion-card>
 
     <ion-button class="btn" expand="block" (click)="control_boton_trim3()">
       <div class="button-content">
         <span>Trimestre 3:</span>
-        <span>{{ resumen.trim3 }}</span>
+        <span>{{this.formatearNumero(resumen.trim3)}}€</span>
       </div>
     </ion-button>
     <ion-card *ngIf="this.ocultar_trim3">
       <ion-card-content class="content">
         <span class="mes">Julio:</span>
-        <span class="variable">{{ resumen.julio }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.julio)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Agosto:</span>
-        <span class="variable">{{ resumen.agosto }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.agosto)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Septiembre:</span>
-        <span class="variable">{{ resumen.septiembre }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.septiembre)}}€</span>
       </ion-card-content>
     </ion-card>
 
     <ion-button class="btn" expand="block" (click)="control_boton_trim4()">
       <div class="button-content">
         <span>Trimestre 4:</span>
-        <span>{{ resumen.trim4 }}</span>
+        <span>{{this.formatearNumero(resumen.trim4)}}€</span>
       </div>
     </ion-button>
     <ion-card *ngIf="this.ocultar_trim4">
       <ion-card-content class="content">
         <span class="mes">Octubre:</span>
-        <span class="variable">{{ resumen.octubre }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.octubre)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Noviembre:</span>
-        <span class="variable">{{ resumen.noviembre }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.noviembre)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Diciembre:</span>
-        <span class="variable">{{ resumen.diciembre }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.diciembre)}}€</span>
       </ion-card-content>
     </ion-card>
   </div>
@@ -114,84 +114,84 @@
     <ion-button class="btn" expand="block" (click)="control_boton_trim1()">
       <div class="button-content">
         <span>Trimestre 1:</span>
-        <span>{{ resumen.trim1iva }}</span>
+        <span>{{this.formatearNumero(resumen.trim1iva)}}€</span>
       </div>
     </ion-button>
     <ion-card *ngIf="this.ocultar_trim1">
       <ion-card-content class="content">
         <span class="mes">Enero:</span>
-        <span class="variable">{{ resumen.eneroiva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.eneroiva)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Febrero:</span>
-        <span class="variable">{{ resumen.febreroiva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.febreroiva)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Marzo:</span>
-        <span class="variable">{{ resumen.marzoiva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.marzoiva)}}€</span>
       </ion-card-content>
     </ion-card>
 
     <ion-button class="btn" expand="block" (click)="control_boton_trim2()">
       <div class="button-content">
         <span>Trimestre 2:</span>
-        <span>{{ resumen.trim2iva }}</span>
+        <span>{{this.formatearNumero(resumen.trim2iva)}}€</span>
       </div>
     </ion-button>
     <ion-card *ngIf="this.ocultar_trim2">
       <ion-card-content class="content">
         <span class="mes">Abril:</span>
-        <span class="variable">{{ resumen.abriliva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.abriliva)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Mayo:</span>
-        <span class="variable">{{ resumen.mayoiva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.mayoiva)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Junio:</span>
-        <span class="variable">{{ resumen.junioiva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.junioiva)}}€</span>
       </ion-card-content>
     </ion-card>
 
     <ion-button class="btn" expand="block" (click)="control_boton_trim3()">
       <div class="button-content">
         <span>Trimestre 3:</span>
-        <span>{{ resumen.trim3iva }}</span>
+        <span>{{this.formatearNumero(resumen.trim3iva)}}€</span>
       </div>
     </ion-button>
     <ion-card *ngIf="this.ocultar_trim3">
       <ion-card-content class="content">
         <span class="mes">Julio:</span>
-        <span class="variable">{{ resumen.julioiva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.julioiva)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Agosto:</span>
-        <span class="variable">{{ resumen.agostoiva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.agostoiva)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Septiembre:</span>
-        <span class="variable">{{ resumen.septiembreiva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.septiembreiva)}}€</span>
       </ion-card-content>
     </ion-card>
 
     <ion-button class="btn" expand="block" (click)="control_boton_trim4()">
       <div class="button-content">
         <span>Trimestre 4:</span>
-        <span>{{ resumen.trim4iva }}</span>
+        <span>{{this.formatearNumero(resumen.trim4iva)}}€</span>
       </div>
     </ion-button>
     <ion-card *ngIf="this.ocultar_trim4">
       <ion-card-content class="content">
         <span class="mes">Octubre:</span>
-        <span class="variable">{{ resumen.octubreiva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.octubreiva)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Noviembre:</span>
-        <span class="variable">{{ resumen.noviembreiva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.noviembreiva)}}€</span>
       </ion-card-content>
       <ion-card-content class="content">
         <span class="mes">Diciembre:</span>
-        <span class="variable">{{ resumen.diciembreiva }}</span>
+        <span class="variable">{{this.formatearNumero(resumen.diciembreiva)}}€</span>
       </ion-card-content>
     </ion-card>
   </div>
@@ -202,12 +202,12 @@
     <!-- TOOLBAR SIN IVA -->
     <div class="footer-content" *ngIf="this.iva.toString() === '1'">
       <span class="total">Total:</span>
-      <span class="variable">{{ resumen.total }}€</span>
+      <span class="variable">{{this.formatearNumero(resumen.total)}}€</span>
     </div>
     <!-- TOOLBAR CON IVA -->
     <div class="footer-content" *ngIf="this.iva.toString() === '2'">
       <span class="total">Total:</span>
-      <span class="variable">{{ resumen.totaliva }}€</span>
+      <span class="variable">{{this.formatearNumero(resumen.totaliva)}}€</span>
     </div>
   </ion-toolbar>
 </ion-footer>
