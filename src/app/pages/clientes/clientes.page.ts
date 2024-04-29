@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonItem, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonImg, InfiniteScrollCustomEvent, Platform, NavController, IonList, IonInfiniteScroll, IonInfiniteScrollContent, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonButton, IonSearchbar, PopoverController, IonProgressBar, IonCheckbox, IonBadge } from '@ionic/angular/standalone';
-import { clienteTmp } from 'src/app/models/clienteTmp';
+import { clienteTmp } from 'src/app/models/clienteTmp.model';
 import { DbService } from 'src/app/services/db.service';
 import { addIcons } from 'ionicons';
 import { alertCircle, eyeOutline, funnel, search } from 'ionicons/icons';

@@ -7,6 +7,9 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonList, IonInfiniteScroll, InfiniteScrollCustomEvent, IonInfiniteScrollContent } from '@ionic/angular/standalone';
 import { efectos } from 'src/app/models/efectos.model';
 import { DbService } from 'src/app/services/db.service';
+import { efectosTmp } from 'src/app/models/efectosTmp.model';
+import { addIcons } from 'ionicons';
+import { openOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-efectos',
@@ -23,8 +26,8 @@ export class EfectosPage implements OnInit {
   filtro: string = ''
   nombre: string = '';
 
-  public efectos: Array<efectos> = [];
-  private efectosAUX: Array<efectos> = [];
+  public efectos: Array<efectosTmp> = [];
+  private efectosAUX: Array<efectosTmp> = [];
   private filtroBusqueda: string = '';
   private efectosPorPagina: number = 10;
   private registros: number = 0;
@@ -39,7 +42,11 @@ export class EfectosPage implements OnInit {
     private transferirService: TransferirDatosService,
     private navC: NavController,
     private dbService: DbService
-  ) { }
+  ) { 
+    addIcons ({
+      openOutline
+    })
+  }
 
   ngOnInit() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
@@ -129,6 +136,19 @@ export class EfectosPage implements OnInit {
       }, 500);
     } else {
 
+    }
+  }
+  
+
+  comprobarEfecto(efecto: efectos): string {
+    if (efecto.est == "3") {
+      return "rowBackgroundGreen";
+    } else if (efecto.est == "1") {
+      return "rowBackgroundRed";
+    } else if (efecto.est == "2") {
+      return "rowBackgroundCian";
+    } else {
+      return "rowBackgroundGray";
     }
   }
 

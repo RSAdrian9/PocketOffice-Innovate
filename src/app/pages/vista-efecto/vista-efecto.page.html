@@ -13,8 +13,23 @@
     <p class="paddingL">{{this.efecto.num}}</p>
   </ion-item>
   <ion-item>
+    <p class="title titleSize">Nº Factura: </p>
+    <p class="paddingL">{{this.efecto.fac}}</p>
+  </ion-item>
+  <ion-item>
     <p class="title titleSize">Fecha:</p>
     <p class="paddingL">{{this.efecto.fec2}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">F.Vencimiento:</p>
+    <p class="paddingL">{{this.efecto.vto}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Estado: </p>
+    <p class="paddingL">{{this.efecto.est}}</p>
+  </ion-item>
+  <ion-item class="ion-text-center title titleCliente">
+    <ion-label>Datos Bancarios</ion-label>
   </ion-item>
   <ion-item>
     <p class="title titleSize">Banco: </p>
@@ -24,44 +39,38 @@
     <p class="title titleSize">Banco efecto: </p>
     <p class="paddingL">{{this.efecto.banefe}}</p>
   </ion-item>
-  <ion-item>
-    <p class="title titleSize">Devuelto: </p>
-    <p class="paddingL">{{this.efecto.dev}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">Documento agrupación: </p>
-    <p class="paddingL">{{this.efecto.efe_docagr}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">Tipo de agrupación: </p>
-    <p class="paddingL">{{this.efecto.efe_tipagr}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">Estado: </p>
-    <p class="paddingL">{{this.efecto.est}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">Nº Factura: </p>
-    <p class="paddingL">{{this.efecto.fac}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">Importe pendiente:</p>
-    <p class="paddingL">{{this.efecto.impend}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">Importe:</p>
-    <p class="paddingL">{{this.efecto.impeu}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">Importe pagado:</p>
-    <p class="paddingL">{{this.efecto.pageu}}</p>
+  <ion-item class="ion-text-center title titleCliente">
+    <ion-label>Datos Remesa</ion-label>
   </ion-item>
   <ion-item>
     <p class="title titleSize">Remesa:</p>
     <p class="paddingL">{{this.efecto.rem}}</p>
   </ion-item>
   <ion-item>
-    <p class="title titleSize">F.Vencimiento:</p>
-    <p class="paddingL">{{this.efecto.vto}}</p>
+    <p class="title titleSize">Devuelto: </p>
+    <p class="paddingL">{{this.efecto.dev}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Tipo de agrupación: </p>
+    <p class="paddingL">{{this.efecto.efe_tipagr}}</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Documento agrupación: </p>
+    <p class="paddingL">{{this.efecto.efe_docagr}}</p>
+  </ion-item>
+  <ion-item class="ion-text-center title titleCliente">
+    <ion-label>Importes</ion-label>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Importe pagado:</p>
+    <p class="paddingL">{{this.formatearNumero(this.efecto.pageu)}}€</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Importe pendiente:</p>
+    <p class="paddingL">{{this.formatearNumero(this.efecto.impend)}}€</p>
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Importe:</p>
+    <p class="paddingL">{{this.formatearNumero(this.efecto.impeu)}}€</p>
   </ion-item>
 </ion-content>
