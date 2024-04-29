@@ -3,7 +3,7 @@ import { CapacitorSQLite, CapacitorSQLitePlugin, SQLiteConnection, SQLiteDBConne
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Capacitor } from '@capacitor/core';
 
-import { clienteTmp } from '../models/clienteTmp';
+import { clienteTmp } from '../models/clienteTmp.model';
 import { proveedorTmp } from '../models/proveedorTmp.model';
 import { FilesystemService } from './filesystem.service';
 import { direccion } from '../models/direccion.model';
@@ -19,6 +19,7 @@ import { situacionriesgo } from '../models/situacionriesgo.model';
 import { rentabilidad } from '../models/rentabilidad.model';
 import { resumen } from '../models/resumen.model';
 import { ToastService } from './toast.service';
+import { efectosTmp } from '../models/efectosTmp.model';
 
 @Injectable({
   providedIn: 'root'
@@ -251,38 +252,38 @@ export class DbService {
     switch (documento) {
       case 'factura':
 
-      if (tipo == 'CL') {
-        sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACEMI WHERE cue ='" + codigo + "'";
-      } else {
-        sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACREC WHERE cue ='" + codigo + "'";
-      }
+        if (tipo == 'CL') {
+          sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACEMI WHERE cue ='" + codigo + "'";
+        } else {
+          sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACREC WHERE cue ='" + codigo + "'";
+        }
 
         break;
       case 'albaran':
 
-      if (tipo == 'CL') {
-        sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBARA WHERE cli ='" + codigo + "'";
-      } else {
-        sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBENT WHERE cli ='" + codigo + "'";
-      }
+        if (tipo == 'CL') {
+          sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBARA WHERE cli ='" + codigo + "'";
+        } else {
+          sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBENT WHERE cli ='" + codigo + "'";
+        }
 
         break;
       case 'pedido':
 
 
-      if (tipo == 'CL') {
-        sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPED WHERE cli ='" + codigo + "'";
-      } else {
-        sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CAPEPR WHERE cli ='" + codigo + "'";
-      }
+        if (tipo == 'CL') {
+          sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPED WHERE cli ='" + codigo + "'";
+        } else {
+          sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CAPEPR WHERE cli ='" + codigo + "'";
+        }
 
-      break;
-    case 'presupuesto':
+        break;
+      case 'presupuesto':
 
-      sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPRE WHERE cli ='" + codigo + "'";
+        sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPRE WHERE cli ='" + codigo + "'";
 
-      break;
-  }
+        break;
+    }
 
     series = (await this.db.query(sentencia)).values as any[];
 
@@ -345,21 +346,22 @@ export class DbService {
   }
 
   public async getListadoEfectos(tipo: string, codigo: string, filtro: string) {
-    var efectos: efectos[] = [];
-    let sentencia: string = "SELECT num, SUBSTR(fac,3,9) AS fac, strftime('%d/%m/%Y',fec) AS fec2, (SELECT des FROM BANCOS WHERE cue= ban) AS ban, strftime('%d/%m/%Y',vto) AS vto, rem, IIF(dev='S', 'DEVUELTO',IIF(dev='N','NO DEVUELTO','NO DEVUELTO')) AS dev, impeu, pageu, impend, ((SELECT nom FROM ENTIDA WHERE cod=cu1)||' '||cu1||' '||cu2||' '||cu3||' '|| cu4) AS banefe, IIF(efe_tipagr='A', 'EFECTO AGRUPADO', IIF(efe_tipagr='G','EFECTO DE AGRUPACIÓN', 'NINGUNA')) AS efe_tipagr, efe_docagr, est FROM EFECTO WHERE cue='" + codigo + "' AND  tip = '" + tipo + "' " + filtro;
+    var efectos: efectosTmp[] = [];
+    let sentencia: string = "SELECT num, SUBSTR(fac,3,9) AS fac, strftime('%d/%m/%Y',fec) AS fec2, strftime('%d/%m/%Y',vto) AS vto, est, IIF(est=1, 'PENDIENTE',IIF(est=2,IIF(tip='C', 'PARC. COBRADO', 'PARC. PAGADO'),IIF(tip='C', 'COBRADO', 'PAGADO'))) AS nomest, impeu, pageu, impend FROM EFECTO WHERE cue='" + codigo + "' AND  tip = '" + tipo + "' " + filtro;
 
-    efectos = (await this.db.query(sentencia)).values as efectos[];
+    efectos = (await this.db.query(sentencia)).values as efectosTmp[];
 
     return efectos;
   }
 
-  public async getDatosEfecto(tipo: string, codigo: string, numero: string) {
-    var efecto: any;
-    let sentencia: string = "SELECT num, SUBSTR(fac,3,9) AS fac, strftime('%d/%m/%Y',fec) AS fec2, (SELECT des FROM BANCOS WHERE cue= ban) AS ban, strftime('%d/%m/%Y',vto) AS vto, rem, IIF(dev='S', 'DEVUELTO',IIF(dev='N','NO DEVUELTO','NO DEVUELTO')) AS dev, impeu, pageu, impend, IFNULL(((SELECT nom FROM ENTIDA WHERE cod=cu1)||' '||cu1||' '||cu2||' '||cu3||' '|| cu4),'') AS banefe, IIF(efe_tipagr='A', 'EFECTO AGRUPADO', IIF(efe_tipagr='G','EFECTO DE AGRUPACIÓN', 'NINGUNA')) AS efe_tipagr, efe_docagr, est FROM EFECTO WHERE cue='" + codigo + "' AND  tip = '" + tipo + "' AND num = '" + numero + "';";
+
+  public async getDatosEfecto(tipo: string, codigo: string, num: string) {
+    var efecto: efectos = {};
+    let sentencia: string = "SELECT num,  SUBSTR(fac,3,9) AS fac, strftime('%d/%m/%Y',fec) AS fec2, IFNULL((SELECT des FROM BANCOS WHERE cue= ban), '') AS ban, strftime('%d/%m/%Y',vto) AS vto, rem, IIF(dev='S', 'DEVUELTO',IIF(dev='N','NO DEVUELTO','NO DEVUELTO')) AS dev, impeu, pageu, impend, IFNULL(((SELECT nom FROM ENTIDA WHERE cod=cu1)||' '||cu1||' '||cu2||' '||cu3||' '|| cu4), '') AS banefe, IIF(efe_tipagr='A', 'EFECTO AGRUPADO', IIF(efe_tipagr='G','EFECTO DE AGRUPACIÓN', 'NINGUNA')) AS efe_tipagr, efe_docagr, IIF(est=1, 'PENDIENTE',IIF(est=2,IIF(tip='C', 'PARC. COBRADO', 'PARC. PAGADO'),IIF(tip='C', 'COBRADO', 'PAGADO'))) AS est FROM EFECTO WHERE cue='" + codigo + "' AND  tip = '" + tipo + "' AND num ='" + num + "';";
 
     const result = await this.db.query(sentencia);
     if (result.values && result.values.length > 0) {
-      efecto = result.values[0];
+      efecto = result.values[0] as efectos;
     }
 
     return efecto;
