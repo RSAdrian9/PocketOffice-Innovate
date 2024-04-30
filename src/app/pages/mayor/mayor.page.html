@@ -13,9 +13,10 @@
       <ion-button style="height: 2px;">
         <div class="icon-container">
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
-          <ion-badge class="badge"></ion-badge>
+          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0 "
+            class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
-      </ion-button> 
+      </ion-button>
     </ion-buttons>
     <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
@@ -23,31 +24,85 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-card *ngFor="let mayor of mayor" [routerLink]="['/vista-mayor/'+this.tipo+'/'+this.codigo+'/'+mayor.num]" routerLinkActive="selected">
-      <ion-item>
-        <p class="title titleSize">Fecha: </p>
-        <ion-label class="paddingL"> {{ mayor.fec2 }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Debe: </p>
-        <ion-label class="paddingL">{{this.formatearNumero(mayor.deb)}}€</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Haber: </p>
-        <ion-label class="paddingL">{{this.formatearNumero(mayor.hab)}}€</ion-label>
-      </ion-item>
-      <ion-item>
-        <p class="title titleSize">Saldo: </p>
-        <ion-label class="paddingL">{{this.formatearNumero(mayor.sal)}}€</ion-label>
-      </ion-item>
+    <ion-card *ngFor="let mayor of this.mayor" class="cardBorder">
+      <ion-grid [fixed]="true">
+        <ion-row class="row_icon">
+          <ion-col>
+            <ion-icon src="assets/imgs/mayor.svg" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="divider">DATOS MAYOR</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Nº Asiento</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{mayor.num}}</ion-col>
+        </ion-row>
+        <ion-row class="row_titulos">
+          <ion-col>Fecha</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{mayor.fec2}}</ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+      <div class="divider">IMPORTES</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Debe</ion-col>
+          <ion-col>Haber</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{this.formatearNumero(mayor.deb)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(mayor.hab)}}€</ion-col>
+        </ion-row>
+        <ion-row class="row_titulos">
+          <ion-col>Saldo</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{this.formatearNumero(mayor.sal)}}€</ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-button expand="block" [routerLink]="['/vista-mayor/'+this.tipo+'/'+this.codigo+'/'+mayor.num]"
+        routerLinkActive="selected">
+        <ion-icon slot="icon-only" name="open-outline"></ion-icon>
+      </ion-button>
+
     </ion-card>
+
   </ion-list>
 
-
   @if(hayMasMayor){
-    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-      <ion-infinite-scroll-content loadingText="Cargando mayor de cuentas..."
-        loadingSpinner="bubbles"></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-    }
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content loadingText="Cargando mayor de cuentas..."
+      loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  }
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar style="border-top:1px solid gray">
+    <ion-grid [fixed]="true">
+      <ion-row>
+        <ion-col>
+          <span style="font-weight: bold;">Debe:</span>
+          <span class="paddingL">{{ this.formatearNumero(this.totalDebe) }}€</span>
+        </ion-col>
+        <ion-col>
+          <span style="font-weight: bold;">Haber:</span>
+          <span class="paddingL">{{ this.formatearNumero(this.totalHaber) }}€</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="row_titulos">
+        <ion-col>
+          <span style="font-weight: bold;">Saldo:</span>
+          <span class="paddingL">{{ this.formatearNumero(this.totalSaldo) }}€</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

@@ -23,9 +23,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-
     <ion-card *ngFor="let efecto of this.efectos" class="cardBorder">
-
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
           <ion-col>
@@ -82,9 +80,7 @@
       <ion-button expand="block" [routerLink]="['/vista-efecto/'+this.tipo+'/'+this.codigo+'/'+efecto.num]" routerLinkActive="selected">
         <ion-icon slot="icon-only" name="open-outline"></ion-icon>
       </ion-button>
-
     </ion-card>
-
   </ion-list>
 
   @if(hayMasEfectos){

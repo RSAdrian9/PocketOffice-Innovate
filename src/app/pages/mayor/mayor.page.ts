@@ -1,27 +1,30 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, Platform } from '@ionic/angular';
 import { TransferirDatosService } from 'src/app/services/transferir-datos.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { IonList, IonInfiniteScroll, IonInfiniteScrollContent, InfiniteScrollCustomEvent } from '@ionic/angular/standalone';
+import { InfiniteScrollCustomEvent, IonInfiniteScroll, IonInfiniteScrollContent, PopoverController, IonBadge, IonButton, IonItem, IonItemDivider, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/angular/standalone';
 import { mayor } from 'src/app/models/mayor.model';
 import { DbService } from 'src/app/services/db.service';
+import { addIcons } from 'ionicons';
+import { openOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-mayor',
   templateUrl: './mayor.page.html',
   styleUrls: ['./mayor.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule,  RouterModule, IonList, IonInfiniteScroll, IonInfiniteScrollContent,
+  providers: [DatePipe],
+  imports: [IonicModule, RouterModule, CommonModule, FormsModule, IonInfiniteScroll, IonInfiniteScrollContent, IonBadge, IonButton, IonItem, IonItemDivider, IonGrid, IonRow, IonCol, IonIcon
   ]
 })
 export class MayorPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   codigo: string = ''
   tipo: string = ''
-  filtro: string = ''
   nombre: string = '';
+  filtro: string = ''
 
   public mayor: Array<mayor> = [];
   private mayorAUX: Array<mayor> = [];
@@ -31,6 +34,9 @@ export class MayorPage implements OnInit {
   public hayMasMayor: boolean = true;
   public consultaRealizada: boolean = false;
   public mostrarBusqueda: boolean = false;
+  public totalDebe: number = 0;
+  public totalHaber: number = 0;
+  public totalSaldo: number = 0;
   public filtros: any = { texto: '', estCobro: '0', facturadoSi: '', facturadoNo: '', nFiltrosAplicados: 0 };
 
   constructor(    
@@ -38,7 +44,11 @@ export class MayorPage implements OnInit {
     private transferirService: TransferirDatosService,
     private navC: NavController,
     private dbService: DbService
-  ) { }
+  ) { 
+    addIcons({
+      openOutline
+    })
+  }
 
   ngOnInit() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
@@ -62,6 +72,7 @@ export class MayorPage implements OnInit {
         this.consultaRealizada = false;
         this.dbService.getListadoMayorDeCuentas('CL', this.codigo, this.filtro).then((mayor) => {
           this.mayorAUX = mayor;
+          this.calcularImporteMayor();
           this.consultaRealizada = true;
           this.registros = this.mayor.length;
           
@@ -118,6 +129,27 @@ export class MayorPage implements OnInit {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.goBack();
     });
+  }
+
+  calcularImporteMayor() {
+    this.totalDebe = 0; 
+    this.totalHaber = 0;
+    this.totalSaldo = 0;
+    for (let index = 0; index < this.mayorAUX.length; index++) {
+      let importeDebe = this.mayorAUX[index].deb;
+      if (importeDebe != null || importeDebe != undefined) {
+        this.totalDebe = this.totalDebe + parseFloat(importeDebe);
+      }
+      let importeHaber = this.mayorAUX[index].hab;
+      if (importeHaber != null || importeHaber != undefined) {
+        this.totalHaber = this.totalHaber + parseFloat(importeHaber);
+      }
+
+    }
+
+    this.totalDebe = parseFloat(this.totalDebe.toFixed(2));
+    this.totalHaber = parseFloat(this.totalHaber.toFixed(2));
+    this.totalSaldo = this.totalDebe - this.totalHaber;
   }
 
   onIonInfinite(ev: InfiniteScrollCustomEvent) {

@@ -8,8 +8,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-button (click)="this.pruebas()" expand="full">PRUEBAS</ion-button>
-  
   <ion-list>
     <div *ngFor="let opcion of this.opcionesVentanaPrincipal">
       <ion-card (click)="this.abrirModal(opcion.id, opcion.nombre, opcion.tipoGrafica)" *ngIf="opcion.mostrar" class="{{opcion.clase}}">
