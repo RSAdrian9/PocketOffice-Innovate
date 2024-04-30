@@ -8,39 +8,45 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Importe compras:</ion-card-title>
-      <p class="paddingL">{{this.formatearNumero(rentabilidad.impcom)}}€</p>
-    </ion-card-header>
-
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Importe ventas:</ion-card-title>
-      <p class="paddingL">{{this.formatearNumero(rentabilidad.impven)}}€</p>
-    </ion-card-header>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Beneficios:</ion-card-title>
-      <p class="paddingL">{{this.formatearNumero(rentabilidad.benefi)}}€</p>
-    </ion-card-header>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>% Sobre la venta:</ion-card-title>
-      <p class="paddingL">{{this.formatearNumero(rentabilidad.besove)}}€</p>
-    </ion-card-header>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>% Sobre la compra:</ion-card-title>
-      <p class="paddingL">{{this.formatearNumero(rentabilidad.besoco)}}€</p>
-    </ion-card-header>
-  </ion-card>
+  <ion-list>
+    <ion-card class="cardBorder">
+      <ion-grid [fixed]="true">
+        <ion-row class="row_icon">
+          <ion-col>
+            <ion-icon src="assets/imgs/money-bag.svg" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="divider">IMPORTES</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Importe de compras</ion-col>
+          <ion-col>Importe de ㅤventas</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{this.formatearNumero(rentabilidad.impcom)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(rentabilidad.impven)}}€</ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="divider">Porcentajes %</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>% Sobre la venta</ion-col>
+          <ion-col>% Sobre la compra</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{this.formatearNumero(rentabilidad.besove)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(rentabilidad.besoco)}}€</ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Beneficios</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{this.formatearNumero(rentabilidad.benefi)}}€</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ion-list>
 </ion-content>

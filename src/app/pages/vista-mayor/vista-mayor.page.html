@@ -17,6 +17,13 @@
     <p class="paddingL">{{mayor.fec2}}</p>
   </ion-item>
   <ion-item>
+    <p class="title titleSize">Año:</p>
+    <p class="paddingL">{{mayor.anio2}}</p>
+  </ion-item>
+  <ion-item class="ion-text-center title titleCliente">
+    <ion-label>Datos Bancarios</ion-label>
+  </ion-item>
+  <ion-item>
     <p class="title titleSize">Concepto: </p>
     <p class="paddingL">{{mayor.con}}</p>
   </ion-item>
@@ -25,27 +32,26 @@
     <p class="paddingL">{{mayor.cue}}</p>
   </ion-item>
   <ion-item>
-    <p class="title titleSize">Debe: </p>
-    <p class="paddingL">{{mayor.deb}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">Haber: </p>
-    <p class="paddingL">{{mayor.hab}}</p>
-  </ion-item>
-  <ion-item>
-    <p class="title titleSize">Saldo: </p>
-    <p class="paddingL">{{mayor.sal}}</p>
-  </ion-item>
-  <ion-item>
     <p class="title titleSize">Signo:</p>
     <p class="paddingL">{{mayor.sig}}</p>
   </ion-item>
-  <ion-item>
-    <p class="title titleSize">Importe:</p>
-    <p class="paddingL">{{mayor.impeu}}</p>
+  <ion-item class="ion-text-center title titleCliente">
+    <ion-label>Importes</ion-label>
   </ion-item>
   <ion-item>
-    <p class="title titleSize">Año:</p>
-    <p class="paddingL">{{mayor.anio2}}</p>
+    <p class="title titleSize">Debe: </p>
+    <p class="paddingL">{{this.formatearNumero(this.mayor.deb)}}€
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Haber: </p>
+    <p class="paddingL">{{this.formatearNumero(this.mayor.hab)}}€
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Saldo: </p>
+    <p class="paddingL">{{this.formatearNumero(this.mayor.sal)}}€
+  </ion-item>
+  <ion-item>
+    <p class="title titleSize">Importe:</p>
+    <p class="paddingL">{{this.formatearNumero(this.mayor.impeu)}}€
   </ion-item>
 </ion-content>
