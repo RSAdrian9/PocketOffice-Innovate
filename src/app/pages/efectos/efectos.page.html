@@ -9,11 +9,11 @@
 
   <ion-toolbar>
     <ion-buttons>
-      <ion-searchbar #input showCancelButton="focus" debounce="500" placeholder="Buscar"></ion-searchbar>
-      <ion-button style="height: 2px;">
+      <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarEfectos($event)" placeholder="Buscar"></ion-searchbar>
+      <ion-button style="height: 2px;" (click)="presentPopover($event)">
         <div class="icon-container">
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
-          <ion-badge class="badge"></ion-badge>
+          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0" class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
       </ion-button>
     </ion-buttons>
