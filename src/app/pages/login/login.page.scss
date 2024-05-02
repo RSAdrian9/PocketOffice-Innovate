@@ -1,0 +1,60 @@
+/* Estilos para el ion-content, espaciado entre los bordes de la pantalla */
+
+ion-content {
+    --padding-start: 40px;
+    --padding-end: 40px;
+}
+
+/* Estilos para el div principal */
+
+.div-main {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Estilos para el card */
+
+ion-card {
+    max-width: 400px;
+    margin: auto;
+    border: black solid 2px;
+    border-radius: 10px;
+}
+
+/* Estilos para el título */
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    color: #6d226d;
+}
+
+/* Estilos para los divs del content */
+
+.div-content {
+    text-align: left;
+}
+
+/* Estilos para los inputs */
+
+ion-input {
+    border-bottom: 1px solid #a5a5a5; /* Color del borde inferior */
+    --border-color-focused: #6d226d; /* Color del borde al pulsar */
+}
+
+/* Estilos para los labels */
+
+.label {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Estilos para el botón */
+
+.button {
+    border: none !important;
+    width: 50%;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}

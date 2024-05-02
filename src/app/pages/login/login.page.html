@@ -6,6 +6,31 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-content class="ion-padding">
+  <div class="div-main">
+    <ion-card>
+      <ion-card-header>
+        <h2 class="title">Bienvenido de nuevo</h2>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="div-content">
+          <ion-label class="label" position="floating">Email:</ion-label>
+          <ion-input class="input" type="email"></ion-input>
+        </div>
+        <br>
+        <div class="div-content">
+          <ion-label class="label" position="floating">Contraseña:</ion-label>
+          <ion-input class="input" type="password"></ion-input>
+        </div>
+      </ion-card-content>
+
+      <ion-button class="button" expand="block" (click)="login()">Iniciar sesión</ion-button>
+    </ion-card>
+  </div>
+</ion-content>
+
+
+<!--
 <ion-content [fullscreen]="true">
   <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <ion-card class="sm:mx-auto sm:w-full sm:max-w-sm sm:h-auto p-10 sm:p-10 rounded-3xl shadow-2xl">
@@ -38,4 +63,4 @@
     </div>
   </ion-card>
   </div>
-</ion-content>
+</ion-content> -->
