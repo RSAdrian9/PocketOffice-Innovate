@@ -1,11 +1,185 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>vista-proveedor</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Datos del Proveedor</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-toolbar>
-    <ion-title size="large">vista-proveedor</ion-title>
-  </ion-toolbar>
+<ion-content>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined ">
+    <p class="title titleSize">Código:</p>
+    <p class="paddingL">{{this.proveedor.cod}}</p>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Nombre:</p>
+    <p class="paddingL">{{this.proveedor.nom}}</p>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Dirección:</p>
+    <p class="paddingL">{{this.proveedor.dir}}</p>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Población:</p>
+    <p class="paddingL">{{this.proveedor.pob}}</p>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Provincia:</p>
+    <p class="paddingL">{{this.proveedor.npro}} - {{this.proveedor.pro}}</p>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">N.I.F:</p>
+    <p class="paddingL">{{this.proveedor.nif}}</p>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Teléfono 1º:</p>
+    <p class="paddingL">{{this.proveedor.te1}}</p>
+    <ion-button size="" [disabled]="this.valid(this.proveedor.te1)" class="btn btn_margin" (click)='callNumber(this.proveedor.te1)' slot="end">
+      <ion-icon name="call-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Teléfono 2º:</p>
+    <p class="paddingL">{{this.proveedor.te2}}</p>
+    <ion-button size="" [disabled]="this.valid(this.proveedor.te2)" class="btn btn_margin" (click)='callNumber(this.proveedor.te2)' slot="end">
+      <ion-icon name="call-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Móvil:</p>
+    <p class="paddingL">{{this.proveedor.mov}}</p>
+    <ion-button size="" [disabled]="this.valid(this.proveedor.mov)" class="btn btn_margin" (click)='callNumber(this.proveedor.mov)' slot="end">
+      <ion-icon name="call-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Fax:</p>
+    <p class="paddingL">{{this.proveedor.fax}}</p>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">E-Mail:</p>
+    <ion-button size="" [disabled]="this.valid(this.proveedor.xxx)" class="btn btn_margin" (click)='mailto(this.proveedor.xxx)' slot="end">
+      <ion-icon name="mail-outline"></ion-icon>
+    </ion-button>
+    <p class="paddingL">{{this.proveedor.xxx}}</p>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Página Web:</p>
+    <p class="paddingL">{{this.proveedor.web}}</p>
+    <ion-button size="" [disabled]="this.valid(this.proveedor.web)" class="btn btn_margin" (click)='web(this.proveedor.web)' slot="end">
+      <ion-icon name="globe-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Observaciones:</p>
+    <p class="paddingL">{{this.proveedor.ob1}}</p>
+    <p class="paddingL">{{this.proveedor.ob2}}</p>
+    <p class="paddingL">{{this.proveedor.ob3}}</p>
+  </ion-item>
+  <ion-item class="ion-text-center title titleCliente">
+    <ion-label>Persona De Contacto</ion-label>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Nombre:</p>
+    <p class="paddingL">{{this.proveedor.per}}</p>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Cargo:</p>
+    <p class="paddingL">{{this.proveedor.car}}</p>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Telefono:</p>
+    <p class="paddingL">{{this.proveedor.ter}}</p>
+    <ion-button size="" [disabled]="this.valid(this.proveedor.ter)" class="btn btn_margin" (click)='callNumber(this.proveedor.ter)' slot="end">
+      <ion-icon name="call-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Extensión:</p>
+    <p class="paddingL">{{this.proveedor.ext}}</p>
+  </ion-item>
+
+  <ion-item class="ion-text-center title titleCliente">
+    <ion-label>Impuestos</ion-label>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Tipo I.V.A:</p>
+    <p class="paddingL" *ngIf="this.proveedor.red=='N'">NORMAL</p>
+    <p class="paddingL" *ngIf="this.proveedor.red=='E'">EXENTO</p>
+    <p class="paddingL" *ngIf="this.proveedor.red=='S'">REDUCCIÓN</p>
+  </ion-item>
+  <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+    <p class="title titleSize">Tipo Venta:</p>
+    <p class="paddingL" *ngIf="this.proveedor.ivainc=='N'">BASE IMPONILE + I.V.A.</p>
+    <p class="paddingL" *ngIf="this.proveedor.ivainc=='S'">I.V.A. INCLUIDO</p>
+  </ion-item>
+
+  <div>
+    <ion-item class="ion-text-center title titleCliente">
+      <ion-label>Configuración de la compra</ion-label>
+    </ion-item>
+    <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+      <p class="title titleSize">Retención:</p>
+      <p class="paddingL" *ngIf="this.proveedor.tre==0">NO HAY - {{this.proveedor.ret}}</p>
+      <p class="paddingL" *ngIf="this.proveedor.tre==1">SOBRE LA BASE - {{this.proveedor.ret}}</p>
+      <p class="paddingL" *ngIf="this.proveedor.tre==2">SOBRE EL TOTAL - {{this.proveedor.ret}}</p>
+    </ion-item>
+    <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+      <p class="title titleSize">%Descuentos:</p>
+      <p class="paddingL">{{this.proveedor.dto}} - {{this.proveedor.dt2}}</p>
+    </ion-item>
+    <ion-item>
+      <p class="title titleSize">Tipo de remesa:</p>
+      <div *ngIf="this.proveedor != null || this.proveedor != undefined">
+        <p class="paddingL">{{this.proveedor.tip_rem}}</p>
+      </div>
+    </ion-item>
+  </div>
+  
+  <div >
+    <ion-item class="ion-text-center title titleCliente">
+      <ion-label>Impresión de documentos</ion-label>
+    </ion-item>
+    <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+      <p class="title titleSize">Marcado:</p>
+      <p *ngIf="this.proveedor.mar=='N'; else elseBlock">NO</p>
+      <ng-template #elseBlock>
+        <p class="paddingL">SI</p>
+      </ng-template>
+    </ion-item>
+    <ion-item class="ion-text-center title titleCliente titleCliente">
+      <ion-label>Forma de pago habitual</ion-label>
+    </ion-item>
+    <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+      <p class="title titleSize">Forma pago:</p>
+      <p class="paddingL">{{this.proveedor.for}}</p>
+    </ion-item>
+    <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+      <p class="title titleSize">Días de pago:</p>
+      <p class="paddingL">{{this.proveedor.di1}} - {{this.proveedor.di2}}</p>
+    </ion-item>
+    <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+      <p class="title titleSize">Días retroceso:</p>
+      <p class="paddingL">{{this.proveedor.di3}}</p>
+    </ion-item>
+    <ion-item *ngIf="this.proveedor != null || this.proveedor != undefined">
+      <p class="title titleSize">Mes no pago:</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==0">NINGUNO</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==1">ENERO</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==2">FEBRERO</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==3">MARZO</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==4">ABRIL</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==5">MAYO</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==6">JUNIO</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==7">JULIO</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==8">AGOSTO</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==9">SEPTIEMBRE</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==10">OCTUBRE</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==11">NOVIEMBRE</p>
+      <p class="paddingL" *ngIf="this.proveedor.mnp==12">DICIEMBRE</p>
+    </ion-item>
+  </div>
+
 </ion-content>
