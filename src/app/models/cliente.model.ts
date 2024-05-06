@@ -1,16 +1,16 @@
-import { albaranes } from "./albaranes";
-import { anios } from "./anios";
-import { banco } from "./banco";
-import { contacto } from "./contacto";
-import { direccion } from "./direccion";
-import { efectos } from "./efectos";
-import { estados } from "./estados";
-import { facturas } from "./facturas";
-import { mayor } from "./mayor";
-import { pedidos } from "./pedidos";
-import { presupuestos } from "./presupuestos";
-import { rentabilidad } from "./rentabilidad";
-import { situacionriesgo } from "./situacionriesgo";
+import { albaranes } from "./albaranes.model";
+import { anios } from "./anios.model";
+import { banco } from "./banco.model";
+import { contacto } from "./contacto.model";
+import { direccion } from "./direccion.model";
+import { efectos } from "./efectos.model";
+import { estados } from "./estados.model";
+import { facturas } from "./facturas.model";
+import { mayor } from "./mayor.model";
+import { pedidos } from "./pedidos.model";
+import { presupuestos } from "./presupuestos.model";
+import { rentabilidad } from "./rentabilidad.model";
+import { situacionriesgo } from "./situacionriesgo.model";
 
 export interface cliente {
     actividad?: string,

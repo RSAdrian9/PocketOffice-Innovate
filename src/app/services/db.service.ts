@@ -151,7 +151,7 @@ export class DbService {
 
   public async getProveedoresParaLista(filtro: string) {
     var proveedores: proveedorTmp[] = [];
-    var sentencia = "SELECT t1.id, t1.cod, t1.nom, t1.historia, (SELECT COUNT(cod) FROM CLIENT WHERE (cod IN (SELECT cli FROM ALBARA WHERE strftime('%Y', fec)=strftime('%Y',DATE('now'))) OR cod IN (SELECT cli FROM CABPRE WHERE strftime('%Y',fec)=strftime('%Y',DATE('now'))) OR cod IN (SELECT cue FROM FACEMI WHERE strftime('%Y',fee)=strftime('%Y',DATE('now')))) AND cod = t1.cod) AS activo, (SELECT rie FROM SITUAC AS t2 WHERE t1.cod=t2.cod) AS riesgo, (SELECT total FROM SITUAC AS t2 WHERE t1.cod=t2.cod) AS totalimp FROM CLIENT AS t1 " + filtro + " ORDER BY t1.nom ";
+    var sentencia = "SELECT t1.id, t1.cod, t1.nom, (SELECT COUNT(cod) FROM PROVEE WHERE (cod IN (SELECT cli FROM ALBENT WHERE strftime('%Y', fec)=strftime('%Y',DATE('now'))) OR cod IN (SELECT cli FROM CAPEPR WHERE strftime('%Y',fec)=strftime('%Y',DATE('now'))) OR cod IN (SELECT cue FROM FACREC WHERE strftime('%Y',fee)=strftime('%Y',DATE('now')))) AND cod = t1.cod) AS activo FROM PROVEE AS t1 " + filtro + " ORDER BY t1.nom ";
 
     proveedores = (await this.db.query(sentencia)).values as proveedorTmp[];
 
