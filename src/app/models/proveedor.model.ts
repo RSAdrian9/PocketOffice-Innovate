@@ -1,12 +1,12 @@
-import { albaranes } from "./albaranes.model";
+import { albaranes } from "./albaranes-cliente.model";
 import { banco } from "./banco.model";
 import { contacto } from "./contacto.model";
 import { direccion } from "./direccion.model";
 import { efectos } from "./efectos.model";
 import { estados } from "./estados.model";
-import { facturas } from "./facturas.model";
+import { facturas } from "./facturas-cliente.model";
 import { mayor } from "./mayor.model";
-import { pedidos } from "./pedidos.model";
+import { pedidos } from "./pedidos-cliente.model";
 
 
 export interface proveedor {

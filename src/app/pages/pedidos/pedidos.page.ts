@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TransferirDatosService } from 'src/app/services/transferir-datos.service';
 import { ActivatedRoute } from '@angular/router';
-import { pedidos } from 'src/app/models/pedidos.model';
+import { pedidosCliente } from 'src/app/models/pedidos-cliente.model';
+import { pedidosProveedor } from 'src/app/models/pedidos-proveedor.model';
 import { Platform, NavController, InfiniteScrollCustomEvent, IonInfiniteScroll, IonInfiniteScrollContent, PopoverController, IonBadge, IonButton, IonItem, IonItemDivider, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/angular/standalone';
 import { DbService } from 'src/app/services/db.service';
 import { FiltroPedidosComponent } from 'src/app/components/filtro-pedidos/filtro-pedidos.component';
@@ -24,8 +25,10 @@ export class PedidosPage implements OnInit {
   nombre: string = ''
   private series: Array<any> = [];
   private estados: Array<any> = [];
-  public pedidos: Array<pedidos> = [];
-  private pedidosAUX: Array<pedidos> = [];
+  public pedidosCliente: Array<pedidosCliente> = [];
+  private pedidosAUXCliente: Array<pedidosCliente> = [];
+  public pedidosProveedor: Array<pedidosProveedor> = [];
+  private pedidosAUXProveedor: Array<pedidosProveedor> = [];
   private filtroBusqueda: string = '';
   private pedidosPorPagina: number = 25;
   private registros: number = 0;
@@ -86,7 +89,8 @@ export class PedidosPage implements OnInit {
 
     this.filtros.texto = $event.detail.value;
     this.filtroBusqueda = this.devuelveFiltroSentencia(this.filtros);
-    this.pedidos = [];
+    this.pedidosCliente = [];
+    this.pedidosProveedor = [];
 
     this.cargarPedidos(this.filtroBusqueda);
   }
@@ -195,7 +199,8 @@ export class PedidosPage implements OnInit {
         console.log(data);
         this.filtros = data.data;
         this.filtroBusqueda = this.devuelveFiltroSentencia(this.filtros);
-        this.pedidos = [];
+        this.pedidosCliente = [];
+        this.pedidosProveedor = [];
 
         this.cargarPedidos(this.filtroBusqueda);
       } else {
@@ -211,14 +216,14 @@ export class PedidosPage implements OnInit {
       case 'cliente':
         this.consultaRealizada = false;
         this.dbService.getListadoPedidos('CL', this.codigo, filtro).then((pedidos) => {
-          this.pedidosAUX = pedidos;
+          this.pedidosAUXCliente = pedidos;
           this.calcularImportePedidos();
           this.consultaRealizada = true;
-          this.registros = this.pedidos.length;
+          this.registros = this.pedidosCliente.length;
 
           for (let i = 0; i < this.pedidosPorPagina; i++) {
-            if (this.pedidos.length < this.pedidosAUX.length) {
-              this.pedidos.push(this.pedidosAUX[this.registros + i]);
+            if (this.pedidosCliente.length < this.pedidosAUXCliente.length) {
+              this.pedidosCliente.push(this.pedidosAUXCliente[this.registros + i]);
               this.hayMasPedidos = true;
             } else {
               this.hayMasPedidos = false;
@@ -238,14 +243,14 @@ export class PedidosPage implements OnInit {
       case 'proveedor':
         this.consultaRealizada = false;
         this.dbService.getListadoPedidos('PR', this.codigo, filtro).then((pedidos) => {
-          this.pedidosAUX = pedidos;
+          this.pedidosAUXProveedor = pedidos;
           this.calcularImportePedidos();
           this.consultaRealizada = true;
-          this.registros = this.pedidos.length;
+          this.registros = this.pedidosProveedor.length;
 
           for (let i = 0; i < this.pedidosPorPagina; i++) {
-            if (this.pedidos.length < this.pedidosAUX.length) {
-              this.pedidos.push(this.pedidosAUX[this.registros + i]);
+            if (this.pedidosProveedor.length < this.pedidosAUXProveedor.length) {
+              this.pedidosProveedor.push(this.pedidosAUXProveedor[this.registros + i]);
               this.hayMasPedidos = true;
             } else {
               this.hayMasPedidos = false;
@@ -267,26 +272,41 @@ export class PedidosPage implements OnInit {
 
   calcularImportePedidos() {
     this.importePedidos = 0;
-    for (let index = 0; index < this.pedidosAUX.length; index++) {
-      let importe = this.pedidosAUX[index].toteu;
-      if (importe != null || importe != undefined) {
-        this.importePedidos = this.importePedidos + parseFloat(importe);
+    if (this.tipo == 'cliente'){
+      for (let index = 0; index < this.pedidosAUXCliente.length; index++) {
+        let importe = this.pedidosAUXCliente[index].toteu;
+        if (importe != null || importe != undefined) {
+          this.importePedidos = this.importePedidos + parseFloat(importe);
+        }
+      }
+    } else if (this.tipo == 'proveedor'){
+      for (let index = 0; index < this.pedidosAUXProveedor.length; index++) {
+        let importe = this.pedidosAUXProveedor[index].toteu;
+        if (importe != null || importe != undefined) {
+          this.importePedidos = this.importePedidos + parseFloat(importe);
+        }
       }
     }
-
     this.importePedidos = parseFloat(this.importePedidos.toFixed(2));
   }
 
   onIonInfinite(ev: InfiniteScrollCustomEvent) {
-
-    if (this.registros != this.pedidosAUX.length) {
-      this.cargarPedidos(this.filtroBusqueda);
-      setTimeout(() => {
-        (ev as InfiniteScrollCustomEvent).target.complete();
-      }, 500);
-    } else {
-
+    if (this.tipo == 'cliente') {
+      if (this.registros != this.pedidosAUXCliente.length) {
+        this.cargarPedidos(this.filtroBusqueda);
+        setTimeout(() => {
+          (ev as InfiniteScrollCustomEvent).target.complete();
+        }, 500);
+      }
+    } else if (this.tipo == 'proveedor') {
+      if (this.registros != this.pedidosAUXProveedor.length) {
+        this.cargarPedidos(this.filtroBusqueda);
+        setTimeout(() => {
+          (ev as InfiniteScrollCustomEvent).target.complete();
+        }, 500);
+      }
     }
+
   }
 
   public formatearFecha(fecha: string) {
@@ -300,7 +320,7 @@ export class PedidosPage implements OnInit {
     return fechaFormateada;
   }
 
-  comprobarServido(pedido: pedidos): string {
+  comprobarServido(pedido: any): string {
     if (pedido.ser == "") {
       return "rowBackgroundRed";
     } else if (pedido.ser == "1") {

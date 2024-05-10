@@ -1,4 +1,4 @@
-export interface albaranes {
+export interface albaranesCliente {
     baseu?: string,
     cobeu?: string,
     est?: string,

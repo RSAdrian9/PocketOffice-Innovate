@@ -1,6 +1,5 @@
-export interface facturas {
+export interface facturasCliente {
     num?:string,
-    numpro:string,
     fee2?:string,
     basmon?:string,
     totimpu?:string,
