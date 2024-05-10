@@ -9,10 +9,13 @@ import { FilesystemService } from './filesystem.service';
 import { direccion } from '../models/direccion.model';
 import { banco } from '../models/banco.model';
 import { contacto } from '../models/contacto.model';
-import { facturas } from '../models/facturas.model';
-import { albaranes } from '../models/albaranes.model';
+import { facturasCliente } from '../models/facturas-cliente.model';
+import { facturasProveedor } from '../models/facturas-proveedor.model';
+import { albaranesCliente } from '../models/albaranes-cliente.model';
+import { albaranesProveedor } from '../models/albaranes-proveedor.model';
 import { presupuestos } from '../models/presupuestos.model';
-import { pedidos } from '../models/pedidos.model';
+import { pedidosCliente } from '../models/pedidos-cliente.model';
+import { pedidosProveedor } from '../models/pedidos-proveedor.model';
 import { efectos } from '../models/efectos.model';
 import { mayor } from '../models/mayor.model';
 import { situacionriesgo } from '../models/situacionriesgo.model';
@@ -292,31 +295,34 @@ export class DbService {
   }
 
   public async getListadoFacturas(tipo: string, codigo: string, filtro: string) {
-    var facturas: facturas[] = [];
+    var facturas: any [] = [];
     let sentencia: string;
 
     if (tipo == 'CL') {
       sentencia = "SELECT num, strftime('%d/%m/%Y',fee) AS fee2, basmon, totmon, toceu, totimpu, impend, est, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cue||'/FACTURA NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM FACEMI WHERE cue='" + codigo + "' " + filtro;
+      facturas = (await this.db.query(sentencia)).values as facturasCliente[];
     } else {
       sentencia = "SELECT num, numpro, strftime('%d/%m/%Y',fee) AS fee2, basmon, totmon, toceu, totimpu, impend, est, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/proveedores/'||cue||'/FACTURA NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM FACREC WHERE cue='" + codigo + "' " + filtro;
+      facturas = (await this.db.query(sentencia)).values as facturasProveedor[];
     }
 
-    facturas = (await this.db.query(sentencia)).values as facturas[];
+
 
     return facturas;
   }
 
   public async getListadoAlbaranes(tipo: string, codigo: string, filtro: string) {
-    var albaranes: albaranes[] = [];
+    var albaranes: any[] = [];
     let sentencia: string;
 
     if (tipo == 'CL') {
       sentencia = "SELECT num, fac, IIF(fac=1 AND (LTRIM(RTRIM(n_f))='' OR LTRIM(RTRIM(n_f)) ='/'),'NO FACTURABLE', n_f) AS n_f, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, cobeu, totimpu, impend, est, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cli||'/ALBARAN NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM ALBARA WHERE cli='" + codigo + "' " + filtro;
+      albaranes = (await this.db.query(sentencia)).values as albaranesCliente[];
     } else {
       sentencia = "SELECT num, fac, apr AS numpro, IIF(fac=1 AND (LTRIM(RTRIM(n_f))='' OR LTRIM(RTRIM(n_f)) ='/'),'NO FACTURABLE', n_f) AS n_f, strftime('%d/%m/%Y',fec) AS fec2,baseu, toteu, cobeu, totimpu, impend, est, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/proveedores/'||cli||'/ALBARAN NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM ALBENT WHERE cli='" + codigo + "' " + filtro;
+      albaranes = (await this.db.query(sentencia)).values as albaranesProveedor[];
     }
 
-    albaranes = (await this.db.query(sentencia)).values as albaranes[];
 
     return albaranes;
   }
@@ -331,16 +337,17 @@ export class DbService {
   }
 
   public async getListadoPedidos(tipo: string, codigo: string, filtro: string) {
-    var pedidos: pedidos[] = [];
+    var pedidos: any[] = [];
     let sentencia: string;
 
     if (tipo == 'CL') {
       sentencia = "SELECT num, LTRIM(RTRIM(aof)) AS aof, IIF(aof='F','Nº Factura',IIF(aof='A','Nº Albarán','')) AS tipdoc, doc, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, totimpu, IFNULL((SELECT des FROM ESTADO WHERE id=est),'') AS est, ser, pdf, IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cli||'/PEDIDO NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM CABPED WHERE cli='" + codigo + "' " + filtro;
+      pedidos = (await this.db.query(sentencia)).values as pedidosCliente[];
     } else {
       sentencia = "SELECT num, LTRIM(RTRIM(aof)) AS aof, IIF(aof='F','Nº Factura',IIF(aof='A','Nº Albarán','')) AS tipdoc, doc, strftime('%d/%m/%Y',fec) AS fec2, baseu, toteu, totimpu, ser, pdf,IIF(pdf=1,'https://" + this.host + "/documentos/clientes/'||cli||'/PEDIDO NUMERO '||REPLACE(num,'/','-')||'.PDF','') AS rutapdf FROM CAPEPR WHERE cli='" + codigo + "' " + filtro;
+      pedidos = (await this.db.query(sentencia)).values as pedidosProveedor[];
     }
 
-    pedidos = (await this.db.query(sentencia)).values as pedidos[];
 
     return pedidos;
   }

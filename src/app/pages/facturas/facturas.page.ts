@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TransferirDatosService } from 'src/app/services/transferir-datos.service';
 import { ActivatedRoute } from '@angular/router';
-import { facturas } from 'src/app/models/facturas.model';
+import { facturasCliente } from 'src/app/models/facturas-cliente.model';
+import { facturasProveedor } from 'src/app/models/facturas-proveedor.model';
 import { DbService } from 'src/app/services/db.service';
 import { Platform, NavController, InfiniteScrollCustomEvent, IonInfiniteScroll, IonInfiniteScrollContent, PopoverController, IonBadge, IonButton, IonItem, IonItemDivider, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/angular/standalone';
 import { FiltroFacturasComponent } from 'src/app/components/filtro-facturas/filtro-facturas.component';
@@ -23,8 +24,10 @@ export class FacturasPage implements OnInit {
   tipo: string = ''
   nombre: string = ''
   private series: Array<any> = [];
-  public facturas: Array<facturas> = [];
-  private facturasAUX: Array<facturas> = [];
+  public facturasCliente: Array<facturasCliente> = [];
+  private facturasAUXCliente: Array<facturasCliente> = [];  
+  public facturasProveedor: Array<facturasProveedor> = [];
+  private facturasAUXProveedor: Array<facturasProveedor> = [];
   private filtroBusqueda: string = '';
   private facturasPorPagina: number = 25;
   private registros: number = 0;
@@ -84,7 +87,8 @@ export class FacturasPage implements OnInit {
 
     this.filtros.texto = $event.detail.value;
     this.filtroBusqueda = this.devuelveFiltroSentencia(this.filtros);
-    this.facturas = [];
+    this.facturasCliente = [];
+    this.facturasProveedor = [];
 
     this.cargarFacturas(this.filtroBusqueda);
   }
@@ -206,7 +210,8 @@ export class FacturasPage implements OnInit {
         console.log(data);
         this.filtros = data.data;
         this.filtroBusqueda = this.devuelveFiltroSentencia(this.filtros);
-        this.facturas = [];
+        this.facturasCliente = [];
+        this.facturasProveedor = [];
 
         this.cargarFacturas(this.filtroBusqueda);
       } else {
@@ -222,14 +227,14 @@ export class FacturasPage implements OnInit {
       case 'cliente':
         this.consultaRealizada = false;
         this.dbService.getListadoFacturas('CL', this.codigo, filtro).then((facturas) => {
-          this.facturasAUX = facturas;
+          this.facturasAUXCliente = facturas;
           this.calcularImporteFacturas();
           this.consultaRealizada = true;
-          this.registros = this.facturas.length;
+          this.registros = this.facturasCliente.length;
 
           for (let i = 0; i < this.facturasPorPagina; i++) {
-            if (this.facturas.length < this.facturasAUX.length) {
-              this.facturas.push(this.facturasAUX[this.registros + i]);
+            if (this.facturasCliente.length < this.facturasAUXCliente.length) {
+              this.facturasCliente.push(this.facturasAUXCliente[this.registros + i]);
               this.hayMasFacturas = true;
             } else {
               this.hayMasFacturas = false;
@@ -246,14 +251,14 @@ export class FacturasPage implements OnInit {
       case 'proveedor':
         this.consultaRealizada = false;
         this.dbService.getListadoFacturas('PR', this.codigo, filtro).then((facturas) => {
-          this.facturasAUX = facturas;
+          this.facturasAUXProveedor = facturas;
           this.calcularImporteFacturas();
           this.consultaRealizada = true;
-          this.registros = this.facturas.length;
+          this.registros = this.facturasProveedor.length;
 
           for (let i = 0; i < this.facturasPorPagina; i++) {
-            if (this.facturas.length < this.facturasAUX.length) {
-              this.facturas.push(this.facturasAUX[this.registros + i]);
+            if (this.facturasProveedor.length < this.facturasAUXProveedor.length) {
+              this.facturasProveedor.push(this.facturasAUXProveedor[this.registros + i]);
               this.hayMasFacturas = true;
             } else {
               this.hayMasFacturas = false;
@@ -272,26 +277,42 @@ export class FacturasPage implements OnInit {
 
   calcularImporteFacturas() {
     this.importeFacturas = 0;
-    for (let index = 0; index < this.facturasAUX.length; index++) {
-      let importe = this.facturasAUX[index].totmon;
-      if (importe != null || importe != undefined) {
-        this.importeFacturas = this.importeFacturas + parseFloat(importe);
+    if (this.tipo == 'cliente'){
+      for (let index = 0; index < this.facturasAUXCliente.length; index++) {
+        let importe = this.facturasAUXCliente[index].totmon;
+        if (importe != null || importe != undefined) {
+          this.importeFacturas = this.importeFacturas + parseFloat(importe);
+        }
+      }
+    } else if (this.tipo == 'proveedor'){
+      for (let index = 0; index < this.facturasAUXProveedor.length; index++) {
+        let importe = this.facturasAUXProveedor[index].totmon;
+        if (importe != null || importe != undefined) {
+          this.importeFacturas = this.importeFacturas + parseFloat(importe);
+        }
       }
     }
-
     this.importeFacturas = parseFloat(this.importeFacturas.toFixed(2));
   }
 
+
   onIonInfinite(ev: InfiniteScrollCustomEvent) {
-
-    if (this.registros != this.facturasAUX.length) {
-      this.cargarFacturas(this.filtroBusqueda);
-      setTimeout(() => {
-        (ev as InfiniteScrollCustomEvent).target.complete();
-      }, 500);
-    } else {
-
+    if (this.tipo == 'cliente') {
+      if (this.registros != this.facturasAUXCliente.length) {
+        this.cargarFacturas(this.filtroBusqueda);
+        setTimeout(() => {
+          (ev as InfiniteScrollCustomEvent).target.complete();
+        }, 500);
+      }
+    } else if (this.tipo == 'proveedor') {
+      if (this.registros != this.facturasAUXProveedor.length) {
+        this.cargarFacturas(this.filtroBusqueda);
+        setTimeout(() => {
+          (ev as InfiniteScrollCustomEvent).target.complete();
+        }, 500);
+      }
     }
+
   }
 
   public formatearFecha(fecha: string) {
@@ -305,7 +326,7 @@ export class FacturasPage implements OnInit {
     return fechaFormateada;
   }
 
-  comprobarFactura(factura: facturas): string {
+  comprobarFactura(factura: any): string {
     if (factura.est == "3") {
       return "rowBackgroundGreen";
     } else if (factura.est == "1") {

@@ -159,7 +159,6 @@ export class AppComponent {
         { title: 'Historial', url: '/historial/proveedor/' + codigo, icon: 'clipboard-outline' },
         { title: 'Listado Facturas', url: '/facturas/proveedor/' + codigo, icon: 'assets/imgs/bill.svg' },
         { title: 'Listado Albaranes', url: '/albaranes/proveedor/' + codigo, icon: 'assets/imgs/delivery-note.svg' },
-        { title: 'Listado Presupuestos', url: '/presupuestos/proveedor/' + codigo, icon: 'assets/imgs/finanzas.svg' },
         { title: 'Listado Pedidos', url: '/pedidos/proveedor/' + codigo, icon: 'assets/imgs/caja.svg' },
         { title: 'Efectos', url: '/efectos/proveedor/' + codigo, icon: 'assets/imgs/flujo-de-efectivo.svg' },
         { title: 'Mayor de Cuentas', url: '/mayor/proveedor/' + codigo, icon: 'assets/imgs/mayor.svg' },

@@ -6,7 +6,8 @@ import { TransferirDatosService } from 'src/app/services/transferir-datos.servic
 import { ActivatedRoute } from '@angular/router';
 import { Platform, NavController, InfiniteScrollCustomEvent, IonInfiniteScroll, IonInfiniteScrollContent, PopoverController, IonBadge, IonButton, IonItem, IonItemDivider, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/angular/standalone';
 import { DbService } from 'src/app/services/db.service';
-import { albaranes } from 'src/app/models/albaranes.model';
+import { albaranesCliente } from 'src/app/models/albaranes-cliente.model';
+import { albaranesProveedor } from 'src/app/models/albaranes-proveedor.model';
 import { FiltroAlbaranesComponent } from 'src/app/components/filtro-albaranes/filtro-albaranes.component';
 
 @Component({
@@ -24,8 +25,10 @@ export class AlbaranesPage implements OnInit {
   tipo: string = '';
   nombre: string = '';
   private series: Array<any> = [];
-  public albaranes: Array<albaranes> = [];
-  private albaranesAUX: Array<albaranes> = [];
+  public albaranesCliente: Array<albaranesCliente> = [];
+  private albaranesAUXCliente: Array<albaranesCliente> = [];
+  public albaranesProveedor: Array<albaranesProveedor> = [];
+  private albaranesAUXProveedor: Array<albaranesProveedor> = [];
   private filtroBusqueda: string = '';
   private albaranesPorPagina: number = 25;
   private registros: number = 0;
@@ -85,7 +88,8 @@ export class AlbaranesPage implements OnInit {
 
     this.filtros.texto = $event.detail.value;
     this.filtroBusqueda = this.devuelveFiltroSentencia(this.filtros);
-    this.albaranes = [];
+    this.albaranesCliente = [];
+    this.albaranesProveedor = [];
 
     this.cargarAlbaranes(this.filtroBusqueda);
   }
@@ -240,7 +244,8 @@ export class AlbaranesPage implements OnInit {
         console.log(data);
         this.filtros = data.data;
         this.filtroBusqueda = this.devuelveFiltroSentencia(this.filtros);
-        this.albaranes = [];
+        this.albaranesCliente = [];
+        this.albaranesProveedor = [];
 
         this.cargarAlbaranes(this.filtroBusqueda);
       } else {
@@ -256,14 +261,14 @@ export class AlbaranesPage implements OnInit {
       case 'cliente':
         this.consultaRealizada = false;
         this.dbService.getListadoAlbaranes('CL', this.codigo, filtro).then((albaranes) => {
-          this.albaranesAUX = albaranes;
+          this.albaranesAUXCliente = albaranes;
           this.calcularImporteAlbaranes();
           this.consultaRealizada = true;
-          this.registros = this.albaranes.length;
+          this.registros = this.albaranesCliente.length;
 
           for (let i = 0; i < this.albaranesPorPagina; i++) {
-            if (this.albaranes.length < this.albaranesAUX.length) {
-              this.albaranes.push(this.albaranesAUX[this.registros + i]);
+            if (this.albaranesCliente.length < this.albaranesAUXCliente.length) {
+              this.albaranesCliente.push(this.albaranesAUXCliente[this.registros + i]);
               this.hayMasAlbaranes = true;
             } else {
               this.hayMasAlbaranes = false;
@@ -280,14 +285,14 @@ export class AlbaranesPage implements OnInit {
       case 'proveedor':
         this.consultaRealizada = false;
         this.dbService.getListadoAlbaranes('PR', this.codigo, filtro).then((albaranes) => {
-          this.albaranesAUX = albaranes;
+          this.albaranesAUXProveedor = albaranes;
           this.calcularImporteAlbaranes();
           this.consultaRealizada = true;
-          this.registros = this.albaranes.length;
+          this.registros = this.albaranesProveedor.length;
 
           for (let i = 0; i < this.albaranesPorPagina; i++) {
-            if (this.albaranes.length < this.albaranesAUX.length) {
-              this.albaranes.push(this.albaranesAUX[this.registros + i]);
+            if (this.albaranesProveedor.length < this.albaranesAUXProveedor.length) {
+              this.albaranesProveedor.push(this.albaranesAUXProveedor[this.registros + i]);
               this.hayMasAlbaranes = true;
             } else {
               this.hayMasAlbaranes = false;
@@ -306,25 +311,42 @@ export class AlbaranesPage implements OnInit {
 
   calcularImporteAlbaranes() {
     this.importeAlbaranes = 0;
-    for (let index = 0; index < this.albaranesAUX.length; index++) {
-      let importe = this.albaranesAUX[index].toteu;
-      if (importe != null || importe != undefined) {
-        this.importeAlbaranes = this.importeAlbaranes + parseFloat(importe);
+    if (this.tipo == 'cliente'){
+      for (let index = 0; index < this.albaranesAUXCliente.length; index++) {
+        let importe = this.albaranesAUXCliente[index].toteu;
+        if (importe != null || importe != undefined) {
+          this.importeAlbaranes = this.importeAlbaranes + parseFloat(importe);
+        }
+      }
+    } else if (this.tipo == 'proveedor'){
+      for (let index = 0; index < this.albaranesAUXProveedor.length; index++) {
+        let importe = this.albaranesAUXProveedor[index].toteu;
+        if (importe != null || importe != undefined) {
+          this.importeAlbaranes = this.importeAlbaranes + parseFloat(importe);
+        }
       }
     }
     this.importeAlbaranes = parseFloat(this.importeAlbaranes.toFixed(2));
+
   }
 
   onIonInfinite(ev: InfiniteScrollCustomEvent) {
-
-    if (this.registros != this.albaranesAUX.length) {
-      this.cargarAlbaranes(this.filtroBusqueda);
-      setTimeout(() => {
-        (ev as InfiniteScrollCustomEvent).target.complete();
-      }, 500);
-    } else {
-
+    if (this.tipo == 'cliente') {
+      if (this.registros != this.albaranesAUXCliente.length) {
+        this.cargarAlbaranes(this.filtroBusqueda);
+        setTimeout(() => {
+          (ev as InfiniteScrollCustomEvent).target.complete();
+        }, 500);
+      }
+    } else if (this.tipo == 'proveedor') {
+      if (this.registros != this.albaranesAUXProveedor.length) {
+        this.cargarAlbaranes(this.filtroBusqueda);
+        setTimeout(() => {
+          (ev as InfiniteScrollCustomEvent).target.complete();
+        }, 500);
+      }
     }
+
   }
 
   public formatearFecha(fecha: string) {
@@ -338,7 +360,7 @@ export class AlbaranesPage implements OnInit {
     return fechaFormateada;
   }
 
-  comprobarAlbaran(albaran: albaranes): string {
+  comprobarAlbaran(albaran: any): string {
     if (albaran.est == "3") {
       return "rowBackgroundGreen";
     } else if (albaran.est == "1") {
@@ -350,7 +372,7 @@ export class AlbaranesPage implements OnInit {
     }
   }
 
-  comprobarAlbaranNofacturable(albaran: albaranes): string {
+  comprobarAlbaranNofacturable(albaran: any): string {
     if (albaran.fac == "1" && albaran.n_f!="NO FACTURABLE") {
       return "rowBackgroundGreen";
     } else if (albaran.fac == "1" && albaran.n_f =="NO FACTURABLE") {

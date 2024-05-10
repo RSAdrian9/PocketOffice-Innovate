@@ -24,9 +24,58 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <ion-list *ngIf="this.tipo == 'cliente'">
 
-    <ion-card *ngFor="let factura of this.facturas" class="cardBorder">
+    <ion-card *ngFor="let factura of this.facturasCliente" class="cardBorder">
+
+      <ion-grid [fixed]="true">
+        <ion-row class="row_icon">
+          <ion-col>
+            <ion-icon src="assets/imgs/bill.svg" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="divider">DATOS FACTURA</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Nº Factura</ion-col>
+          <ion-col>Fecha</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{factura.num}}</ion-col>
+          <ion-col>{{factura.fee2}}</ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div class="divider">IMPORTES</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Base Imp.</ion-col>
+          <ion-col>Impuestos</ion-col>
+          <ion-col>Total</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{this.formatearNumero(factura.basmon)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(factura.totimpu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(factura.totmon)}}€</ion-col>
+        </ion-row>
+        <ion-row class="row_titulos">
+          <ion-col>Cobrado</ion-col>
+          <ion-col>Pendiente</ion-col>
+        </ion-row>
+        <ion-row class="{{this.comprobarFactura(factura)}}">
+          <ion-col>{{this.formatearNumero(factura.toceu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(factura.impend)}}€</ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card>
+
+  </ion-list>
+
+  <ion-list *ngIf="this.tipo == 'proveedor'">
+
+    <ion-card *ngFor="let factura of this.facturasProveedor" class="cardBorder">
 
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">

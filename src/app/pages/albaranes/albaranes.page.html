@@ -24,9 +24,67 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <ion-list *ngIf="this.tipo == 'cliente'">
 
-    <ion-card *ngFor="let albaran of this.albaranes" class="cardBorder">
+    <ion-card *ngFor="let albaran of this.albaranesCliente" class="cardBorder">
+
+      <ion-grid [fixed]="true">
+        <ion-row class="row_icon">
+          <ion-col>
+            <ion-icon src="assets/imgs/delivery-note.svg" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="divider">DATOS ALBARÁN</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Nº Albarán</ion-col>
+          <ion-col *ngIf="albaran.numpro!=undefined || albaran.numpro!=null">Nº Alb. Proveedor</ion-col>
+          <ion-col>Fecha</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{albaran.num}}</ion-col>
+          <ion-col *ngIf="albaran.numpro!=undefined || albaran.numpro!=null">{{albaran.numpro}}</ion-col>
+          <ion-col>{{albaran.fec2}}</ion-col>
+        </ion-row>
+        <ion-row  *ngIf="albaran.fac == '1'" class="row_titulos">
+          <ion-col>Nº Factura.</ion-col>
+        </ion-row>
+        <ion-row  *ngIf="albaran.fac == '1'" class="{{this.comprobarAlbaranNofacturable(albaran)}}">
+          <ion-col>{{albaran.n_f}}</ion-col>          
+        </ion-row>
+      </ion-grid>
+      
+
+      <div class="divider">IMPORTES</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Base Imp.</ion-col>
+          <ion-col>Impuestos</ion-col>
+          <ion-col>Total</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{this.formatearNumero(albaran.baseu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(albaran.totimpu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(albaran.toteu)}}€</ion-col>
+        </ion-row>
+        <ion-row class="row_titulos">
+          <ion-col>Cobrado</ion-col>
+          <ion-col>Pendiente</ion-col>
+        </ion-row>
+        <ion-row class="{{this.comprobarAlbaran(albaran)}}">
+          <ion-col>{{this.formatearNumero(albaran.cobeu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(albaran.impend)}}€</ion-col>
+        </ion-row>
+      </ion-grid>      
+
+    </ion-card>
+
+  </ion-list>
+
+  <ion-list *ngIf="this.tipo == 'proveedor'">
+
+    <ion-card *ngFor="let albaran of this.albaranesProveedor" class="cardBorder">
 
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">

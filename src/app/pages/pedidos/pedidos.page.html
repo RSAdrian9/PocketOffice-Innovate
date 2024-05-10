@@ -24,9 +24,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <ion-list *ngIf="this.tipo == 'cliente'">
 
-    <ion-card *ngFor="let pedido of this.pedidos" class="cardBorder">
+    <ion-card *ngFor="let pedido of this.pedidosCliente" class="cardBorder">
 
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
@@ -50,6 +50,53 @@
         </ion-row>
         <ion-row *ngIf="pedido.est != ''">
           <ion-col>{{pedido.est}}</ion-col>
+        </ion-row>
+        <ion-row class="row_titulos" *ngIf="pedido.aof != ''">
+          <ion-col>{{pedido.tipdoc}}</ion-col>
+        </ion-row>
+        <ion-row *ngIf="pedido.aof != ''" class="{{this.comprobarServido(pedido)}}">
+          <ion-col>{{pedido.doc}}</ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div class="divider">IMPORTES</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Base Imp.</ion-col>
+          <ion-col>Impuestos</ion-col>
+          <ion-col>Total</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{this.formatearNumero(pedido.baseu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(pedido.totimpu)}}€</ion-col>
+          <ion-col>{{this.formatearNumero(pedido.toteu)}}€</ion-col>
+        </ion-row>        
+      </ion-grid>
+      
+    </ion-card>
+
+  </ion-list>
+
+  <ion-list *ngIf="this.tipo == 'proveedor'">
+
+    <ion-card *ngFor="let pedido of this.pedidosProveedor" class="cardBorder">
+
+      <ion-grid [fixed]="true">
+        <ion-row class="row_icon">
+          <ion-col>
+            <ion-icon src="assets/imgs/caja.svg" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="divider">DATOS PEDIDO</div>
+      <ion-grid [fixed]="true">
+        <ion-row class="row_titulos">
+          <ion-col>Nº Pedido</ion-col>          
+          <ion-col>Fecha</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>{{pedido.num}}</ion-col>
+          <ion-col>{{pedido.fec2}}</ion-col>
         </ion-row>
         <ion-row class="row_titulos" *ngIf="pedido.aof != ''">
           <ion-col>{{pedido.tipdoc}}</ion-col>

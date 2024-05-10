@@ -1,4 +1,4 @@
-export interface pedidos {
+export interface pedidosProveedor {
     num?: string,
     aof?:string,
     tipdoc?:string,
@@ -7,8 +7,7 @@ export interface pedidos {
     baseu?: string,
     toteu?: string,
     totimpu?: string,
-    est?: string,
-    ser?: string
+    ser?: string,
     pdf?: string,
     rutapdf?: string
 }
