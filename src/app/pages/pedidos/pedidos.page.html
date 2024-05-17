@@ -24,8 +24,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list *ngIf="this.tipo == 'cliente'">
-
+  <div *ngIf="this.tipo == 'cliente'">
+    <div class="noHayDatos" *ngIf="this.pedidosCliente.length == 0">No hay pedidos de venta para mostrar</div>
+  </div>
+  <div *ngIf="this.tipo == 'proveedor'">
+    <div class="noHayDatos" *ngIf="this.pedidosProveedor.length == 0">No hay pedidos de compra para mostrar</div>
+  </div>
+  <ion-list *ngIf="this.tipo == 'cliente' && this.pedidosCliente.length > 0">
+    
     <ion-card *ngFor="let pedido of this.pedidosCliente" class="cardBorder">
 
       <ion-grid [fixed]="true">
@@ -77,8 +83,7 @@
 
   </ion-list>
 
-  <ion-list *ngIf="this.tipo == 'proveedor'">
-
+  <ion-list *ngIf="this.tipo == 'proveedor' && this.pedidosProveedor.length > 0">    
     <ion-card *ngFor="let pedido of this.pedidosProveedor" class="cardBorder">
 
       <ion-grid [fixed]="true">
@@ -97,7 +102,7 @@
         <ion-row>
           <ion-col>{{pedido.num}}</ion-col>
           <ion-col>{{pedido.fec2}}</ion-col>
-        </ion-row>
+        </ion-row>               
         <ion-row class="row_titulos" *ngIf="pedido.aof != ''">
           <ion-col>{{pedido.tipdoc}}</ion-col>
         </ion-row>
@@ -123,6 +128,7 @@
     </ion-card>
 
   </ion-list>
+
   @if(hayMasPedidos){
   <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
     <ion-infinite-scroll-content loadingText="Cargando Pedidos..."
@@ -134,9 +140,6 @@
 
 <ion-footer>
   <ion-toolbar style="border-top:1px solid gray">
-    <div class="footer-content">
-      <span class="total">Total:</span>
-      <span class="variable">{{this.formatearNumero(this.importePedidos)}}€</span>
-    </div>
+    <ion-title>Total: {{this.formatearNumero(this.importePedidos)}}€</ion-title>
   </ion-toolbar>
 </ion-footer>

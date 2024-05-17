@@ -16,8 +16,8 @@
       <ion-select-option value="2">Servido</ion-select-option>
     </ion-select>
   </ion-item>  
-  <ion-item-divider>Estado</ion-item-divider>
-  <ion-item>
+  <ion-item-divider *ngIf="this.tipo == 'cliente'">Estado</ion-item-divider>
+  <ion-item *ngIf="this.tipo == 'cliente'">
     <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.estado}}"
       (ionChange)="this.controladorSelectEstado($event)">
       <ion-select-option *ngFor="let estado of estados" value="{{estado.id}}">{{estado.des}}</ion-select-option>

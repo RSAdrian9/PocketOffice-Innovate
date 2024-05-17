@@ -1,4 +1,7 @@
 export interface resumen {
+    id?: string,
+    cod?: string,
+    cla?: string,
     trim1?: string,
     enero?: string,
     febrero?: string,

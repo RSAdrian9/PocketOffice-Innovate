@@ -24,8 +24,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <div *ngIf="this.tipo == 'cliente' && this.albaranesCliente.length > 0 " >
+    <div class="noHayDatos" *ngIf="this.albaranesCliente.length == 0">No hay albaranes de venta para mostrar</div>
+  </div>
+  <div *ngIf="this.tipo == 'proveedor'">
+    <div class="noHayDatos" *ngIf="this.albaranesProveedor.length == 0">No hay albaranes de compra para mostrar</div>
+  </div>
   <ion-list *ngIf="this.tipo == 'cliente'">
-
+    
     <ion-card *ngFor="let albaran of this.albaranesCliente" class="cardBorder">
 
       <ion-grid [fixed]="true">
@@ -38,13 +44,11 @@
       <div class="divider">DATOS ALBARÁN</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
-          <ion-col>Nº Albarán</ion-col>
-          <ion-col *ngIf="albaran.numpro!=undefined || albaran.numpro!=null">Nº Alb. Proveedor</ion-col>
+          <ion-col>Nº Albarán</ion-col>          
           <ion-col>Fecha</ion-col>
         </ion-row>
         <ion-row>
-          <ion-col>{{albaran.num}}</ion-col>
-          <ion-col *ngIf="albaran.numpro!=undefined || albaran.numpro!=null">{{albaran.numpro}}</ion-col>
+          <ion-col>{{albaran.num}}</ion-col>          
           <ion-col>{{albaran.fec2}}</ion-col>
         </ion-row>
         <ion-row  *ngIf="albaran.fac == '1'" class="row_titulos">
@@ -82,7 +86,8 @@
 
   </ion-list>
 
-  <ion-list *ngIf="this.tipo == 'proveedor'">
+
+  <ion-list *ngIf="this.tipo == 'proveedor' && this.albaranesProveedor.length > 0">
 
     <ion-card *ngFor="let albaran of this.albaranesProveedor" class="cardBorder">
 
@@ -97,12 +102,12 @@
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
           <ion-col>Nº Albarán</ion-col>
-          <ion-col *ngIf="albaran.numpro!=undefined || albaran.numpro!=null">Nº Alb. Proveedor</ion-col>
+          <ion-col>Nº Alb. Proveedor</ion-col>
           <ion-col>Fecha</ion-col>
         </ion-row>
         <ion-row>
           <ion-col>{{albaran.num}}</ion-col>
-          <ion-col *ngIf="albaran.numpro!=undefined || albaran.numpro!=null">{{albaran.numpro}}</ion-col>
+          <ion-col>{{albaran.numpro}}</ion-col>
           <ion-col>{{albaran.fec2}}</ion-col>
         </ion-row>
         <ion-row  *ngIf="albaran.fac == '1'" class="row_titulos">
@@ -150,9 +155,6 @@
 
 <ion-footer>
   <ion-toolbar style="border-top:1px solid gray">
-    <div class="footer-content">
-      <span class="total">Total:</span>
-      <span class="variable">{{this.formatearNumero(this.importeAlbaranes)}}€</span>
-    </div>
+    <ion-title>Total: {{this.formatearNumero(this.importeAlbaranes)}}€</ion-title>
   </ion-toolbar>
 </ion-footer>

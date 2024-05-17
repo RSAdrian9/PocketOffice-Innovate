@@ -11,6 +11,7 @@ import { efectosTmp } from 'src/app/models/efectosTmp.model';
 import { addIcons } from 'ionicons';
 import { openOutline } from 'ionicons/icons';
 import { FiltroEfectosComponent } from 'src/app/components/filtro-efectos/filtro-efectos.component';
+import { anio } from 'src/app/models/anio.model';
 
 @Component({
   selector: 'app-efectos',
@@ -18,17 +19,15 @@ import { FiltroEfectosComponent } from 'src/app/components/filtro-efectos/filtro
   styleUrls: ['./efectos.page.scss'],
   standalone: true,
   providers: [DatePipe],
-  imports: [IonicModule, RouterModule, CommonModule, FormsModule, IonInfiniteScroll, IonInfiniteScrollContent, IonBadge, IonButton, IonItem, IonItemDivider, IonGrid, IonRow, IonCol, IonIcon
-  ]
+  imports: [IonicModule, RouterModule, CommonModule, FormsModule, IonInfiniteScroll, IonInfiniteScrollContent, IonBadge, IonButton, IonItem, IonItemDivider, IonGrid, IonRow, IonCol, IonIcon]
 })
 export class EfectosPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   codigo: string = ''
   tipo: string = ''
   nombre: string = '';
-  filtro: string = ''
 
-  private series: Array<any> = [];
+  private series: Array<any> = []
   public efectos: Array<efectosTmp> = [];
   private efectosAUX: Array<efectosTmp> = [];
   private filtroBusqueda: string = '';
@@ -37,8 +36,8 @@ export class EfectosPage implements OnInit {
   public hayMasEfectos: boolean = true;
   public consultaRealizada: boolean = false;
   public mostrarBusqueda: boolean = false;
-  public importeFacturas: number = 0;
-  public filtros: any = { texto: '', estCobro: '0', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
+  public importeEfectos: number = 0;
+  public filtros: any = { texto: '', serie: 'Todos', estCobro: '0', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
 
 
   constructor(
@@ -47,7 +46,7 @@ export class EfectosPage implements OnInit {
     private navC: NavController,
     private dbService: DbService,
     private datepipe: DatePipe,
-    private popoverController: PopoverController,
+    private popoverController: PopoverController
   ) {
     addIcons({
       openOutline
@@ -76,6 +75,7 @@ export class EfectosPage implements OnInit {
         this.consultaRealizada = false;
         this.dbService.getListadoEfectos('C', this.codigo, filtro).then((efectos) => {
           this.efectosAUX = efectos;
+          this.calcularImporteEfectos();
           this.consultaRealizada = true;
           this.registros = this.efectos.length;
 
@@ -91,12 +91,16 @@ export class EfectosPage implements OnInit {
         });
         this.dbService.getNombreCliente(this.codigo).then((nombre) => {
           this.nombre = nombre;
+        });
+        this.dbService.getSeriesDocumento('CL', 'efecto', this.codigo).then((series) => {
+          this.series = series;
         });
         break;
       case 'proveedor':
         this.consultaRealizada = false;
         this.dbService.getListadoEfectos('P', this.codigo, filtro).then((efectos) => {
           this.efectosAUX = efectos;
+          this.calcularImporteEfectos();
           this.consultaRealizada = true;
           this.registros = this.efectos.length;
 
@@ -112,20 +116,44 @@ export class EfectosPage implements OnInit {
         this.dbService.getNombreCliente(this.codigo).then((nombre) => {
           this.nombre = nombre;
         });
+        this.dbService.getSeriesDocumento('PR', 'efecto', this.codigo).then((series) => {
+          this.series = series;
+        });        
         break;
     }
 
   }
 
+  calcularImporteEfectos() {
+    this.importeEfectos = 0;
+
+    for (let index = 0; index < this.efectosAUX.length; index++) {
+      let importe = this.efectosAUX[index].impeu;
+      if (importe != null || importe != undefined) {
+        this.importeEfectos = this.importeEfectos + parseFloat(importe);
+      }
+    }
+
+    this.importeEfectos = parseFloat(this.importeEfectos.toFixed(2));
+  }
+
 
   goBack() {
-    this.navC.navigateBack('/vista-cliente/' + this.codigo);
-    this.transferirService.sendObjectSource({ ruta: '/vista-cliente' });
+    switch (this.tipo) {
+      case 'cliente':
+        this.navC.navigateBack('/vista-cliente/' + this.codigo);
+        this.transferirService.sendObjectSource({ ruta: '/vista-cliente' });
+        break;
+      case 'proveedor':
+        this.navC.navigateBack('/vista-proveedor/' + this.codigo);
+        this.transferirService.sendObjectSource({ ruta: '/vista-proveedor' });
+        break;
+    }
   }
 
 
   pageController() {
-    this.cargarEfectos(this.filtro);
+    this.cargarEfectos(this.filtroBusqueda);
 
     this.transferirService.sendObjectSource({ codigo: this.codigo })
     this.platform.backButton.subscribeWithPriority(10, () => {
@@ -146,7 +174,7 @@ export class EfectosPage implements OnInit {
     let filtro = '';
     let nFiltrosAnadidos = 0;
 
-    if (filtros.texto != '' || filtros.fechaDesde != '' || filtros.fechaHasta != '' || filtros.estCobro != '0') {
+    if (filtros.texto != '' || filtros.serie != 'Todos' || filtros.fechaDesde != '' || filtros.fechaHasta != '' || filtros.estCobro != '0') {
       filtro = filtro + 'AND ';
     }
 
@@ -160,6 +188,15 @@ export class EfectosPage implements OnInit {
       }
     }
 
+    if(filtros.serie != 'Todos'){
+      if (nFiltrosAnadidos > 0) {
+        filtro = filtro + " AND substr(fac,2,2)='" + filtros.serie + "' ";
+        nFiltrosAnadidos++;
+      } else {
+        filtro = filtro + " substr(fac,2,2)='" + filtros.serie + "' ";
+        nFiltrosAnadidos++;
+      }
+    }
 
     switch (filtros.estCobro) {
       case '0':
@@ -167,10 +204,10 @@ export class EfectosPage implements OnInit {
         break;
       case '1':
         if (nFiltrosAnadidos > 0) {
-          filtro = filtro + " AND pageu = 0 AND impeu <> 0 ";
+          filtro = filtro + " AND pageu = 0 AND impeu <> 0 AND efe_tipagr <> 'A' AND dev <> 'S' ";
           nFiltrosAnadidos++;
         } else {
-          filtro = filtro + " pageu = 0 AND impeu <> 0 ";
+          filtro = filtro + " pageu = 0 AND impeu <> 0 AND efe_tipagr <> 'A' AND dev <> 'S' ";
           nFiltrosAnadidos++;
         }
         break;
@@ -230,7 +267,7 @@ export class EfectosPage implements OnInit {
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: FiltroEfectosComponent,
-      componentProps: { filtros: this.filtros },
+      componentProps: { filtros: this.filtros, series: this.series },
       event: ev,
       translucent: true
     });
@@ -246,17 +283,17 @@ export class EfectosPage implements OnInit {
         console.log(this.filtroBusqueda);
         this.cargarEfectos(this.filtroBusqueda);
       } else {
-        this.filtros = { texto: '', estCobro: '0', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
+        this.filtros = { texto: '', serie: 'Todos', estCobro: '0', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
       }
     }).catch((err) => {
-      this.filtros = { texto: '', estCobro: '0', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
+      this.filtros = { texto: '', serie: 'Todos', estCobro: '0', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
     })
   }
 
   onIonInfinite(ev: InfiniteScrollCustomEvent) {
 
     if (this.registros != this.efectosAUX.length) {
-      this.cargarEfectos(this.filtro);
+      this.cargarEfectos(this.filtroBusqueda);
       setTimeout(() => {
         (ev as InfiniteScrollCustomEvent).target.complete();
       }, 500);
@@ -293,5 +330,4 @@ export class EfectosPage implements OnInit {
     let numeroFormateado = parseFloat(numero).toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
     return numeroFormateado;
   }
-
 }

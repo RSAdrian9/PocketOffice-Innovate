@@ -22,7 +22,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <div class="noHayDatos" *ngIf="this.efectos.length == 0">No hay efectos para mostrar</div>
+  <ion-list *ngIf="this.efectos.length > 0">    
     <ion-card *ngFor="let efecto of this.efectos" class="cardBorder">
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
@@ -77,7 +78,7 @@
         </ion-row>
       </ion-grid>
 
-      <ion-button expand="block" [routerLink]="['/vista-efecto/'+this.tipo+'/'+this.codigo+'/'+efecto.num]" routerLinkActive="selected">
+      <ion-button expand="block" class="btn" [routerLink]="['/vista-efecto/'+this.tipo+'/'+this.codigo+'/'+efecto.num]" routerLinkActive="selected">
         <ion-icon slot="icon-only" name="open-outline"></ion-icon>
       </ion-button>
     </ion-card>
@@ -90,3 +91,9 @@
   </ion-infinite-scroll>
   }
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar style="border-top:1px solid gray">
+    <ion-title>Total: {{this.formatearNumero(this.importeEfectos)}}€</ion-title>
+  </ion-toolbar>
+</ion-footer>

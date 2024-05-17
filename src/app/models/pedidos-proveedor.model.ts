@@ -1,13 +1,14 @@
 export interface pedidosProveedor {
+    cli?: string,
     num?: string,
     aof?:string,
-    tipdoc?:string,
     doc?: string,
+    tipdoc?:string,
     fec2?: string,
     baseu?: string,
     toteu?: string,
     totimpu?: string,
-    ser?: string,
+    ser?: string
     pdf?: string,
     rutapdf?: string
 }

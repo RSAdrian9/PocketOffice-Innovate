@@ -15,10 +15,11 @@ import { DatePickerComponent } from '../date-picker/date-picker.component';
   imports: [FormsModule, CommonModule, IonItem, IonList, IonItemDivider, IonCheckbox, IonButton, IonSelect, IonSelectOption, IonIcon, IonBadge]
 })
 export class FiltroPedidosComponent implements OnInit {
-  filtros: any = { texto: '', servido: 'Todos', estado: 'Todos', serie: 'Todos', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
+  filtros: any = { texto: '', servido:'Todos', estado: 'Todos', serie: 'Todos', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
   nFiltrosAplicados: number = 0;
   public series: Array<any> = [];
   public estados: Array<any> = [];
+  public tipo: string = "";
 
   constructor(
     private popoverController: PopoverController,
@@ -49,6 +50,7 @@ export class FiltroPedidosComponent implements OnInit {
 
   ionViewDidEnter() {
     let data: any = this.navParams.data;
+    this.tipo = data.tipo;
     this.series = data.series;
     this.estados = data.estados;
     this.filtros.texto = data.filtros.texto;
@@ -92,7 +94,7 @@ export class FiltroPedidosComponent implements OnInit {
 
   aplicarFiltros() {
     this.nFiltrosAplicados = 0;
-
+    
     if (this.filtros.servido != 'Todos') {
       this.nFiltrosAplicados++;
     }
