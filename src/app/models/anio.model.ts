@@ -1,4 +1,4 @@
-export interface anios {
+export interface anio {
     aniodef?: string,
     anioval?: string
 }

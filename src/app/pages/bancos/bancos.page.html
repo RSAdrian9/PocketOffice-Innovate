@@ -9,7 +9,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <div class="noHayDatos" *ngIf="this.bancos.length == 0">No hay bancos para mostrar</div>
+  <ion-list *ngIf="this.bancos.length > 0">
+    
     <ion-card *ngFor="let banco of bancos" class="cardBorderGray">
       <ion-item>
         <p class="title titleSize">Habitual:</p>
@@ -33,6 +35,7 @@
         <p class="title titleSize">SWIFT/BIC:</p>
         <ion-label>{{ banco.bic }}</ion-label>
       </ion-item>
+      
     </ion-card>
   </ion-list>
 </ion-content>

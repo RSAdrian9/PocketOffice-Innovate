@@ -24,8 +24,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
-
+  <div class="noHayDatos" *ngIf="this.clientes.length == 0">No hay clientes para mostrar</div>
+  <ion-list *ngIf="this.clientes.length > 0">    
     <ion-card *ngFor="let cliente of this.clientes"
       [ngClass]="this.comprobarDiferencia(cliente)==true ? 'cardBorderRed':'cardBorderGray' ">
       <ion-item [routerLink]="['/vista-cliente/'+cliente.cod]" routerLinkActive="selected">

@@ -1,13 +1,13 @@
 export interface facturasCliente {
+    cue?:string,
     num?:string,
     fee2?:string,
     basmon?:string,
-    totimpu?:string,
     totmon?:string,
     toceu?:string,
+    totimpu?:string,
     impend?:string,
     est?:string,
-    cue?:string,
     pdf:string,
     rutapdf?:string
 }

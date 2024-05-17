@@ -24,8 +24,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
-
+  <div class="noHayDatos" *ngIf="this.presupuestos.length == 0">No hay presupuestos para mostrar</div>
+  <ion-list *ngIf="this.presupuestos.length > 0">    
     <ion-card *ngFor="let presupuesto of this.presupuestos" class="cardBorder">
 
       <ion-grid [fixed]="true">
@@ -94,9 +94,6 @@
 
 <ion-footer>
   <ion-toolbar style="border-top:1px solid gray">
-    <div class="footer-content">
-      <span class="total">Total:</span>
-      <span class="variable">{{this.formatearNumero(this.importePresupuestos)}}€</span>
-    </div>
+    <ion-title>Total: {{this.formatearNumero(this.importePresupuestos)}}€</ion-title>
   </ion-toolbar>
 </ion-footer>

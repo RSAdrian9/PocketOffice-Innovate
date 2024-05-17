@@ -1,17 +1,17 @@
 export interface direccion {
+    id?: string,
     cla?: string,
     cod?: string,
     den?: string,
-    dir?: string,
-    email?: string,
-    hab?: string,
-    id?: string,
-    npro?: string,
-    pais?: string,
-    per?: string,
+    dir?: string,    
     pob?: string,
+    npro?: string,
     pro?: string,
+    pais?: string,
+    email?: string,
     rut?: string,
+    nomrut?: string,
     tel?: string,
-    nomrut?: string
+    hab?: string,    
+    per?: string
 }

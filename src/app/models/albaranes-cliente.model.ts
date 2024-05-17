@@ -1,15 +1,15 @@
 export interface albaranesCliente {
-    baseu?: string,
-    cobeu?: string,
-    est?: string,
-    fac?: string,
-    fec2?: string,
-    impend?: string,
-    numpro?: string,
-    n_f?: string,
+    cli?: string,
     num?: string,
-    pdf?: string,
-    rutapdf?: string,
+    fac?: string,
+    n_f?: string,
+    fec2?: string,
+    baseu?: string,
     toteu?: string,
-    totimpu?: string
+    cobeu?: string,
+    totimpu?: string,
+    impend?: string,
+    est?: string,   
+    pdf?: string,
+    rutapdf?: string 
 }

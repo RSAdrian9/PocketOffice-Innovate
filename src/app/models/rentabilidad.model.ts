@@ -1,7 +1,9 @@
 export interface rentabilidad {
-    benefi?: string,
-    besoco?: string,
-    besove?: string,
+    id?: string,
+    cod?: string,
     impcom?: string,
-    impven?: string
+    impven?: string,
+    benefi?: string,
+    besove?: string,
+    besoco?: string
 }

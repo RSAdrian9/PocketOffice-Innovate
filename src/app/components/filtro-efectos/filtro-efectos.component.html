@@ -1,11 +1,18 @@
 <ion-list>
+  <ion-item-divider *ngIf="this.series.length > 1">Serie documento</ion-item-divider>
+  <ion-item *ngIf="this.series.length > 1">
+    <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.serie}}"
+      (ionChange)="this.controladorSelectSerie($event)" >
+      <ion-select-option *ngFor="let serie of series" value="{{serie.serie}}">{{serie.serie}}</ion-select-option>      
+    </ion-select>
+  </ion-item>
   <ion-item-divider>Estado de cobro</ion-item-divider>
   <ion-item>
     <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.estCobro}}"
       (ionChange)="this.controladorSelectEstado($event)">
-      <ion-select-option value="0">Todas</ion-select-option>
+      <ion-select-option value="0">Todos</ion-select-option>
       <ion-select-option value="1">Pendientes</ion-select-option>
-      <ion-select-option value="2">Cobradas</ion-select-option>
+      <ion-select-option value="2">Cobrados</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item-divider>Rango de fechas</ion-item-divider>

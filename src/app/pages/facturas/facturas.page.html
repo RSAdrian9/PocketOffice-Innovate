@@ -5,8 +5,8 @@
     </ion-buttons>
     <ion-title>Listado Facturas</ion-title>
     <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
+
   </ion-toolbar>
-  
   <ion-toolbar>
     <ion-buttons>
       <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarFacturas($event)"
@@ -24,8 +24,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list *ngIf="this.tipo == 'cliente'">
+  <div *ngIf="this.tipo == 'cliente'">
+    <div class="noHayDatos" *ngIf="this.facturasCliente.length == 0">No hay facturas de venta para mostrar</div>
+  </div>
+  <div *ngIf="this.tipo == 'proveedor'">
+    <div class="noHayDatos" *ngIf="this.facturasProveedor.length == 0">No hay facturas de compra para mostrar</div>
+  </div>
 
+  <ion-list *ngIf="this.tipo == 'cliente' && this.facturasCliente.length > 0">    
     <ion-card *ngFor="let factura of this.facturasCliente" class="cardBorder">
 
       <ion-grid [fixed]="true">
@@ -38,7 +44,7 @@
       <div class="divider">DATOS FACTURA</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
-          <ion-col>Nº Factura</ion-col>
+          <ion-col>Nº Factura</ion-col>          
           <ion-col>Fecha</ion-col>
         </ion-row>
         <ion-row>
@@ -68,13 +74,13 @@
           <ion-col>{{this.formatearNumero(factura.impend)}}€</ion-col>
         </ion-row>
       </ion-grid>
-
+      
     </ion-card>
 
   </ion-list>
 
-  <ion-list *ngIf="this.tipo == 'proveedor'">
-
+  <ion-list *ngIf="this.tipo == 'proveedor' && this.facturasProveedor.length > 0">
+    
     <ion-card *ngFor="let factura of this.facturasProveedor" class="cardBorder">
 
       <ion-grid [fixed]="true">
@@ -119,10 +125,11 @@
           <ion-col>{{this.formatearNumero(factura.impend)}}€</ion-col>
         </ion-row>
       </ion-grid>
-
+      
     </ion-card>
 
   </ion-list>
+
   @if(hayMasFacturas){
   <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
     <ion-infinite-scroll-content loadingText="Cargando Facturas..."
@@ -134,9 +141,6 @@
 
 <ion-footer>
   <ion-toolbar style="border-top:1px solid gray">
-    <div class="footer-content">
-      <span class="total">Total:</span>
-      <span class="variable">{{this.formatearNumero(this.importeFacturas)}}€</span>
-    </div>
+    <ion-title>Total: {{this.formatearNumero(this.importeFacturas)}}€</ion-title>
   </ion-toolbar>
 </ion-footer>

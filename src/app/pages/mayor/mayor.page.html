@@ -10,11 +10,10 @@
   <ion-toolbar>
     <ion-buttons>
       <ion-searchbar #input showCancelButton="focus" debounce="500" placeholder="Buscar"></ion-searchbar>
-      <ion-button style="height: 2px;">
+      <ion-button style="height: 2px;" (click)="presentPopover($event)">
         <div class="icon-container">
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
-          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0 "
-            class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
+          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0" class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
       </ion-button>
     </ion-buttons>
@@ -23,7 +22,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <div class="noHayDatos" *ngIf="this.mayor.length == 0">No hay datos de libro mayor para mostrar</div>
+  <ion-list *ngIf="this.mayor.length > 0">
+    
     <ion-card *ngFor="let mayor of this.mayor" class="cardBorder">
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
@@ -67,7 +68,7 @@
         </ion-row>
       </ion-grid>
 
-      <ion-button expand="block" [routerLink]="['/vista-mayor/'+this.tipo+'/'+this.codigo+'/'+mayor.num]"
+      <ion-button expand="block" class="btn" [routerLink]="['/vista-mayor/'+this.tipo+'/'+this.codigo+'/'+mayor.num]"
         routerLinkActive="selected">
         <ion-icon slot="icon-only" name="open-outline"></ion-icon>
       </ion-button>

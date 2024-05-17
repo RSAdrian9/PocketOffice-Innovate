@@ -23,6 +23,7 @@ import { rentabilidad } from '../models/rentabilidad.model';
 import { resumen } from '../models/resumen.model';
 import { ToastService } from './toast.service';
 import { efectosTmp } from '../models/efectosTmp.model';
+import { anio } from '../models/anio.model';
 
 @Injectable({
   providedIn: 'root'
@@ -221,79 +222,6 @@ export class DbService {
     return historia;
   }
 
-  public async getEstadosPedidos(tipo: string, codigo: string) {
-    var estados: any[] = [];
-    let sentencia = "";
-
-    switch (tipo) {
-      case 'CL':
-        sentencia = "SELECT 'Todos' AS id, 'Todos' AS [des] UNION ALL SELECT id, [des] FROM ESTPED WHERE id IN (SELECT est FROM CABPED WHERE cli='" + codigo + "');";
-        break;
-      case 'PR':
-        sentencia = "SELECT 'Todos' AS id, 'Todos' AS [des] UNION ALL SELECT id, [des] FROM ESTPED WHERE id IN (SELECT est FROM CAPEPR WHERE cli='" + codigo + "');";
-        break;
-    }
-
-    estados = (await this.db.query(sentencia)).values as any[];
-
-    return estados;
-  }
-
-  public async getEstadosPresupuestos(codigo: string) {
-    var estados: any[] = [];
-    let sentencia = "SELECT 'Todos' AS id, 'Todos' AS [des] UNION ALL SELECT id, [des] FROM ESTADO WHERE id IN (SELECT est FROM CABPRE WHERE cli='" + codigo + "');";
-
-    estados = (await this.db.query(sentencia)).values as any[];
-
-    return estados;
-  }
-
-  public async getSeriesDocumento(tipo: string, documento: string, codigo: string) {
-    var series: any[] = [];
-    let sentencia = "";
-
-    switch (documento) {
-      case 'factura':
-
-        if (tipo == 'CL') {
-          sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACEMI WHERE cue ='" + codigo + "'";
-        } else {
-          sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACREC WHERE cue ='" + codigo + "'";
-        }
-
-        break;
-      case 'albaran':
-
-        if (tipo == 'CL') {
-          sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBARA WHERE cli ='" + codigo + "'";
-        } else {
-          sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBENT WHERE cli ='" + codigo + "'";
-        }
-
-        break;
-      case 'pedido':
-
-
-        if (tipo == 'CL') {
-          sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPED WHERE cli ='" + codigo + "'";
-        } else {
-          sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CAPEPR WHERE cli ='" + codigo + "'";
-        }
-
-        break;
-      case 'presupuesto':
-
-        sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPRE WHERE cli ='" + codigo + "'";
-
-        break;
-    }
-
-    series = (await this.db.query(sentencia)).values as any[];
-
-    return series;
-
-  }
-
   public async getListadoFacturas(tipo: string, codigo: string, filtro: string) {
     var facturas: any [] = [];
     let sentencia: string;
@@ -376,7 +304,7 @@ export class DbService {
 
   public async getListadoMayorDeCuentas(tipo: string, codigo: string, filtro: string) {
     var lineasMayor: mayor[] = [];
-    let sentencia: string = "SELECT num, con, strftime('%d/%m/%Y',fec) AS fec2, cla, sig, impeu , deb, hab, sal, 'AÑO '||anio AS anio2 FROM APUNXX WHERE SUBSTR(cue,-6)='" + codigo + "'  AND cla = '" + tipo + "' ORDER BY anio DESC, num;"
+    let sentencia: string = "SELECT num, con, strftime('%d/%m/%Y',fec) AS fec2, cla, sig, impeu , deb, hab, sal, 'AÑO '||anio AS anio2 FROM APUNXX WHERE SUBSTR(cue,-6)='" + codigo + "' AND cla = '" + tipo + "' " + filtro + "ORDER BY fec";
 
     lineasMayor = (await this.db.query(sentencia)).values as mayor[];
 
@@ -385,7 +313,7 @@ export class DbService {
 
   public async getDatosMayorDeCuentas(tipo: string, codigo: string, numero: string) {
     var mayor: any;
-    let sentencia: string = "SELECT num, con, strftime('%d/%m/%Y',fec) AS fec2, cla, sig, impeu , deb, hab, sal, 'AÑO '||anio AS anio2 FROM APUNXX WHERE SUBSTR(cue,-6)='" + codigo + "'  AND cla = '" + tipo + "' AND num = '" + numero + "' ORDER BY anio DESC, num;"
+    let sentencia: string = "SELECT num, con, strftime('%d/%m/%Y',fec) AS fec2, cla, sig, impeu , deb, hab, sal, 'AÑO '||anio AS anio2 FROM APUNXX WHERE SUBSTR(cue,-6)='" + codigo + "' AND cla = '" + tipo + "' AND num = '" + numero +"'";
 
     const result = await this.db.query(sentencia);
     if (result.values && result.values.length > 0) {
@@ -394,6 +322,97 @@ export class DbService {
 
     return mayor;
   }
+
+    //*************************PARA LOS FILTROS*****************************
+    public async getAniosApuntes(tipo: string, codigo: string) {
+      var anios: anio[] = [];
+      let sentencia = "SELECT 'AÑO ' || strftime('%Y', DATE()) AS 'aniodef', strftime('%Y', DATE()) AS 'anioval' UNION ALL SELECT 'AÑO ' || anio AS 'aniodef', anio AS 'anioval' FROM APUNXX WHERE cla='" + tipo + "' AND substr(cue, -6)='" + codigo + "' AND anio <> strftime('%Y', DATE()) GROUP BY anio ORDER BY anio DESC";
+  
+      anios = (await this.db.query(sentencia)).values as anio[];
+  
+      return anios;
+    }
+  
+    public async getEstadosPedidos(tipo: string, codigo: string) {
+      var estados: any[] = [];
+      let sentencia = "";
+  
+      switch (tipo) {
+        case 'CL':
+          sentencia = "SELECT 'Todos' AS id, 'Todos' AS [des] UNION ALL SELECT id, [des] FROM ESTPED WHERE id IN (SELECT est FROM CABPED WHERE cli='" + codigo + "');";
+          break;
+        case 'PR':
+          sentencia = "SELECT 'Todos' AS id, 'Todos' AS [des] UNION ALL SELECT id, [des] FROM ESTPED WHERE id IN (SELECT est FROM CAPEPR WHERE cli='" + codigo + "');";
+          break;
+      }
+  
+      estados = (await this.db.query(sentencia)).values as any[];
+  
+      return estados;
+    }
+  
+    public async getEstadosPresupuestos(codigo: string) {
+      var estados: any[] = [];
+      let sentencia = "SELECT 'Todos' AS id, 'Todos' AS [des] UNION ALL SELECT id, [des] FROM ESTADO WHERE id IN (SELECT est FROM CABPRE WHERE cli='" + codigo + "');";
+  
+      estados = (await this.db.query(sentencia)).values as any[];
+  
+      return estados;
+    }
+  
+    public async getSeriesDocumento(tipo: string, documento: string, codigo: string) {
+      var series: any[] = [];
+      let sentencia = "";
+  
+      switch (documento) {
+        case 'factura':
+  
+          if (tipo == 'CL') {
+            sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACEMI WHERE cue ='" + codigo + "'";
+          } else {
+            sentencia = "SELECT 'Todas' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM FACREC WHERE cue ='" + codigo + "'";
+          }
+  
+          break;
+        case 'albaran':
+  
+          if (tipo == 'CL') {
+            sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBARA WHERE cli ='" + codigo + "'";
+          } else {
+            sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM ALBENT WHERE cli ='" + codigo + "'";
+          }
+  
+          break;
+        case 'pedido':
+  
+          if (tipo == 'CL') {
+            sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPED WHERE cli ='" + codigo + "'";
+          } else {
+            sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CAPEPR WHERE cli ='" + codigo + "'";
+          }
+  
+          break;
+        case 'presupuesto':
+  
+          sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(num,1,2)) AS serie FROM CABPRE WHERE cli ='" + codigo + "'";
+  
+          break;
+        case 'efecto':
+          if (tipo == 'CL') {
+            sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(fac,2,2)) AS serie FROM EFECTO WHERE tip = 'C' AND cue ='" + codigo + "'";
+          } else {
+            sentencia = "SELECT 'Todos' AS serie UNION ALL SELECT DISTINCT(substr(fac,2,2)) AS serie FROM EFECTO WHERE tip = 'P' AND cue ='" + codigo + "'";
+          }
+  
+  
+          break;
+      }
+  
+      series = (await this.db.query(sentencia)).values as any[];
+  
+      return series;
+  
+    }
 
   public async getSituacionDeRiesgo(codigo: string) {
     var situacion: situacionriesgo = {};

@@ -1,9 +1,10 @@
 export interface presupuestos {
+    cli?: string,
     num?: string,
     des?: string,
     aof?: string,
-    tipdoc?: string,
     doc?: string,
+    tipdoc?: string,
     fec2?: string,
     baseu?: string,
     toteu?: string,

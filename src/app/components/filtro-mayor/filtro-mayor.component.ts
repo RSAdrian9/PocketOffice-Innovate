@@ -4,21 +4,22 @@ import { FormsModule } from '@angular/forms';
 import { PopoverController, ModalController, IonButton, IonCheckbox, IonItem, IonItemDivider, IonList, NavParams, IonSelect, IonSelectOption, IonIcon, IonBadge } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { calendarOutline, trashBin } from 'ionicons/icons';
-import { DatePickerComponent } from '../date-picker/date-picker.component';
+import { DatePickerMayorComponent } from '../date-picker-mayor/date-picker-mayor.component';
+import { anio } from 'src/app/models/anio.model';
 
 @Component({
-  selector: 'app-filtro-efectos',
-  templateUrl: './filtro-efectos.component.html',
-  styleUrls: ['./filtro-efectos.component.scss'],
+  selector: 'app-filtro-mayor',
+  templateUrl: './filtro-mayor.component.html',
+  styleUrls: ['./filtro-mayor.component.scss'],
   standalone: true,
   providers: [DatePipe],
   imports: [FormsModule, CommonModule, IonItem, IonList, IonItemDivider, IonCheckbox, IonButton, IonSelect, IonSelectOption, IonIcon, IonBadge]
 })
-export class FiltroEfectosComponent implements OnInit {
+export class FiltroMayorComponent implements OnInit {
 
-  filtros: any = { texto: '', serie: 'Todos', estCobro: '0', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
+  filtros: any = { texto: '', anio: '', fechaDesde: '', fechaHasta: '', nFiltrosAplicados: 0 };
   nFiltrosAplicados: number = 0;
-  public series: Array<any> = [];
+  public anios: Array<anio> = [];
 
   constructor(
     private popoverController: PopoverController,
@@ -31,33 +32,25 @@ export class FiltroEfectosComponent implements OnInit {
 
   ngOnInit() { }
 
-  controladorSelectSerie(ev: any) {
-    this.filtros.serie = ev.detail.value;
-  }
-
-  controladorSelectEstado(ev: any) {
-    this.filtros.estCobro = ev.detail.value;
-  }
-
-  controladorSelectOrden(ev: any) {
-    this.filtros.orden = ev.detail.value;
-  }
+  controladorSelectAnio(ev: any) {
+    this.filtros.anio = ev.detail.value;
+  }  
 
   ionViewDidEnter() {
     let data: any = this.navParams.data;
-    this.series = data.series;
+    console.log(data);
+
+    this.anios = data.anios;
     this.filtros.texto = data.filtros.texto;
-    this.filtros.serie = data.filtros.serie;
-    this.filtros.estCobro = data.filtros.estCobro;
+    this.filtros.anio = data.filtros.anio;
     this.filtros.fechaDesde = data.filtros.fechaDesde;
     this.filtros.fechaHasta = data.filtros.fechaHasta;
-    this.filtros.orden = data.filtros.orden;
     this.filtros.nFiltrosAplicados = data.filtros.nFiltrosAplicados;
   }
 
   async abrirModalFecha(tipo: string) {
     const modal = await this.modalController.create({
-      component: DatePickerComponent,
+      component: DatePickerMayorComponent,
       cssClass: 'noBackground',
       componentProps: {
         tipo: tipo,
@@ -69,7 +62,6 @@ export class FiltroEfectosComponent implements OnInit {
     modal.onDidDismiss().then((result) => {
       if (result.data.cancelar == false) {
         this.filtros = result.data.filtros;
-        //console.log(this.filtros);
       }
     });
   }
@@ -88,11 +80,7 @@ export class FiltroEfectosComponent implements OnInit {
   aplicarFiltros() {
     this.nFiltrosAplicados = 0;
 
-    if (this.filtros.serie != 'Todos') {
-      this.nFiltrosAplicados++;
-    }
-
-    if (this.filtros.estCobro != '0') {
+    if (this.filtros.anio != '0') {
       this.nFiltrosAplicados++;
     }
 
@@ -106,9 +94,8 @@ export class FiltroEfectosComponent implements OnInit {
 
     let texto = this.filtros.texto;
 
-    this.filtros = { texto: texto, serie: this.filtros.serie, estCobro: this.filtros.estCobro, fechaDesde: this.filtros.fechaDesde, fechaHasta: this.filtros.fechaHasta, orden: this.filtros.orden, nFiltrosAplicados: this.nFiltrosAplicados }
+    this.filtros = { texto: texto, anio: this.filtros.anio, fechaDesde: this.filtros.fechaDesde, fechaHasta: this.filtros.fechaHasta, nFiltrosAplicados: this.nFiltrosAplicados }
 
-    //console.log(this.filtros);
     this.popoverController.dismiss(this.filtros);
   }
 
@@ -122,7 +109,4 @@ export class FiltroEfectosComponent implements OnInit {
         break;
     }
   }
-
-
-
 }

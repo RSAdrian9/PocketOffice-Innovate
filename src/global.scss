@@ -27,6 +27,11 @@
 
 :root {
 
+  .noHayDatos {
+    text-align: center;
+    padding: 10px;
+  }
+
   .cardBorderRed {
     border: 3px solid red;
   }
@@ -46,7 +51,7 @@
   .cardBorderCian {
     border: 1px solid #50BEF3;
   }
-  
+
   .icon-container {
     position: relative;
     display: inline-block;

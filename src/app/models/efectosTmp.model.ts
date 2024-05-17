@@ -7,5 +7,5 @@ export interface efectosTmp {
     nomest?: string,
     impeu?: string,
     pageu?: string,
-    impend?: string    
+    impend?: string     
 }

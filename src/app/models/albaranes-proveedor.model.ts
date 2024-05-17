@@ -1,16 +1,16 @@
 export interface albaranesProveedor {
-    baseu?: string,
-    cobeu?: string,
-    est?: string,
-    fac?: string,
-    fec2?: string,
-    impend?: string,
+    cli?: string,
+    num?: string,       
     numpro?: string,
+    fac?: string,
     n_f?: string,
-    num?: string,
-    pdf?: string,
-    rutapdf?: string,
+    fec2?: string,
+    baseu?: string,
     toteu?: string,
+    cobeu?: string,
     totimpu?: string,
-    apr?: string // Nº albarán proveedor
+    impend?: string,
+    est?: string,   
+    pdf?: string,
+    rutapdf?: string 
 }

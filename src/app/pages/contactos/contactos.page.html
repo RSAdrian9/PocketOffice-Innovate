@@ -9,7 +9,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <div class="noHayDatos" *ngIf="this.contactos.length == 0">No hay contactos para mostrar</div>
+  <ion-list *ngIf="this.contactos.length > 0">
+    
     <ion-card *ngFor="let contacto of this.contactos" class="cardBorderGray">
       <ion-item>
         <ion-card-header>
