@@ -29,21 +29,31 @@ import { anio } from '../models/anio.model';
   providedIn: 'root'
 })
 export class DbService {
-  sqliteConnection!: SQLiteConnection;
+  private sqliteConnection!: SQLiteConnection;
   isService: boolean = false;
-  platform!: string;
-  sqlitePlugin!: CapacitorSQLitePlugin;
-  native: boolean = false;
-  loadToVersion: number = 1;
-  nombreDB: string = 'oficinavirtual.db';
-  directorioDB: string = 'io.ionic.appEmpresa';
-  host: string = 'appgp.mjhudesings.com';
+  private platform!: string;
+  private sqlitePlugin!: CapacitorSQLitePlugin;
+  private native: boolean = false;
+  private loadToVersion: number = 1;
+  public nombreDB: string = 'oficinavirtual.db';
+  private host: string = 'appgp.mjhudesings.com';
 
-  db!: SQLiteDBConnection;
+  private db!: SQLiteDBConnection;
 
-  constructor(private filesystemService: FilesystemService, private toastService: ToastService) { }
+  constructor(
+    private filesystemService: FilesystemService,
+    private toastService: ToastService
+  ) {
+    this.platform = Capacitor.getPlatform();
+    console.log(this.platform);
+    if (this.platform === 'ios' || this.platform === 'android') {
+      console.log('Inicializando CapacitorSQLite');
+      this.sqlitePlugin = CapacitorSQLite;
+      this.sqliteConnection = new SQLiteConnection(this.sqlitePlugin);
+    }
+  }
 
-  async initializePlugin(): Promise<boolean> {
+  /*async initializePlugin(): Promise<boolean> {
     this.platform = Capacitor.getPlatform();
     if (this.platform === 'ios' || this.platform === 'android') this.native = true;
     this.sqlitePlugin = CapacitorSQLite;
@@ -61,7 +71,7 @@ export class DbService {
 
 
     return true;
-  }
+  }*/
 
   async openDatabase(dbName: string, encrypted: boolean, mode: string, version: number, readonly: boolean): Promise<SQLiteDBConnection> {
     let db: SQLiteDBConnection;
@@ -85,7 +95,7 @@ export class DbService {
     this.sqlitePlugin.moveDatabasesAndAddSuffix({ folderPath: Directory.External, dbNameList: [this.nombreDB] });
   }
 
-  async connectDatabase() {
+  /*async connectDatabase() {
     this.db = await this.openDatabase(
       this.nombreDB,
       false,
@@ -93,6 +103,21 @@ export class DbService {
       this.loadToVersion,
       false
     );
+  }*/
+
+  public async connectDatabase(): Promise<Boolean> {
+    return await this.openDatabase(
+      this.nombreDB,
+      false,
+      'no-encryption',
+      this.loadToVersion,
+      false
+    ).then((db) => {
+      this.db = db;
+      return true;
+    }).catch(() => {
+      return false;
+    });
   }
 
   devuelveListaBBDD() {
@@ -313,7 +338,7 @@ export class DbService {
 
   public async getDatosMayorDeCuentas(tipo: string, codigo: string, numero: string) {
     var mayor: any;
-    let sentencia: string = "SELECT num, con, strftime('%d/%m/%Y',fec) AS fec2, cla, sig, impeu , deb, hab, sal, 'AÑO '||anio AS anio2 FROM APUNXX WHERE SUBSTR(cue,-6)='" + codigo + "' AND cla = '" + tipo + "' AND num = '" + numero +"'";
+    let sentencia: string = "SELECT num, con, strftime('%d/%m/%Y',fec) AS fec2, cla, sig, impeu , deb, hab, sal, 'AÑO '||anio AS anio2 FROM APUNXX WHERE SUBSTR(cue,-6)='" + codigo + "' AND cla = '" + tipo + "' AND num = '" + numero + "'";
 
     const result = await this.db.query(sentencia);
     if (result.values && result.values.length > 0) {
@@ -322,6 +347,52 @@ export class DbService {
 
     return mayor;
   }
+
+
+    //*************************PARA LAS GRAFICAS*****************************
+
+    public async devuelveImporteVentasUltimos12Meses() {
+      var importeVentas: any;
+      let sentencia: string = "SELECT (SELECT IFNULL(SUM(baseu), 0.00) FROM ALBARA WHERE fac = 0 AND fec >= date('now','-12 month'))+(SELECT IFNULL(SUM(basmon), 0.00) FROM FACEMI WHERE  fee >= date('now','-12 month')) AS ventas";
+  
+      const result = await this.db.query(sentencia);
+      if (result.values && result.values.length > 0) {
+        importeVentas = result.values[0].ventas;
+      }
+  
+      return importeVentas;
+    }
+  
+    public async devuelveImporteComprasUltimos12Meses() {
+      var importeCompras: any;
+      let sentencia: string = "SELECT (SELECT IFNULL(SUM(baseu), 0.00) FROM ALBENT WHERE fac = 0 AND fec >= date('now','-12 month'))+(SELECT IFNULL(SUM(basmon), 0.00) FROM FACREC WHERE  fee >= date('now','-12 month')) AS compras";
+  
+      const result = await this.db.query(sentencia);
+      if (result.values && result.values.length > 0) {
+        importeCompras = result.values[0].compras;
+      }
+  
+      return importeCompras;
+    }
+  
+  
+    public async devuelveDatosTarjetas(){
+      var datosTarjetas = {
+        importeVentas: '0',
+        importeCompras: '0',
+        efectosPendientes: '0'
+      }
+      let sentencia = "SELECT (SELECT IFNULL(SUM(baseu), 0.00) FROM ALBARA WHERE fac = 0 AND fec >= date('now','-12 month'))+(SELECT IFNULL(SUM(basmon), 0.00) FROM FACEMI WHERE tip <>'A' AND  fee >= date('now','-12 month')) AS ventas, (SELECT IFNULL(SUM(baseu), 0.00) FROM ALBENT WHERE fac = 0 AND fec >= date('now','-12 month'))+(SELECT IFNULL(SUM(basmon), 0.00) FROM FACREC WHERE tip <> 'A' AND fee >= date('now','-12 month')) AS compras, (SELECT COUNT(num) FROM EFECTO WHERE tip = 'C' AND  pageu = 0 AND impeu <> 0 AND efe_tipagr <> 'A' AND dev <> 'S') AS efectosPendientes;";
+  
+      const result = await this.db.query(sentencia);
+      if (result.values && result.values.length > 0) {
+        datosTarjetas.importeVentas = result.values[0].ventas;
+        datosTarjetas.importeCompras = result.values[0].compras;
+        datosTarjetas.efectosPendientes = result.values[0].efectosPendientes;
+      }
+  
+      return datosTarjetas;
+    }
 
     //*************************PARA LOS FILTROS*****************************
     public async getAniosApuntes(tipo: string, codigo: string) {
