@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { DbService } from './services/db.service';
 import { ToastService } from './services/toast.service';
 import { FilesystemService } from './services/filesystem.service';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-root',
@@ -50,11 +51,26 @@ export class AppComponent {
 
   }
 
-  initializeApp() {
-    if (this.platform.is("android") || this.platform.is("ios")) {
+  private async initializeApp() {
+    /*if (this.platform.is("android") || this.platform.is("ios")) {
       
       this.filesystem.crearDirectorioTmp();
-      this.dbService.initializePlugin();
+      this.dbService.connectDatabase()
+      
+    }*/
+
+    await SplashScreen.show({
+      autoHide: false,
+    });
+
+    const functionResult = await this.dbService.connectDatabase();
+
+    if(functionResult){
+
+      await SplashScreen.hide();
+      this.platform.ready().then(() => {
+        this.router.navigateByUrl('/home');
+      });
     }
   }
 

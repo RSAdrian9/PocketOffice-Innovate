@@ -28,7 +28,7 @@ export class DownloadService {
       if (status.connected) {
         this.toastService.mostrarToast('Descargando paquete de datos', 1500, 'bottom', 'baseline');
         const downloadResult = await this.filesystemService.descargarFichero(this.directorioTmp + "/" + this.nombre, this.endpoint, Directory.External);
-        
+
         if (downloadResult.path) {
           this.toastService.mostrarToast('Descarga completada', 1500, 'bottom', 'baseline');
           const zipData = await this.filesystemService.leerFichero(this.directorioTmp + "/" + this.nombre, Directory.External);
@@ -37,10 +37,15 @@ export class DownloadService {
           const zipContent = await zip.loadAsync(zipData.data, { base64: true });
 
           zipContent.forEach(async (relativePath: string, zipFile: JSZip.JSZipObject) => {
-            console.log(relativePath);
+
             await this.filesystemService.crearFichero(relativePath, Directory.External, await zipFile.async('base64'), true).then(() => {
-              this.dbService.initializePlugin();
-              this.filesystemService.borrarArchivo(this.directorioTmp + "/" + this.nombre, Directory.External);
+              //this.dbService.initializePlugin();
+              this.filesystemService.copiarBBDDExternaAInterna(this.dbService.nombreDB).then(() => {
+
+                this.dbService.moverBBDDAInterna().then(() => {
+                  this.dbService.connectDatabase();
+                });
+              });
             });
           });
         } else {
