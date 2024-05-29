@@ -1,5 +1,5 @@
 
-![Logo](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5VuDXf3FTUy-rFF78_d43WPFULqOxeo08bOi_7Pns&s)
+![Logo](https://cdn.reskyt.com/4319/innovate-mayorista-informatico-sl-logoweb-112907-160329125341.png)
 
 # Pocket Office Bussines 
 
