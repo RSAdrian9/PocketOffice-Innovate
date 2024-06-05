@@ -26,6 +26,30 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 :root {
+  @media (prefers-color-scheme: dark) {
+    .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+        background: #373737f5 !important;
+        border-bottom: 1px solid #ddd !important;
+    }
+
+    .apexcharts-tooltip.apexcharts-theme-light {
+        border: 1px solid #e3e3e3 !important;
+        background: rgb(107 102 102 / 96%) !important;
+    }
+
+    .apexcharts-title-text {
+      fill: white;
+    }
+
+    .apexcharts-yaxis-texts-g text {
+      fill: white;
+    }
+
+    .apexcharts-xaxis-texts-g text{
+      fill: white;
+    }
+
+  }
 
   .noHayDatos {
     text-align: center;

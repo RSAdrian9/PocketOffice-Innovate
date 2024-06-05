@@ -259,7 +259,6 @@ export class AppComponent {
  * Las opciones del menú son:
  * - Contactos: los detalles de contacto del proveedor.
  * - Datos Bancarios: los detalles bancarios del proveedor.
- * - Direcciones: las direcciones del proveedor.
  * - Historial: los registros históricos del proveedor.
  * - Listado Facturas: la lista de facturas del proveedor.
  * - Listado Albaranes: la lista de notas de entrega del proveedor.
@@ -277,7 +276,6 @@ export class AppComponent {
       this.opcionesProveedores = [
         { title: 'Contactos', url: '/contactos/proveedor/' + codigo, icon: 'assets/imgs/cuaderno.svg' },
         { title: 'Datos Bancarios', url: '/bancos/proveedor/' + codigo, icon: 'card-sharp' },
-        { title: 'Direcciones', url: '/direcciones/proveedor/' + codigo, icon: 'compass-outline' },
         { title: 'Historial', url: '/historial/proveedor/' + codigo, icon: 'clipboard-outline' },
         { title: 'Listado Facturas', url: '/facturas/proveedor/' + codigo, icon: 'assets/imgs/bill.svg' },
         { title: 'Listado Albaranes', url: '/albaranes/proveedor/' + codigo, icon: 'assets/imgs/delivery-note.svg' },

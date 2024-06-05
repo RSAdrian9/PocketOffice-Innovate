@@ -96,11 +96,11 @@ private async cargarGrafica(id: number, titulo: string) {
 }
 
  /**
- * Carga un gráfico de barras con el título y los datos proporcionados.
+ * Carga los datos de la gráfica de barras con el título y los datos proporcionados.
  *
- * @param {string} titulo - El título del gráfico.
- * @param {any[]} datos - Los datos del gráfico. Cada elemento del arreglo debe tener una propiedad "total".
- * @return {Promise<void>} Una promesa que se resuelve cuando se ha cargado el gráfico.
+ * @param {string} titulo - El título de la gráfica.
+ * @param {any[]} datos - Los datos de la gráfica. Cada elemento del arreglo debe tener una propiedad "total".
+ * @return {Promise<void>} Una promesa que se resuelve cuando se cargan los datos de la gráfica.
  */
  private async cargarDatosGraficaBarras(titulo: string, datos: any) {
   this.chartOptions = {
@@ -137,7 +137,7 @@ private async cargarGrafica(id: number, titulo: string) {
       text: titulo
     },
     xaxis: {
-      categories: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+      categories: [datos[0].mesletras, datos[1].mesletras, datos[2].mesletras, datos[3].mesletras, datos[4].mesletras, datos[5].mesletras, datos[6].mesletras, datos[7].mesletras, datos[8].mesletras, datos[9].mesletras, datos[10].mesletras, datos[11].mesletras]
     }  
   };
 }
@@ -160,14 +160,14 @@ private async cargarGrafica(id: number, titulo: string) {
   }
 
  /**
- * Formatea un número limitar sus decimales a 2, reemplazando el punto decimal por una coma y agregando separadores de miles.
+ * Formatea un número limitando sus decimales a 2, reemplazando el punto decimal por una coma y agregando separadores de miles.
  *
  * @param {any} numero - El número a formatear.
  * @return {string} El número formateado como una cadena de texto.
  */
-  formatearNumero(numero: any) {
-    let numeroFormateado = parseFloat(numero).toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-    return numeroFormateado;
-  }
+ formatearNumero(numero: any) {
+  let numeroFormateado = parseFloat(numero).toFixed(2);
+  return numeroFormateado;
+}
 
 }
