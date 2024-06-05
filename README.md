@@ -76,6 +76,7 @@ npm install @capacitor/filesystem
 npm install cordova-plugin-android-permissions
 npm install @capacitor-community/sqlite
 npm install apexcharts ng-apexcharts --save
+npm install @capacitor/splash-screen --legacy-peer-deps
 ```
 
 Construir y Desplegar en un dispositivo Android
