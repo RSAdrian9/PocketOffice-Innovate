@@ -1,38 +1,51 @@
+<!-- Encabezado de la página con una barra de herramientas translúcida -->
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón de menú en el lado izquierdo del encabezado -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título principal del encabezado -->
     <ion-title>Mayor de cuentas</ion-title>
+    <!-- Título pequeño con evento de click en el lado derecho del encabezado -->
     <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
   </ion-toolbar>
 
   <ion-toolbar>
+    <!-- Barra de búsqueda y botón de filtro en el encabezado -->
     <ion-buttons>
       <ion-searchbar #input showCancelButton="focus" debounce="500" placeholder="Buscar"></ion-searchbar>
       <ion-button style="height: 2px;" (click)="presentPopover($event)">
         <div class="icon-container">
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
+          <!-- Badge para mostrar el número de filtros aplicados -->
           <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0" class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
       </ion-button>
     </ion-buttons>
+    <!-- Barra de progreso indeterminada -->
     <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal de la página -->
 <ion-content [fullscreen]="true">
+  <!-- Mensaje para cuando no hay datos -->
   <div class="noHayDatos" *ngIf="this.mayor.length == 0">No hay datos de libro mayor para mostrar</div>
+  
+  <!-- Lista de tarjetas de libro mayor -->
   <ion-list *ngIf="this.mayor.length > 0">
-    
+    <!-- Tarjeta individual para cada elemento del libro mayor -->
     <ion-card *ngFor="let mayor of this.mayor" class="cardBorder">
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
           <ion-col>
+            <!-- Icono del libro mayor -->
             <ion-icon src="assets/imgs/mayor.svg" />
           </ion-col>
         </ion-row>
       </ion-grid>
+      <!-- Sección de datos del mayor -->
       <div class="divider">DATOS MAYOR</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
@@ -49,7 +62,7 @@
         </ion-row>
       </ion-grid>
 
-
+      <!-- Sección de importes -->
       <div class="divider">IMPORTES</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
@@ -68,23 +81,22 @@
         </ion-row>
       </ion-grid>
 
-      <ion-button expand="block" class="btn" [routerLink]="['/vista-mayor/'+this.tipo+'/'+this.codigo+'/'+mayor.num]"
-        routerLinkActive="selected">
+      <!-- Botón para ver más detalles del mayor -->
+      <ion-button expand="block" class="btn" [routerLink]="['/vista-mayor/'+this.tipo+'/'+this.codigo+'/'+mayor.num]" routerLinkActive="selected">
         <ion-icon slot="icon-only" name="open-outline"></ion-icon>
       </ion-button>
-
     </ion-card>
-
   </ion-list>
 
+  <!-- Scroll infinito para cargar más datos -->
   @if(hayMasMayor){
-  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-    <ion-infinite-scroll-content loadingText="Cargando mayor de cuentas..."
-      loadingSpinner="bubbles"></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content loadingText="Cargando mayor de cuentas..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   }
 </ion-content>
 
+<!-- Pie de página con resumen de totales -->
 <ion-footer>
   <ion-toolbar style="border-top:1px solid gray">
     <ion-grid [fixed]="true">

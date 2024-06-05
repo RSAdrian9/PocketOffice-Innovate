@@ -1,51 +1,66 @@
+<!-- Encabezado de la página con una barra de herramientas translúcida -->
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón de menú en el lado izquierdo del encabezado -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título principal del encabezado -->
     <ion-title>Proveedores</ion-title>
+    <!-- Botones en el lado derecho del encabezado -->
     <ion-buttons slot="end">
+      <!-- Botón de búsqueda con evento para mostrar/ocultar la barra de búsqueda -->
       <ion-button style="height: 2px;" (click)="mostrarBusqueda = !mostrarBusqueda">
         <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="search"></ion-icon>
       </ion-button>
+      <!-- Botón de filtro -->
       <ion-button style="height: 2px;" (click)="presentPopover($event)">
         <div class="icon-container">
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
-          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0 " class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
+          <!-- Badge para mostrar el número de filtros aplicados -->
+          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0" class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
       </ion-button>
     </ion-buttons>
+    <!-- Barra de progreso indeterminada -->
     <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
+  <!-- Barra de herramientas adicional que contiene la barra de búsqueda -->
   <ion-toolbar *ngIf="!mostrarBusqueda">
-    <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarProveedores($event)"
-      placeholder="Buscar"></ion-searchbar>
+    <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarProveedores($event)" placeholder="Buscar"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal de la página -->
 <ion-content [fullscreen]="true">
+  <!-- Mensaje para cuando no hay proveedores -->
   <div class="noHayDatos" *ngIf="this.proveedores.length == 0">No hay proveedores para mostrar</div>
-  <ion-list *ngIf="this.proveedores.length > 0">    
+
+  <!-- Lista de proveedores -->
+  <ion-list *ngIf="this.proveedores.length > 0">
+    <!-- Tarjeta individual para cada proveedor -->
     <ion-card *ngFor="let proveedor of this.proveedores" class="cardBorderGray">
+      <!-- Elemento de ítem con enlace de enrutamiento a la vista de detalles del proveedor -->
       <ion-item [routerLink]="['/vista-proveedor/'+proveedor.cod]" routerLinkActive="selected">
         <ion-card-header>
           <ion-card-title>{{proveedor.nom}}</ion-card-title>
           <ion-card-subtitle style="color: gray;">{{proveedor.cod}}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-
+          <!-- Contenido adicional del proveedor puede ir aquí -->
         </ion-card-content>
       </ion-item>
-      <ion-item>        
+      <!-- Icono para ver detalles adicionales del proveedor -->
+      <ion-item>
         <ion-icon slot="end" name="eye-outline"></ion-icon>
-      </ion-item>     
+      </ion-item>
     </ion-card>
-
   </ion-list>
+
+  <!-- Scroll infinito para cargar más datos -->
   @if(hayMasProveedores){
   <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-    <ion-infinite-scroll-content loadingText="Cargando Proveedores..."
-      loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    <ion-infinite-scroll-content loadingText="Cargando Proveedores..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
   </ion-infinite-scroll>
   }
 </ion-content>

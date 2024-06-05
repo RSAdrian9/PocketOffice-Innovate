@@ -1,14 +1,21 @@
+<!-- Encabezado con barra de herramientas -->
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón de menú en la posición de inicio -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título principal de la página -->
     <ion-title>Historial</ion-title>
+    <!-- Botón en la posición de fin que muestra un label con un nombre y ejecuta la función goBack al hacer clic -->
     <ion-buttons slot="end" (click)="goBack()">
       <ion-label>{{ this.nombre }}</ion-label>
     </ion-buttons>
   </ion-toolbar>
+</ion-header>
 
+<!-- Contenido principal -->
 <ion-content [fullscreen]="true">
+  <!-- Área de texto que muestra la variable 'historia' -->
   <ion-textarea class="formatted-text">{{ historia }}</ion-textarea>
 </ion-content>

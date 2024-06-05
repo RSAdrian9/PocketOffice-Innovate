@@ -1,13 +1,21 @@
 <div style="margin: auto;">
+    <!-- Divider para mostrar el tipo de fecha -->
   <ion-item-divider>Fecha {{this.tipo}}</ion-item-divider>
   <div>
-    <ion-datetime #datetime presentation="date" [(ngModel)]="this.fechaSeleccionada" firstDayOfWeek="1"
-      displayFormat="DD/MM/YYYY" />
+    <!-- Componente de fecha y hora de Ionic con presentación de solo fecha -->
+    <!-- El ngModel se vincula a la propiedad 'fechaSeleccionada' del componente -->
+    <!-- firstDayOfWeek establece el lunes como primer día de la semana -->
+    <!-- displayFormat define el formato de visualización de la fecha -->
+    <ion-datetime #datetime presentation="date" [(ngModel)]="this.fechaSeleccionada" firstDayOfWeek="1" displayFormat="DD/MM/YYYY" />
   </div>
   <ion-item-divider>
+     <!-- Botones de acción para reestablecer, cancelar y aceptar la selección de fecha -->
     <ion-buttons>
+      <!-- Botón para reestablecer la fecha seleccionada, llama al método 'reestablecer' del componente -->
       <ion-button color="danger" (click)="this.reestablecer()">Reestablecer</ion-button>
+      <!-- Botón para cancelar la selección, llama al método 'cancelar' del componente -->
       <ion-button color="primary" (click)="this.cancelar()">Cancelar</ion-button>
+            <!-- Botón para aceptar la fecha seleccionada, llama al método 'aceptar' del componente -->
       <ion-button color="primary" (click)="this.aceptar()">Aceptar</ion-button>
     </ion-buttons>
   </ion-item-divider>

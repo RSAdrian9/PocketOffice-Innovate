@@ -29,6 +29,15 @@ export class ClientesPage implements OnInit {
   public mostrarBusqueda: boolean = false;
   public filtros: any = { texto: '', actividad: '0', riesgo: '0', nFiltrosAplicados: 0 };
 
+    /**
+   * Construye una nueva instancia de la clase.
+   *
+   * @param {Platform} platform - El servicio de la plataforma.
+   * @param {DbService} dbService - El servicio de la base de datos.
+   * @param {NavController} navC - El controlador de navegación.
+   * @param {TransferirDatosService} transferirService - El servicio de transferencia de datos.
+   * @param {PopoverController} popoverController - El controlador de popover.
+   */
   constructor(
     private platform: Platform,
     private dbService: DbService,
@@ -40,15 +49,31 @@ export class ClientesPage implements OnInit {
     this.mostrarBusqueda = true;
   }
 
+    /**
+   * Inicializa el componente y llama a los métodos pageController y cargarClientes.
+   *
+   * @return {void} No se devuelve nada por esta función.
+   */
   ngOnInit() {
     this.pageController('/clientes');
     this.cargarClientes('');
   }
 
+    /**
+   * Se ejecuta cuando la vista ha sido completamente ingresada y ahora es la vista activa.
+   * Llama al método pageController con la ruta '/clientes'.
+   *
+   * @return {void} Esta función no devuelve nada.
+   */
   ionViewDidEnter() {
     this.pageController('/clientes');
   }
 
+  /**
+   * Filtra los clientes basados en el evento dado.
+   * @param {any} $event - El evento que contiene el valor del filtro.
+   * @return {Promise} - Una promesa que se resuelve cuando se completa el filtrado. 
+   */
   public async filtrarClientes($event: any) {
 
     this.filtros.texto = $event.detail.value;
@@ -58,6 +83,14 @@ export class ClientesPage implements OnInit {
     this.cargarClientes(this.filtroBusqueda);
   }
 
+  /**
+   * Devuelve una función de filtro SQL basada en los filtros proporcionados.
+   * @param {any} filtros - Los filtros a aplicar. Debe tener las siguientes propiedades:
+   * texto: El texto a buscar.
+   * actividad: El filtro de actividad ('0', '1' o '2').
+   * riesgo: El filtro de riesgo ('0' o '1').
+   * @return {string} La función de filtro SQL.
+  */
   private devuelveFiltroSentencia(filtros: any): string {
     let filtro = '';
     let nFiltrosAnadidos = 0;
@@ -117,6 +150,12 @@ export class ClientesPage implements OnInit {
     return filtro;
   }
 
+  /**
+   * Presenta un popover con el filtro de clientes.
+   * @param {any} ev - El evento que activó el popover.
+   * @return {Promise<void>} Una promesa que se resuelve cuando el popover se cierra.
+   * 
+   */
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: FiltroClientesComponent,
@@ -141,6 +180,12 @@ export class ClientesPage implements OnInit {
     })
   }
 
+  /**
+   * Carga los clientes correspondientes al filtro proporcionado.
+   * @param {string} filtro - El filtro de clientes a cargar.
+   * @return {void} No se devuelve nada.
+   * 
+   */
   private cargarClientes(filtro: string) {
     this.consultaRealizada = false;
     this.dbService.getClientesParaLista(filtro).then((clientes) => {
@@ -159,7 +204,12 @@ export class ClientesPage implements OnInit {
     });
   }
 
-
+  /**
+   * Carga los clientes correspondientes al filtro proporcionado.
+   * @param {string} filtro - El filtro de clientes a cargar.
+   * @return {void} No se devuelve nada.
+   * 
+   */
   onIonInfinite(ev: InfiniteScrollCustomEvent) {
 
     if (this.registros != this.clientesAUX.length) {
@@ -172,6 +222,11 @@ export class ClientesPage implements OnInit {
     }
   }
 
+  /**
+   * Carga los clientes correspondientes al filtro proporcionado.
+   * @param {string} filtro - El filtro de clientes a cargar.
+   * @return {void} No se devuelve nada.
+   */
   pageController(route: string) {
     this.transferirService.sendObjectSource({ ruta: route });
     this.platform.backButton.subscribeWithPriority(10, () => {
@@ -180,6 +235,11 @@ export class ClientesPage implements OnInit {
     });
   }
 
+  /**
+   * Carga los clientes correspondientes al filtro proporcionado.
+   * @param {string} filtro - El filtro de clientes a cargar.
+   * @return {void} No se devuelve nada.
+   */
   comprobarDiferencia(s: clienteTmp) {
     if (s.riesgo > 0.00) {
       if (s.totalimp > s.riesgo) {

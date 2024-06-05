@@ -1,34 +1,48 @@
+<!-- Encabezado de la página con una barra de herramientas translúcida -->
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón de menú en el lado izquierdo del encabezado -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título principal del encabezado -->
     <ion-title>Rentabilidad</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal de la página -->
 <ion-content [fullscreen]="true">
   <ion-list>
+    <!-- Tarjeta que contiene la información de rentabilidad -->
     <ion-card class="cardBorder">
+      <!-- Grid para el icono -->
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
           <ion-col>
-            <ion-icon src="assets/imgs/money-bag.svg" />
+            <ion-icon src="assets/imgs/money-bag.svg"></ion-icon>
           </ion-col>
         </ion-row>
       </ion-grid>
+
+      <!-- Divider para separar secciones -->
       <div class="divider">IMPORTES</div>
+      
+      <!-- Grid para mostrar los importes de compras y ventas -->
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
           <ion-col>Importe de compras</ion-col>
-          <ion-col>Importe de ㅤventas</ion-col>
+          <ion-col>Importe de ventas</ion-col>
         </ion-row>
         <ion-row>
           <ion-col>{{this.formatearNumero(rentabilidad.impcom)}}€</ion-col>
           <ion-col>{{this.formatearNumero(rentabilidad.impven)}}€</ion-col>
         </ion-row>
       </ion-grid>
+
+      <!-- Divider para separar secciones -->
       <div class="divider">Porcentajes %</div>
+      
+      <!-- Grid para mostrar los porcentajes sobre la venta y compra -->
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
           <ion-col>% Sobre la venta</ion-col>
@@ -39,6 +53,8 @@
           <ion-col>{{this.formatearNumero(rentabilidad.besoco)}}€</ion-col>
         </ion-row>
       </ion-grid>
+      
+      <!-- Grid para mostrar los beneficios -->
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
           <ion-col>Beneficios</ion-col>

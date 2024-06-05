@@ -39,6 +39,16 @@ export class AlbaranesPage implements OnInit {
   public filtros: any = { texto: '', facturado: '0', serie: 'Todos', estCobro: '0', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
 
 
+    /**
+   * Crea una nueva instancia de la clase.
+   *
+   * @param {Platform} platform - El objeto de la plataforma.
+   * @param {TransferirDatosService} transferirService - El servicio de transferencia de datos.
+   * @param {NavController} navC - El controlador de navegación.
+   * @param {PopoverController} popoverController - El controlador de popover.
+   * @param {DatePipe} datepipe - El filtro de fecha.
+   * @param {DbService} dbService - El servicio de base de datos.
+   */
   constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
@@ -48,6 +58,12 @@ export class AlbaranesPage implements OnInit {
     private dbService: DbService
   ) { }
 
+    /**
+   * Inicializa el componente y establece las propiedades tipo y código basadas en los parámetros de la ruta activada.
+   * Luego llama al método pageController.
+   *
+   * @return {void} Esta función no devuelve ningún valor.
+   */
   ngOnInit() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -55,6 +71,11 @@ export class AlbaranesPage implements OnInit {
     this.pageController();
   }
 
+    /**
+   * Se ejecuta cuando la vista ha entrado completamente y ahora es la vista activa.
+   * Establece las propiedades 'tipo' y 'codigo' a partir de los parámetros de la instantánea de la ruta activada.
+   * Llama al método 'pageController'.
+   */
   ionViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -62,6 +83,16 @@ export class AlbaranesPage implements OnInit {
     this.pageController();
   }
 
+    /**
+   * Ejecuta la lógica del controlador de página.
+   *
+   * Esta función establece la propiedad `filtroBusqueda` llamando al método `devuelveFiltroSentencia` con la propiedad `filtros`.
+   * Luego llama al método `cargarAlbaranes` con la propiedad `filtroBusqueda`.
+   *
+   * Después de eso, envía un objeto con la propiedad `codigo` al servicio `transferirService` utilizando el método `sendObjectSource`.
+   *
+   * Por último, se suscribe al evento de botón atrás con una prioridad de 10 y llama al método `goBack` cuando se activa el evento.
+   */
   pageController() {
     this.filtroBusqueda = this.devuelveFiltroSentencia(this.filtros);
     this.cargarAlbaranes(this.filtroBusqueda);
@@ -72,6 +103,12 @@ export class AlbaranesPage implements OnInit {
     });
   }
 
+    /**
+   * Navega hacia atrás a la página anterior según el valor de `this.tipo`.
+   * Si `this.tipo` es 'cliente', navega hacia atrás a '/vista-cliente/{this.codigo}'.
+   * Si `this.tipo` es 'proveedor', navega hacia atrás a '/vista-proveedor/{this.codigo}'.
+   * También envía un objeto que contiene la ruta a `this.transferirService`.
+   */
   goBack() {
     switch (this.tipo) {
       case 'cliente':
@@ -84,6 +121,12 @@ export class AlbaranesPage implements OnInit {
         break;
     }
   }
+    /**
+   * Filtra los albaranes basados en el valor de entrada.
+   *
+   * @param {any} $event - El objeto de evento que contiene el valor de entrada.
+   * @return {Promise<void>} - Una promesa que se resuelve cuando los albaranes se filtran.
+   */
   public async filtrarAlbaranes($event: any) {
 
     this.filtros.texto = $event.detail.value;
@@ -94,6 +137,12 @@ export class AlbaranesPage implements OnInit {
     this.cargarAlbaranes(this.filtroBusqueda);
   }
 
+    /**
+   * Devuelve una oración de filtro SQL basada en los filtros dados.
+   *
+   * @param {any} filtros - Los filtros a aplicar.
+   * @return {string} La oración de filtro SQL generada.
+   */
   private devuelveFiltroSentencia(filtros: any): string {
     let filtro = '';
     let nFiltrosAnadidos = 0;
@@ -230,6 +279,12 @@ export class AlbaranesPage implements OnInit {
     return filtro;
   }
 
+    /**
+   * Presenta un popover con el componente FiltroAlbaranesComponent y maneja el evento de cierre.
+   *
+   * @param {any} ev - El evento que desencadenó la aparición del popover.
+   * @return {Promise<void>} Una promesa que se resuelve cuando el popover se cierra.
+   */
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: FiltroAlbaranesComponent,
@@ -255,7 +310,12 @@ export class AlbaranesPage implements OnInit {
       this.filtros = { texto: '', facturado: '0', serie: 'Todos', estCobro: '0', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
     })
   }
-
+    /**
+   * Carga la lista de facturas según el filtro proporcionado.
+   *
+   * @param {string} filtro - El filtro a aplicar a las facturas.
+   * @return {void} Esta función no devuelve ningún valor.
+   */
   private cargarAlbaranes(filtro: string) {
     switch (this.tipo) {
       case 'cliente':
@@ -309,6 +369,16 @@ export class AlbaranesPage implements OnInit {
     }
   }
 
+    /**
+   * Calcula el importe total de los albaranes en función del tipo.
+   *
+   * Esta función itera a través de los arrays albaranesAUXCliente o albaranesAUXProveedor
+   * y suma la propiedad 'toteu' de cada albarán. El resultado se almacena en la variable
+   * importeAlbaranes. La función verifica si el tipo es 'cliente' o 'proveedor' y realiza
+   * el cálculo correspondiente. El resultado final se redondea a 2 decimales.
+   *
+   * @return {void} Esta función no devuelve ningún valor.
+   */
   calcularImporteAlbaranes() {
     this.importeAlbaranes = 0;
     if (this.tipo == 'cliente'){
@@ -330,6 +400,12 @@ export class AlbaranesPage implements OnInit {
 
   }
 
+    /**
+   * Maneja el evento de scroll infinito.
+   *
+   * @param {InfiniteScrollCustomEvent} ev - El objeto del evento de scroll infinito.
+   * @return {void} Esta función no devuelve nada.
+   */
   onIonInfinite(ev: InfiniteScrollCustomEvent) {
     if (this.tipo == 'cliente') {
       if (this.registros != this.albaranesAUXCliente.length) {
@@ -349,6 +425,12 @@ export class AlbaranesPage implements OnInit {
 
   }
 
+    /**
+   * Formatea una cadena de fecha dada en el formato 'yyyy-MM-dd'.
+   *
+   * @param {string} fecha - La cadena de fecha a formatear.
+   * @return {string} La cadena de fecha formateada, o una cadena vacía si la entrada es nula.
+   */
   public formatearFecha(fecha: string) {
     let fechaFormateada;
     if (fecha != null) {
@@ -360,6 +442,12 @@ export class AlbaranesPage implements OnInit {
     return fechaFormateada;
   }
 
+    /**
+   * Determina la clase de color de fondo basada en el estado del albarán dado.
+   *
+   * @param {any} albaran - El objeto albarán para verificar el estado.
+   * @return {string} La clase de color de fondo correspondiente al estado del albarán.
+   */
   comprobarAlbaran(albaran: any): string {
     if (albaran.est == "3") {
       return "rowBackgroundGreen";
@@ -372,6 +460,12 @@ export class AlbaranesPage implements OnInit {
     }
   }
 
+    /**
+   * Determina la clase de color de fondo para un albarán dado en función de su estado.
+   *
+   * @param {any} albaran - El objeto albarán para verificar el estado.
+   * @return {string} La clase de color de fondo correspondiente al estado del albarán.
+   */
   comprobarAlbaranNofacturable(albaran: any): string {
     if (albaran.fac == "1" && albaran.n_f!="NO FACTURABLE") {
       return "rowBackgroundGreen";
@@ -382,6 +476,12 @@ export class AlbaranesPage implements OnInit {
     }
   }
 
+    /**
+   * Formatea un número ajustando sus decimales, reemplazando el punto decimal con una coma y agregando separadores de miles.
+   *
+   * @param {any} numero - El número a formatear.
+   * @return {string} El número formateado como una cadena.
+   */
   formatearNumero(numero: any){
     let numeroFormateado = parseFloat(numero).toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
     return numeroFormateado;

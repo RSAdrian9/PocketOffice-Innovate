@@ -24,6 +24,14 @@ export class BancosPage implements OnInit {
   bancos: banco[] = [];
   nombre: string = '';
 
+    /**
+   * Crea una nueva instancia de la clase.
+   *
+   * @param {Platform} platform - El servicio de la plataforma.
+   * @param {TransferirDatosService} transferirService - El servicio de transferencia de datos.
+   * @param {NavController} navC - El controlador de navegación.
+   * @param {DbService} dbService - El servicio de la base de datos.
+   */
   constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
@@ -33,6 +41,12 @@ export class BancosPage implements OnInit {
     addIcons({ checkmarkOutline });
   }
 
+    /**
+   * Inicializa el componente y recupera los parámetros 'tipo' y 'codigo' desde la ruta activada.
+   * Llama al método pageController.
+   *
+   * @return {void} Esta función no devuelve nada.
+   */
   ngOnInit() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -41,6 +55,11 @@ export class BancosPage implements OnInit {
 
   }
 
+    /**
+   * Se ejecuta cuando la vista ha entrado completamente y ahora es la vista activa.
+   * Establece las propiedades 'tipo' y 'codigo' a partir de los parámetros de la ruta activada.
+   * Llama al método 'pageController'.
+   */
   ionViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -48,6 +67,11 @@ export class BancosPage implements OnInit {
     this.pageController();
   }
 
+    /**
+   * Carga de forma asíncrona los bancos basados en el tipo y el código.
+   *
+   * @return {Promise<void>} Una promesa que se resuelve cuando se cargan los bancos.
+   */
   async cargarBancos() {
     switch (this.tipo) {
       case 'cliente':
@@ -75,6 +99,12 @@ export class BancosPage implements OnInit {
     }
   }
 
+    /**
+   * Inicializa el controlador de página cargando los bancos según el tipo y código,
+   * enviando el código al servicio de transferencia y suscribiéndose al evento del botón de retroceso.
+   *
+   * @return {void} Esta función no devuelve ningún valor.
+   */
   pageController() {
     this.cargarBancos();
     this.transferirService.sendObjectSource({ codigo: this.codigo })
@@ -83,6 +113,11 @@ export class BancosPage implements OnInit {
     });
   }
 
+    /**
+   * Navega hacia atrás a la vista adecuada según el tipo y el código, y envía el código al servicio de transferencia.
+   *
+   * @return {void} Esta función no devuelve nada.
+   */
   goBack() {
     switch (this.tipo) {
       case 'cliente':

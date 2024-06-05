@@ -28,6 +28,14 @@ export class ResumenMensualVentasPage implements OnInit {
   ocultar_trim4: boolean = false;
 
 
+ /**
+ * Constructor de la clase PedidosPage.
+ *
+ * @param {Platform} platform - El servicio de la plataforma.
+ * @param {TransferirDatosService} transferirService - El servicio de transferencia de datos.
+ * @param {NavController} navC - El controlador de navegación.
+ * @param {DbService} dbService - El servicio de base de datos.
+ */
   constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
@@ -35,6 +43,12 @@ export class ResumenMensualVentasPage implements OnInit {
     private dbService: DbService
   ) { }
 
+ /**
+ * Inicializa el componente y establece las propiedades 'tipo' y 'codigo' basadas en los parámetros de la ruta activada.
+ * Luego llama al método 'pageController'.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   ngOnInit() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -43,6 +57,13 @@ export class ResumenMensualVentasPage implements OnInit {
     this.pageController();
   }
 
+ /**
+ * Se ejecuta cuando la vista ha entrado completamente y ahora es la vista activa.
+ * Establece las propiedades 'tipo' y 'codigo' basadas en los parámetros de la ruta activada.
+ * Llama al método 'pageController'.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   ionViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -51,27 +72,65 @@ export class ResumenMensualVentasPage implements OnInit {
     this.pageController();
   }
 
+ /**
+ * Alterna la visibilidad del botón del primer trimestre.
+ *
+ * Esta función actualiza el valor de la propiedad `ocultar_trim1` negando su valor actual.
+ *
+ * @return {void} Esta función no devuelve ningún valor.
+ */
   control_boton_trim1(){
     this.ocultar_trim1 = !this.ocultar_trim1;
   }
 
+ /**
+ * Alterna la visibilidad del botón del segundo trimestre.
+ *
+ * Esta función actualiza el valor de la propiedad `ocultar_trim2` negando su valor actual.
+ *
+ * @return {void} Esta función no devuelve ningún valor.
+ */
   control_boton_trim2(){
     this.ocultar_trim2 = !this.ocultar_trim2;
   }
 
+ /**
+ * Alterna la visibilidad del botón del tercer trimestre.
+ *
+ * Esta función actualiza el valor de la propiedad `ocultar_trim3` negando su valor actual.
+ *
+ * @return {void} Esta función no devuelve ningún valor.
+ */
   control_boton_trim3(){
     this.ocultar_trim3 = !this.ocultar_trim3;
   }
 
+ /**
+ * Alterna la visibilidad del botón del cuarto trimestre.
+ *
+ * Esta función actualiza el valor de la propiedad `ocultar_trim4` negando su valor actual.
+ *
+ * @return {void} Esta función no devuelve ningún valor.
+ */
   control_boton_trim4(){
     this.ocultar_trim4 = !this.ocultar_trim4;
   }
 
+ /**
+ * Actualiza el valor de la propiedad 'iva' basado en el valor seleccionado del evento.
+ *
+ * @param {any} event - El objeto de evento que contiene el valor seleccionado.
+ * @return {void} Esta función no devuelve nada.
+ */
   controlSelectIVA(event: any) {
     this.iva = event.detail.value;
   }
   
 
+ /**
+ * Asincrónicamente carga el resumen mensual basado en el valor de la propiedad 'tipo'.
+ * @return {Promise} Una promesa que se resuelve cuando se carga el resumen mensual. 
+ */
   async cargarResumenMensual() {
     switch (this.tipo) {
       case 'cliente':
@@ -96,13 +155,23 @@ export class ResumenMensualVentasPage implements OnInit {
 
   }
 
-
+ /**
+ * Navega hacia atrás a la página '/vista-cliente/{this.codigo}' y envía un objeto con la propiedad 'ruta' establecida en '/vista-cliente' al servicio 'transferirService'.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   goBack() {
     this.navC.navigateBack('/vista-cliente/' + this.codigo);
     this.transferirService.sendObjectSource({ ruta: '/vista-cliente' });
   }
 
 
+ /**
+ * Inicializa la página cargando el resumen mensual de ventas y enviando el código al servicio de transferencia.
+ * También se suscribe al evento del botón de retroceso y llama a la función goBack.
+ *
+ * @return {void}
+ */
   pageController() {
     this.cargarResumenMensual();
 
@@ -112,6 +181,12 @@ export class ResumenMensualVentasPage implements OnInit {
     });
   }
 
+ /**
+ * Formatea un número limitando sus decimales a 2, reemplazando el punto decimal con una coma y agregando separadores de miles.
+ *
+ * @param {any} numero - El número a formatear.
+ * @return {string} El número formateado como una cadena.
+ */
   formatearNumero(numero: any) {
     let numeroFormateado = parseFloat(numero).toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
     return numeroFormateado;

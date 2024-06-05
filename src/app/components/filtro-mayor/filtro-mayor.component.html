@@ -1,36 +1,46 @@
 <ion-list>
+  <!-- Divisor para el año fiscal -->
   <ion-item-divider *ngIf="this.anios.length > 1">Año fiscal</ion-item-divider>
   <ion-item *ngIf="this.anios.length > 1">
-    <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.anio}}"
-      (ionChange)="this.controladorSelectAnio($event)" >
-      <ion-select-option *ngFor="let anio of anios" value="{{anio.anioval}}">{{anio.aniodef}}</ion-select-option>      
+    <!-- Selector de año fiscal -->
+    <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" [value]="this.filtros.anio" (ionChange)="this.controladorSelectAnio($event)">
+      <!-- Opciones del selector de año fiscal -->
+      <ion-select-option *ngFor="let anio of anios" [value]="anio.anioval">{{anio.aniodef}}</ion-select-option>      
     </ion-select>
   </ion-item>
   
+  <!-- Divisor para el rango de fechas -->
   <ion-item-divider>Rango de fechas</ion-item-divider>
+  <!-- Item para la fecha desde -->
   <ion-item>
     <div class="icon-container">
+      <!-- Texto de la fecha desde -->
       Desde: {{formatearFecha(this.filtros.fechaDesde)}}
+      <!-- Icono para borrar filtro de fecha desde -->
       <ion-badge *ngIf="this.filtros.fechaDesde !=''" class="badge_float_button">
-        <ion-icon style="color:red; position: relative; font-weight: bold; font-size: 1.5em;" name="trash-bin"
-          (click)="this.borrarFiltroFecha('desde')"></ion-icon>
+        <ion-icon style="color:red; position: relative; font-weight: bold; font-size: 1.5em;" name="trash-bin" (click)="this.borrarFiltroFecha('desde')"></ion-icon>
       </ion-badge>
     </div>
+    <!-- Botón para abrir modal de selección de fecha desde -->
     <ion-button size="" class="btn btn_margin" (click)="this.abrirModalFecha('desde')" slot="end">
       <ion-icon name="calendar-outline"></ion-icon>
     </ion-button>
   </ion-item>
+  <!-- Item para la fecha hasta -->
   <ion-item>
     <div class="icon-container">
+      <!-- Texto de la fecha hasta -->
       Hasta: {{formatearFecha(this.filtros.fechaHasta)}}
+      <!-- Icono para borrar filtro de fecha hasta -->
       <ion-badge *ngIf="this.filtros.fechaHasta !=''" class="badge_float_button">
-        <ion-icon style="color:red; position: relative; font-weight: bold; font-size: 1.5em;" name="trash-bin"
-          (click)="this.borrarFiltroFecha('hasta')"></ion-icon>
+        <ion-icon style="color:red; position: relative; font-weight: bold; font-size: 1.5em;" name="trash-bin" (click)="this.borrarFiltroFecha('hasta')"></ion-icon>
       </ion-badge>
     </div>
+    <!-- Botón para abrir modal de selección de fecha hasta -->
     <ion-button size="" class="btn btn_margin" (click)="this.abrirModalFecha('hasta')" slot="end">
       <ion-icon name="calendar-outline"></ion-icon>
     </ion-button>
   </ion-item>  
 </ion-list>
+<!-- Botón para aplicar filtros -->
 <ion-button expand="block" (click)="this.aplicarFiltros()" class="btn">Aplicar</ion-button>

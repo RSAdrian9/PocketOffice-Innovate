@@ -24,6 +24,14 @@ export class DireccionesPage implements OnInit {
   direcciones: direccion[] = [];
   nombre: string = '';
 
+    /**
+   * Constructor del componente de direcciones para mostrar las direcciones de un cliente o proveedor
+   * @param platform
+   * @param transferirService
+   * @param navC
+   * @param dbService
+   * @param utils
+   */
   constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
@@ -34,6 +42,11 @@ export class DireccionesPage implements OnInit {
     addIcons({ callOutline, mailOutline });
   }
 
+  /**
+   * Carga la información de los contactos y el nombre del contacto
+   * 
+   * @return {void} Esta función no devuelve nada.
+   */
   ngOnInit() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -41,6 +54,11 @@ export class DireccionesPage implements OnInit {
     this.pageController();
   }
 
+  /**
+   * Carga la información de los contactos y el nombre del contacto
+   * 
+   * @return {void} Esta función no devuelve nada.
+   */
   async cargarDirecciones() {
     switch (this.tipo) {
       case 'cliente':
@@ -66,6 +84,11 @@ export class DireccionesPage implements OnInit {
     }
   }
 
+  /**
+   * Carga la información de los contactos y el nombre del contacto
+   * 
+   * @return {void} Esta función no devuelve nada.
+   */
   pageController() {
     this.cargarDirecciones();
     this.transferirService.sendObjectSource({ codigo: this.codigo })
@@ -74,6 +97,11 @@ export class DireccionesPage implements OnInit {
     });
   }
 
+  /**
+   * Carga la información de los contactos y el nombre del contacto
+   * 
+   * @return {void} Esta función no devuelve nada.
+   */
   goBack() {
     switch (this.tipo) {
       case 'cliente':
@@ -87,14 +115,29 @@ export class DireccionesPage implements OnInit {
     }
   }
 
+  /**
+   * Carga la información de los contactos y el nombre del contacto
+   * 
+   * @return {void} Esta función no devuelve nada.
+   */
   valid(e?: String) {
     return this.utils.valid(e);
   }
 
+  /**
+   * Llama al número de telefono
+   * @param number 
+   * @returns 
+   */
   callNumber(number?: string) {
     window.open(`tel:${number}`, '_system');
   }
 
+  /**
+   * Llama al correo electronico
+   * @param email 
+   * @returns 
+   */
   mailto(email?: string) {
     window.open(`mailto:${email}`, '_system');
   }

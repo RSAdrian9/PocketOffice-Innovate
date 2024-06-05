@@ -21,21 +21,39 @@ export class ModalGraficaComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent | undefined;
   public chartOptions: any;
 
+ /**
+ * Crea una nueva instancia de la clase.
+ *
+ * @param {NavParams} navParams - Los parámetros de navegación.
+ */
   constructor(
     private navParams: NavParams
-  ) {
-    
-  }
+  ) { }
 
+ /**
+ * Inicializa el componente y llama al método `controlGrafica`.
+ *
+ * @return {void} No devuelve ningún valor.
+ */
   ngOnInit() {
     this.controlGrafica();
   }
 
+ /**
+ * Ejecuta el método `controlGrafica` cuando la vista es accedida.
+ *
+ * @return {void} Esta función no devuelve ningún valor.
+ */
   ionViewDidEnter() {
     this.controlGrafica();
   }
 
-  controlGrafica(){
+ /**
+ * Controla la gráfica según el tipo de gráfica especificado en los parámetros de navegación.
+ *
+ * @return {void} Esta función no devuelve ningún valor.
+ */
+  controlGrafica() {
     let id = this.navParams.data['id'];
     let titulo = this.navParams.data['titulo'];
     let tipoGrafica = this.navParams.data['tipoGrafica'];
@@ -47,14 +65,19 @@ export class ModalGraficaComponent implements OnInit {
       case 'sectores':
         this.cargarGraficaSectores(id, titulo);
         break;
-
       default:
         break;
     }
   }
 
-  /*El id se utilizara para saber que consulta se tiene que ejecutar para cargar los datos correspondientes*/
-  cargarGraficaBarras(id:number, titulo:string) {
+ /**
+ * Carga un gráfico de barras con el id y título proporcionados.
+ *
+ * @param {number} id - El id del gráfico.
+ * @param {string} titulo - El título del gráfico.
+ * @return {void} Esta función no devuelve nada.
+ */
+  cargarGraficaBarras(id: number, titulo: string) {
     this.chartOptions = {
       series: [
         {
@@ -74,9 +97,15 @@ export class ModalGraficaComponent implements OnInit {
       }
     };
   }
-  
-  /*El id se utilizara para saber que consulta se tiene que ejecutar para cargar los datos correspondientes*/
-  cargarGraficaSectores(id:number, titulo:string) {
+
+ /**
+ * Carga un gráfico de sectores con el id y título proporcionados.
+ *
+ * @param {number} id - El id del gráfico.
+ * @param {string} titulo - El título del gráfico.
+ * @return {void} Esta función no devuelve nada.
+ */
+  cargarGraficaSectores(id: number, titulo: string) {
     this.chartOptions = {
       series: [44, 55, 13, 43, 22],
       chart: {
@@ -101,7 +130,5 @@ export class ModalGraficaComponent implements OnInit {
         }
       ]
     }
-
   }
-
 }

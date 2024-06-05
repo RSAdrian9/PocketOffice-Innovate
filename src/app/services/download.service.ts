@@ -15,6 +15,13 @@ export class DownloadService {
   nombre: string = "salida.zip";
   private directorioTmp: string = 'temp';
 
+ /**
+ * Inicializa una nueva instancia de la clase.
+ *
+ * @param {FilesystemService} filesystemService - El servicio para interactuar con el sistema de archivos.
+ * @param {ToastService} toastService - El servicio para mostrar notificaciones de toast.
+ * @param {DbService} dbService - El servicio para interactuar con la base de datos.
+ */
   constructor(
     private filesystemService: FilesystemService,
     private toastService: ToastService,
@@ -22,6 +29,11 @@ export class DownloadService {
 
   ) { }
 
+ /**
+ * Descarga e extrae un paquete de datos.
+ *
+ * @return {Promise<void>} - Una promesa que se resuelve cuando el paquete se descarga y extrae correctamente.
+ */
   public async descargarYDescomprimirPaqueteDatos() {
     try {
       const status = await Network.getStatus();

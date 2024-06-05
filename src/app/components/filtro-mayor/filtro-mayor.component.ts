@@ -21,6 +21,14 @@ export class FiltroMayorComponent implements OnInit {
   nFiltrosAplicados: number = 0;
   public anios: Array<anio> = [];
 
+ /**
+ * Constructor para la clase FiltroPedidosComponent.
+ *
+ * @param {PopoverController} popoverController - La instancia de PopoverController.
+ * @param {DatePipe} datepipe - La instancia de DatePipe.
+ * @param {NavParams} navParams - La instancia de NavParams.
+ * @param {ModalController} modalController - La instancia de ModalController.
+ */
   constructor(
     private popoverController: PopoverController,
     private datepipe: DatePipe,
@@ -32,10 +40,21 @@ export class FiltroMayorComponent implements OnInit {
 
   ngOnInit() { }
 
+ /**
+ * Actualiza la propiedad 'anio' del objeto 'filtros' con el valor seleccionado del evento 'ev'.
+ *
+ * @param {any} ev - El objeto de evento que contiene el valor seleccionado.
+ */
   controladorSelectAnio(ev: any) {
     this.filtros.anio = ev.detail.value;
   }  
 
+ /**
+ * Se ejecuta cuando la vista ha sido completamente ingresada y ahora es la vista activa.
+ * Recupera los datos de los parámetros de navegación y los asigna a las variables correspondientes.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   ionViewDidEnter() {
     let data: any = this.navParams.data;
     console.log(data);
@@ -48,6 +67,12 @@ export class FiltroMayorComponent implements OnInit {
     this.filtros.nFiltrosAplicados = data.filtros.nFiltrosAplicados;
   }
 
+ /**
+ * Abre un modal para seleccionar una fecha.
+ *
+ * @param {string} tipo - El tipo de fecha a seleccionar.
+ * @return {Promise<void>} Una promesa que se resuelve cuando el modal se cierra.
+ */
   async abrirModalFecha(tipo: string) {
     const modal = await this.modalController.create({
       component: DatePickerMayorComponent,
@@ -66,6 +91,12 @@ export class FiltroMayorComponent implements OnInit {
     });
   }
 
+ /**
+ * Formatea una cadena de fecha dada en el formato 'dd/MM/yyyy' utilizando la DatePipe.
+ *
+ * @param {string} fecha - La cadena de fecha a formatear.
+ * @return {string} La cadena de fecha formateada, o una cadena vacía si la entrada es nula.
+ */
   public formatearFecha(fecha: string) {
     let fechaFormateada;
     if (fecha != null) {
@@ -77,6 +108,18 @@ export class FiltroMayorComponent implements OnInit {
     return fechaFormateada;
   }
 
+ /**
+ * Aplica los filtros seleccionados y cierra el popover.
+ *
+ * Esta función incrementa la variable `nFiltrosAplicados` basándosese en los filtros seleccionados.
+ * Si el filtro `anio` no es igual a '0', `nFiltrosAplicados` se incrementa.
+ * Si el filtro `fechaDesde` no es una cadena vacía, `nFiltrosAplicados` se incrementa.
+ * Si el filtro `fechaHasta` no es una cadena vacía, `nFiltrosAplicados` se incrementa.
+ * Los valores `texto`, `anio`, `fechaDesde`, `fechaHasta` y `nFiltrosAplicados` se asignan al objeto `filtros`.
+ * El objeto `filtros` se pasa al método `popoverController.dismiss()`.
+ *
+ * @return {void} Esta función no devuelve ningún valor.
+ */
   aplicarFiltros() {
     this.nFiltrosAplicados = 0;
 
@@ -99,6 +142,11 @@ export class FiltroMayorComponent implements OnInit {
     this.popoverController.dismiss(this.filtros);
   }
 
+ /**
+ * Borra el rango de fechas seleccionado según el tipo proporcionado.
+ *
+ * @param {string} tipo - El tipo de rango de fechas a borrar ('desde' o 'hasta').
+ */
   borrarFiltroFecha(tipo: string) {
     switch (tipo) {
       case 'desde':

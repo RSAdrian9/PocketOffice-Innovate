@@ -1,53 +1,69 @@
+<!-- Encabezado de la página -->
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón de menú en el lado izquierdo -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título de la página -->
     <ion-title>Clientes</ion-title>
+    <!-- Botones en el lado derecho -->
     <ion-buttons slot="end">
+      <!-- Botón de búsqueda -->
       <ion-button style="height: 2px;" (click)="mostrarBusqueda = !mostrarBusqueda">
         <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="search"></ion-icon>
       </ion-button>
+      <!-- Botón de filtro -->
       <ion-button style="height: 2px;" (click)="presentPopover($event)">
+        <!-- Icono de filtro -->
         <div class="icon-container">
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
+          <!-- Indicador de filtros aplicados -->
           <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0 " class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
       </ion-button>
     </ion-buttons>
+    <!-- Barra de progreso para indicar carga de datos -->
     <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
+  <!-- Barra de herramientas para la barra de búsqueda -->
   <ion-toolbar *ngIf="!mostrarBusqueda">
+    <!-- Barra de búsqueda -->
     <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarClientes($event)"
       placeholder="Buscar"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal -->
 <ion-content [fullscreen]="true">
+  <!-- Mensaje si no hay clientes -->
   <div class="noHayDatos" *ngIf="this.clientes.length == 0">No hay clientes para mostrar</div>
+  <!-- Lista de clientes -->
   <ion-list *ngIf="this.clientes.length > 0">    
+    <!-- Tarjeta de cliente -->
     <ion-card *ngFor="let cliente of this.clientes"
       [ngClass]="this.comprobarDiferencia(cliente)==true ? 'cardBorderRed':'cardBorderGray' ">
+      <!-- Elemento de lista que enlaza a la vista detallada del cliente -->
       <ion-item [routerLink]="['/vista-cliente/'+cliente.cod]" routerLinkActive="selected">
+        <!-- Encabezado de la tarjeta con nombre y código del cliente -->
         <ion-card-header>
           <ion-card-title>{{cliente.nom}}</ion-card-title>
           <ion-card-subtitle style="color: gray;">{{cliente.cod}}</ion-card-subtitle>
         </ion-card-header>
+        <!-- Contenido de la tarjeta (opcional) -->
         <ion-card-content>
 
         </ion-card-content>
       </ion-item>
+      <!-- Ícono de alerta si hay diferencia y ícono de vista detallada del cliente -->
       <ion-item>
         <ion-icon *ngIf="this.comprobarDiferencia(cliente)==true" name="alert-circle" color="danger"></ion-icon>
         <ion-icon slot="end" name="eye-outline"></ion-icon>
       </ion-item>
     </ion-card>
-
   </ion-list>
-  @if(hayMasClientes){
-  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-    <ion-infinite-scroll-content loadingText="Cargando Clientes..."
-      loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  <!-- Scroll infinito para cargar más clientes si hay disponibles -->
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" *ngIf="hayMasClientes">
+    <ion-infinite-scroll-content loadingText="Cargando Clientes..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
   </ion-infinite-scroll>
-  }
 </ion-content>

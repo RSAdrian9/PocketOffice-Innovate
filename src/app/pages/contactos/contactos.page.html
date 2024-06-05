@@ -1,41 +1,56 @@
+<!-- Encabezado de la página -->
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón del menú lateral en el lado izquierdo -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título de la página -->
     <ion-title style="padding-left:0 ;">Contactos</ion-title>
+    <!-- Título secundario con el nombre del contacto en el lado derecho -->
     <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal -->
 <ion-content [fullscreen]="true">
+  <!-- Mensaje si no hay contactos -->
   <div class="noHayDatos" *ngIf="this.contactos.length == 0">No hay contactos para mostrar</div>
+  <!-- Lista de contactos -->
   <ion-list *ngIf="this.contactos.length > 0">
-    
+    <!-- Tarjeta de contacto para cada contacto -->
     <ion-card *ngFor="let contacto of this.contactos" class="cardBorderGray">
+      <!-- Encabezado de la tarjeta con el nombre del contacto -->
       <ion-item>
         <ion-card-header>
           <ion-card-title>Nombre: {{contacto.nom}}</ion-card-title>
         </ion-card-header>
       </ion-item>
+      <!-- Información del contacto: Cargo -->
       <ion-item>Cargo: {{contacto.car}}</ion-item>
+      <!-- Información del contacto: Teléfono -->
       <ion-item>
         <p class="title titleSize">Teléfono:</p>
         <p class="paddingL">{{contacto.tel}}</p>
+        <!-- Botón para llamar al número de teléfono -->
         <ion-button size="" [disabled]="this.valid(contacto.tel)" class="btn btn_margin"
           (click)='callNumber(contacto.tel)' slot="end">
           <ion-icon name="call-outline"></ion-icon>
         </ion-button>
       </ion-item>
+      <!-- Información del contacto: Extensión -->
       <ion-item>Extensión: {{contacto.ext}}</ion-item>
+      <!-- Información del contacto: Correo electrónico -->
       <ion-item>
         <p class="title titleSize">E-Mail:</p>
+        <!-- Botón para enviar correo electrónico -->
         <ion-button size="" [disabled]="this.valid(contacto.email)" class="btn btn_margin"
           (click)='mailto(contacto.email)' slot="end">
           <ion-icon name="mail-outline"></ion-icon>
         </ion-button>
         <p class="paddingL">{{contacto.email}}</p>
       </ion-item>
+      <!-- Información del contacto: Observaciones -->
       <ion-item>Observaciones:</ion-item>
       <ion-item>
         <p>{{contacto.ob1}}</p>

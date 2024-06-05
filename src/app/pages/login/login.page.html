@@ -1,66 +1,47 @@
+<!-- Encabezado de la página con una barra de herramientas translúcida -->
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Contenedor personalizado para el encabezado -->
     <div class="custom-header">
+      <!-- Imagen del logotipo y nombre de la aplicación -->
       <img src="assets/imgs/logoYNombre.png">
     </div>
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal de la página con padding -->
 <ion-content class="ion-padding">
+  <!-- Contenedor principal de la tarjeta -->
   <div class="div-main">
+    <!-- Tarjeta que contiene el formulario de inicio de sesión -->
     <ion-card>
+      <!-- Encabezado de la tarjeta -->
       <ion-card-header>
+        <!-- Título de bienvenida dentro del encabezado de la tarjeta -->
         <h2 class="title">Bienvenido de nuevo</h2>
       </ion-card-header>
+
+      <!-- Contenido de la tarjeta -->
       <ion-card-content>
+        <!-- Primer campo de entrada para el email -->
         <div class="div-content">
+          <!-- Etiqueta del campo email -->
           <ion-label class="label" position="floating">Email:</ion-label>
+          <!-- Campo de entrada para el email -->
           <ion-input class="input" type="email"></ion-input>
         </div>
         <br>
+        <!-- Segundo campo de entrada para la contraseña -->
         <div class="div-content">
+          <!-- Etiqueta del campo contraseña -->
           <ion-label class="label" position="floating">Contraseña:</ion-label>
+          <!-- Campo de entrada para la contraseña -->
           <ion-input class="input" type="password"></ion-input>
         </div>
       </ion-card-content>
 
+      <!-- Botón de inicio de sesión -->
       <ion-button class="button" expand="block" (click)="login()">Iniciar sesión</ion-button>
     </ion-card>
   </div>
 </ion-content>
-
-
-<!--
-<ion-content [fullscreen]="true">
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    <ion-card class="sm:mx-auto sm:w-full sm:max-w-sm sm:h-auto p-10 sm:p-10 rounded-3xl shadow-2xl">
-    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Inicio de sesión</h2>
-    </div>
-  
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
-        <div>
-          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Usuario</label>
-          <div class="mt-2">
-            <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-          </div>
-        </div>
-  
-        <div>
-          <div class="flex items-center justify-between">
-            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Contraseña</label>
-          </div>
-          <div class="mt-2">
-            <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-          </div>
-        </div>
-  
-        <div>
-          <button (click)="login()" type="submit" class="flex w-full justify-center rounded-md bg-ion-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-ion-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-ion-primary">Iniciar sesión</button>
-        </div>
-      </form>
-    </div>
-  </ion-card>
-  </div>
-</ion-content> -->

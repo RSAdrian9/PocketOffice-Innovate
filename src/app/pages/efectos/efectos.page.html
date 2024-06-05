@@ -1,38 +1,55 @@
+<!-- Encabezado de la página -->
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón del menú lateral en el lado izquierdo -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título de la página -->
     <ion-title>Efectos</ion-title>
+    <!-- Título secundario con el nombre en el lado derecho que permite volver atrás al hacer clic -->
     <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
   </ion-toolbar>
 
   <ion-toolbar>
+    <!-- Barra de búsqueda y botón de filtro -->
     <ion-buttons>
+      <!-- Barra de búsqueda con un debounce de 500ms -->
       <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarEfectos($event)" placeholder="Buscar"></ion-searchbar>
+      <!-- Botón para abrir un popover con filtros -->
       <ion-button style="height: 2px;" (click)="presentPopover($event)">
         <div class="icon-container">
+          <!-- Icono de filtro -->
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
+          <!-- Badge que muestra el número de filtros aplicados -->
           <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0" class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
       </ion-button>
     </ion-buttons>
+    <!-- Barra de progreso que se muestra mientras se realiza la consulta -->
     <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal -->
 <ion-content [fullscreen]="true">
+  <!-- Mensaje si no hay efectos para mostrar -->
   <div class="noHayDatos" *ngIf="this.efectos.length == 0">No hay efectos para mostrar</div>
+  <!-- Lista de efectos -->
   <ion-list *ngIf="this.efectos.length > 0">    
+    <!-- Tarjeta para cada efecto -->
     <ion-card *ngFor="let efecto of this.efectos" class="cardBorder">
+      <!-- Grid con icono de flujo de efectivo -->
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
           <ion-col>
-            <ion-icon src="assets/imgs/flujo-de-efectivo.svg" />
+            <ion-icon src="assets/imgs/flujo-de-efectivo.svg"></ion-icon>
           </ion-col>
         </ion-row>
       </ion-grid>
+      <!-- Sección de datos del efecto -->
       <div class="divider">DATOS EFECTO</div>
+      <!-- Grid con número de efecto y número de factura -->
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
           <ion-col>Nº Efecto</ion-col>
@@ -44,6 +61,7 @@
         </ion-row>
       </ion-grid>
 
+      <!-- Grid con fecha y fecha de vencimiento -->
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
           <ion-col>Fecha</ion-col>
@@ -55,6 +73,7 @@
         </ion-row>
       </ion-grid>
 
+      <!-- Grid con estado del efecto -->
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
           <ion-col>Estado</ion-col>
@@ -64,13 +83,16 @@
         </ion-row>
       </ion-grid>
 
+      <!-- Sección de importes -->
       <div class="divider">IMPORTES</div>
+      <!-- Grid con importes cobrados, pendientes y totales -->
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
           <ion-col>Cobrado</ion-col>
           <ion-col>Pendiente</ion-col>
           <ion-col>Total</ion-col>
         </ion-row>
+        <!-- Clase dinámica según el resultado de la función comprobarEfecto -->
         <ion-row class="{{this.comprobarEfecto(efecto)}}">
           <ion-col>{{this.formatearNumero(efecto.pageu)}}€</ion-col>
           <ion-col>{{this.formatearNumero(efecto.impend)}}€</ion-col>
@@ -78,20 +100,22 @@
         </ion-row>
       </ion-grid>
 
+      <!-- Botón para ver más detalles del efecto -->
       <ion-button expand="block" class="btn" [routerLink]="['/vista-efecto/'+this.tipo+'/'+this.codigo+'/'+efecto.num]" routerLinkActive="selected">
         <ion-icon slot="icon-only" name="open-outline"></ion-icon>
       </ion-button>
     </ion-card>
   </ion-list>
 
+  <!-- Infinite scroll para cargar más efectos -->
   @if(hayMasEfectos){
   <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-    <ion-infinite-scroll-content loadingText="Cargando efectos..."
-      loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    <ion-infinite-scroll-content loadingText="Cargando efectos..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
   </ion-infinite-scroll>
   }
 </ion-content>
 
+<!-- Pie de página con el importe total de los efectos -->
 <ion-footer>
   <ion-toolbar style="border-top:1px solid gray">
     <ion-title>Total: {{this.formatearNumero(this.importeEfectos)}}€</ion-title>

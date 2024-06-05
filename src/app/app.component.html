@@ -1,52 +1,55 @@
 <ion-app>
+  <!-- Define el diseño principal de pane dividido -->
   <ion-split-pane contentId="main-content">
+    <!-- Configura el menú lateral con eventos de apertura y cierre -->
     <ion-menu (ionWillOpen)="this.openMenu()" (ionWillClose)="this.closeMenu()" contentId="main-content" type="overlay">
       <ion-content>
-
+        <!-- Lista principal del menú -->
         <ion-list id="inbox-list">
-          <ion-list-header>Innovate</ion-list-header>          
+          <ion-list-header>Innovate</ion-list-header>
+          
+          <!-- Sección de Maestros -->
           <ion-item-divider>
             <ion-label> Maestros </ion-label>
           </ion-item-divider>
+          
+          <!-- Genera opciones del menú dinámicamente -->
           <ion-menu-toggle auto-hide="false" *ngFor="let opcion of opcionesMenu; let i = index">
-            
             <ion-item class="colorItemMenu item-inner" routerDirection="root" [routerLink]="[opcion.url]" (click)="this.setRuta(opcion.url)" routerLinkActive="selected">
               <ion-icon class="colorico" slot="start" [ios]="opcion.icon" [md]="opcion.icon" [src]="opcion.icon"></ion-icon>
-              <ion-label style="overflow: unset; ">{{ opcion.title }}</ion-label>              
+              <ion-label style="overflow: unset;">{{ opcion.title }}</ion-label>
             </ion-item>
-                        
           </ion-menu-toggle>
+          
+          <!-- Sección de Informes para Clientes -->
           <div *ngIf="this.mostrarOpcionesCliente">
             <ion-item-divider>
               <ion-label> Informes </ion-label>
             </ion-item-divider>
             <ion-menu-toggle auto-hide="false" *ngFor="let opcion of opcionesClientes; let i = index">
-  
               <ion-item class="colorItemMenu item-inner" routerDirection="root" [routerLink]="[opcion.url]" routerLinkActive="selected">
                 <ion-icon class="colorico" slot="start" [ios]="opcion.icon" [md]="opcion.icon" [src]="opcion.icon"></ion-icon>
-                <ion-label style="overflow: unset; ">{{ opcion.title }}</ion-label>              
+                <ion-label style="overflow: unset;">{{ opcion.title }}</ion-label>
               </ion-item>
-                          
             </ion-menu-toggle>
           </div>
 
+          <!-- Sección de Informes para Proveedores -->
           <div *ngIf="this.mostrarOpcionesProveedor">
             <ion-item-divider>
-              <ion-label> Informes </ion-label>
+              <ion-label> Informes</ion-label>
             </ion-item-divider>
             <ion-menu-toggle auto-hide="false" *ngFor="let opcion of opcionesProveedores; let i = index">
-  
               <ion-item class="colorItemMenu item-inner" routerDirection="root" [routerLink]="[opcion.url]" routerLinkActive="selected">
                 <ion-icon class="colorico" slot="start" [ios]="opcion.icon" [md]="opcion.icon" [src]="opcion.icon"></ion-icon>
-                <ion-label style="overflow: unset; ">{{ opcion.title }}</ion-label>              
+                <ion-label style="overflow: unset;">{{ opcion.title }}</ion-label>
               </ion-item>
-                          
             </ion-menu-toggle>
           </div>
-
         </ion-list>
       </ion-content>
     </ion-menu>
+    <!-- Define el área principal de la aplicación -->
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>

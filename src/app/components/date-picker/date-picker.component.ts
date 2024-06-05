@@ -18,13 +18,32 @@ export class DatePickerComponent implements OnInit {
   fechaSeleccionada: string = (new Date()).toISOString();
   reestablecerPulsado: boolean = false;
 
+ /**
+ * Crea una nueva instancia de la clase.
+ *
+ * @param {ModalController} modalCtrl - El controlador de modal.
+ * @param {NavParams} navParams - Los parámetros de navegación.
+ */
   constructor(
     private modalCtrl: ModalController,
     private navParams: NavParams
   ) { }
 
-  ngOnInit() { }
+ /**
+ * Inicializa el componente y establece los valores iniciales de las propiedades basados en los datos pasados a través de los parámetros de navegación.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
+  ngOnInit() { 
 
+  }
+
+ /**
+ * Se ejecuta cuando la vista ha sido completamente ingresada y ahora es la vista activa.
+ * Establece los valores iniciales de las propiedades basados en los datos pasados a través de los parámetros de navegación.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   ionViewDidEnter() {
     let data: any = this.navParams.data;
     this.reestablecerPulsado = false;
@@ -49,6 +68,12 @@ export class DatePickerComponent implements OnInit {
     }
   }
 
+ /**
+ * Actualiza la propiedad 'fechaDesde' o 'fechaHasta' del objeto 'filtros' según el valor de 'tipo' y el estado de 'reestablecerPulsado'.
+ * Si 'reestablecerPulsado' es falso, la propiedad correspondiente se establece en 'fechaSeleccionada'.
+ * Si 'reestablecerPulsado' es verdadero, la propiedad correspondiente se establece en una cadena vacía.
+ * Finalmente, se descarta el modal con el objeto 'filtros' actualizado y 'cancelar' establecido en falso.
+ */
   aceptar() {
     switch (this.tipo) {
       case 'desde':
@@ -64,23 +89,29 @@ export class DatePickerComponent implements OnInit {
         } else {
           this.filtros.fechaHasta = '';
         }
-        
         break;
     }
 
     this.modalCtrl.dismiss({ filtros: this.filtros, cancelar: false });
   }
 
+ /**
+ * Cancela la operación actual al desactivar el modal y pasar una bandera que indica el cancelamiento.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   cancelar() {
     this.modalCtrl.dismiss({ cancelar: true });
   }
 
+ /**
+ * Reinicia el datetimePicker, establece la fechaSeleccionada en la fecha actual y establece reestablecerPulsado en true.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   reestablecer() {
     this.datetimePicker.reset();
     this.fechaSeleccionada = (new Date()).toISOString();
     this.reestablecerPulsado = true;
   }
-
-
-
 }

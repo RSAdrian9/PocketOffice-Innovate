@@ -1,3 +1,4 @@
+// Las definiciones de cada variable se encuentran en el pdf.
 export interface agente {
     age_usu?: string,
     age_ver_todo?: string,

@@ -21,13 +21,32 @@ export class FiltroClientesComponent implements OnInit {
   valorRiesgo: string = '';
   nFiltrosAplicados: number = 0;
 
+ /**
+ * Constructor para la clase FiltroClientesComponent.
+ *
+ * @param {PopoverController} popoverController - La instancia de PopoverController.
+ * @param {NavParams} navParams - La instancia de NavParams.
+ */
   constructor(
     private popoverController: PopoverController,
     private navParams: NavParams
   ) { }
 
-  ngOnInit() { }
+ /**
+ * Inicializa el componente y carga los datos iniciales.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
+  ngOnInit() { 
 
+  }
+
+ /**
+ * Se ejecuta cuando se entra en la vista. Obtiene datos de navParams y actualiza el objeto filtros.
+ * También actualiza las propiedades booleanas checkConActividad y checkSinActividad basadas en el valor de actividad.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   ionViewDidEnter() {
     let data: any = this.navParams.data;
     this.filtros.texto = data.texto;
@@ -49,6 +68,12 @@ export class FiltroClientesComponent implements OnInit {
     }
   }
 
+ /**
+ * Maneja el evento cuando se marca o desmarca la casilla "Con Actividad".
+ *
+ * @param {any} ev - El objeto de evento que contiene información sobre el cambio de la casilla.
+ * @return {void} Esta función no devuelve nada.
+ */
   controladorCheckConActividad(ev: any) {
     if (ev.detail.checked && this.checkSinActividad) {
       this.checkConActividad = true;
@@ -60,6 +85,12 @@ export class FiltroClientesComponent implements OnInit {
     }
   }
 
+ /**
+ * Maneja el evento cuando se marca o desmarca la casilla "Sin Actividad".
+ *
+ * @param {any} ev - El objeto de evento que contiene información sobre el cambio de la casilla.
+ * @return {void} Esta función no devuelve nada.
+ */
   controladorCheckSinActividad(ev: any) {
     if (ev.detail.checked && this.checkConActividad) {
       this.checkConActividad = false;
@@ -71,6 +102,12 @@ export class FiltroClientesComponent implements OnInit {
     }
   }
 
+ /**
+ * Maneja el evento cuando se marca o desmarca la casilla de verificación "Con Riesgo".
+ *
+ * @param {any} ev - El objeto de evento que contiene información sobre el cambio de la casilla de verificación.
+ * @return {void} Esta función no devuelve nada.
+ */
   controladorCheckConRiesgo(ev: any) {
     if (ev.detail.checked) {
       this.checkConRiesgo = true;
@@ -79,8 +116,15 @@ export class FiltroClientesComponent implements OnInit {
     }
   }
 
-
-
+ /**
+ * Aplica los filtros y cierra el popover con los filtros actualizados.
+ *
+ * Esta función incrementa la variable `nFiltrosAplicados` basándose en los valores de `checkConActividad`, `checkSinActividad`
+ * y `checkConRiesgo`. Establece las variables `valorActividad` y `valorRiesgo` según corresponda. Finalmente, crea un nuevo objeto
+ * con los valores de filtro actualizados y cierra el popover con los filtros actualizados.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   aplicarFiltros() {
     this.nFiltrosAplicados = 0;
 
@@ -107,5 +151,4 @@ export class FiltroClientesComponent implements OnInit {
 
     this.popoverController.dismiss(this.filtros);
   }
-
 }

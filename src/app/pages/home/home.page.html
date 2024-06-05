@@ -1,44 +1,57 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón de menú en la esquina izquierda -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Logo e imagen en la barra de herramientas -->
     <ion-img style="height: 50%; width: 50%;" src="../../../assets/imgs/logoYNombre.png"></ion-img>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-list>
+    <!-- Bucle para generar tarjetas basado en opcionesVentanaPrincipal -->
     <div *ngFor="let opcion of this.opcionesVentanaPrincipal">
+      <!-- Condicional para mostrar la tarjeta si opcion.mostrar es true -->
       <ion-card (click)="this.abrirModal(opcion.id, opcion.nombre, opcion.tipoGrafica)" *ngIf="opcion.mostrar" class="{{opcion.clase}}">
+        <!-- Encabezado de la tarjeta -->
         <ion-card-header>
           <div style="width: 100%; vertical-align: middle;">
+            <!-- Icono en la esquina izquierda del encabezado -->
             <div class="ion-float-left" style="padding-right: 2%;">
               <ion-icon [src]="opcion.icono" style="font-size: 150%; color: white;"></ion-icon>
             </div>
+            <!-- Título de la tarjeta -->
             <div class="ion-float-left">
               <ion-card-title style="color: white; font-weight: bold;">{{opcion.nombre}}</ion-card-title>
             </div>
           </div>
         </ion-card-header>
+        <!-- Contenido de la tarjeta -->
         <ion-card-content>
-          <div class="{{opcion.posicionTexto}}" >
-            <h2 style="font-size: xx-large; font-weight: bold; color: white;">{{opcion.datos}} @if(opcion.tipo =='moneda'){€}</h2>
+          <div class="{{opcion.posicionTexto}}">
+            <h2 style="font-size: xx-large; font-weight: bold; color: white;">
+              {{opcion.datos}} @if(opcion.tipo == 'moneda'){€}
+            </h2>
           </div>
         </ion-card-content>
       </ion-card>
     </div>
-
   </ion-list>
 
+  <!-- Botón flotante (FAB) para acciones rápidas -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>
       <ion-icon name="chevron-up-circle"></ion-icon>
     </ion-fab-button>
+    <!-- Lista de acciones del FAB -->
     <ion-fab-list side="top">
+      <!-- Botón para descargar paquete de datos -->
       <ion-fab-button (click)="this.descargarPaqueteDeDatos()">
         <ion-icon name="download-outline"></ion-icon>
-      </ion-fab-button>      
+      </ion-fab-button>
+      <!-- Botón para abrir configuración -->
       <ion-fab-button>
         <ion-icon name="settings-outline"></ion-icon>
       </ion-fab-button>

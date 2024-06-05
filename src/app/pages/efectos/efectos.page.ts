@@ -40,6 +40,16 @@ export class EfectosPage implements OnInit {
   public filtros: any = { texto: '', serie: 'Todos', estCobro: '0', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
 
 
+  /**
+   * Constructor para la clase EfectosPage.
+   *
+   * @param {Platform} platform - El servicio de la plataforma.
+   * @param {TransferirDatosService} transferirService - El servicio de transferencia de datos.
+   * @param {NavController} navC - El controlador de navegación.
+   * @param {DbService} dbService - El servicio de base de datos.
+   * @param {DatePipe} datepipe - El servicio de formato de fecha.
+   * @param {PopoverController} popoverController - El controlador de popover.
+   */
   constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
@@ -53,6 +63,11 @@ export class EfectosPage implements OnInit {
     })
   }
 
+    /**
+   * Inicializa el componente y recupera los parámetros 'tipo' y 'codigo' de la ruta activada.
+   * Registra los parámetros de la ruta activada en la consola.
+   * Llama al método 'pageController'.
+   */
   ngOnInit() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -61,6 +76,12 @@ export class EfectosPage implements OnInit {
     this.pageController();
   }
 
+    /**
+   * Se ejecuta cuando la vista ha completado la entrada y ahora es la vista activa.
+   * Establece las propiedades 'tipo' y 'codigo' a partir de los parámetros de la ruta activada en el snapshot.
+   * Registra los parámetros de la ruta activada en el snapshot en la consola.
+   * Llama al método 'pageController'.
+   */
   ionViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -69,6 +90,12 @@ export class EfectosPage implements OnInit {
     this.pageController();
   }
 
+    /**
+   * Carga de forma asíncrona la lista de efectos basada en el filtro dado.
+   *
+   * @param {string} filtro - El filtro a aplicar al cargar la lista de efectos.
+   * @return {Promise<void>} Una promesa que se resuelve cuando se ha cargado la lista de efectos.
+   */
   async cargarEfectos(filtro: string) {
     switch (this.tipo) {
       case 'cliente':
@@ -124,6 +151,11 @@ export class EfectosPage implements OnInit {
 
   }
 
+    /**
+   * Calcula el importe total de los efectos sumando el valor de la propiedad 'impeu' de cada efecto en el array 'efectosAUX'.
+   * Si la propiedad 'impeu' es nula o indefinida, no se incluye en la suma.
+   * El resultado se almacena en la propiedad 'importeEfectos' y se redondea a 2 decimales.
+   */
   calcularImporteEfectos() {
     this.importeEfectos = 0;
 
@@ -137,7 +169,11 @@ export class EfectosPage implements OnInit {
     this.importeEfectos = parseFloat(this.importeEfectos.toFixed(2));
   }
 
-
+  /**
+ * Navega hacia atrás a la vista adecuada según el valor de la propiedad 'tipo'.
+ * Si 'tipo' es 'cliente', navega hacia atrás a '/vista-cliente/{codigo}' y envía un objeto de origen con la ruta '/vista-cliente'.
+ * Si 'tipo' es 'proveedor', navega hacia atrás a '/vista-proveedor/{codigo}' y envía un objeto de origen con la ruta '/vista-proveedor'.
+ */
   goBack() {
     switch (this.tipo) {
       case 'cliente':
@@ -151,7 +187,14 @@ export class EfectosPage implements OnInit {
     }
   }
 
-
+    /**
+   * Ejecuta la lógica del controlador de página.
+   *
+   * Esta función ejecuta la lógica del controlador de página.
+   * Primero, carga los efectos utilizando el método `cargarEfectos` con la propiedad `filtroBusqueda`.
+   * Luego, envía un objeto con la propiedad `codigo` al servicio `transferirService` utilizando el método `sendObjectSource`.
+   * Por último, se suscribe al evento de botón atrás con una prioridad de 10 y llama al método `goBack` cuando se activa.
+   */
   pageController() {
     this.cargarEfectos(this.filtroBusqueda);
 
@@ -161,6 +204,12 @@ export class EfectosPage implements OnInit {
     });
   }
 
+  /**
+ * Filtra los efectos en función del evento proporcionado.
+ *
+ * @param {$event} $event - El evento que contiene el valor para filtrar los efectos.
+ * @return {Promise<void>} Una promesa que se resuelve cuando los efectos han sido filtrados.
+ */
   public async filtrarEfectos($event: any) {
 
     this.filtros.texto = $event.detail.value;
@@ -170,6 +219,12 @@ export class EfectosPage implements OnInit {
     this.cargarEfectos(this.filtroBusqueda);
   }
 
+    /**
+   * Genera una sentencia de filtro basada en los filtros proporcionados.
+   *
+   * @param {any} filtros - Los filtros a aplicar.
+   * @return {string} La sentencia de filtro generada.
+   */
   private devuelveFiltroSentencia(filtros: any): string {
     let filtro = '';
     let nFiltrosAnadidos = 0;
@@ -264,6 +319,12 @@ export class EfectosPage implements OnInit {
     return filtro;
   }
 
+    /**
+   * Presenta un popover con el componente FiltroEfectosComponent y maneja el evento de cierre.
+   *
+   * @param {any} ev - El evento que desencadenó la presentación del popover.
+   * @return {Promise<void>} Una promesa que se resuelve cuando el popover se cierra.
+   */
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: FiltroEfectosComponent,
@@ -290,6 +351,12 @@ export class EfectosPage implements OnInit {
     })
   }
 
+    /**
+   * Maneja el evento de scroll infinito.
+   *
+   * @param {InfiniteScrollCustomEvent} ev - El objeto de evento para el scroll infinito.
+   * @return {void} Esta función no devuelve ningún valor.
+   */
   onIonInfinite(ev: InfiniteScrollCustomEvent) {
 
     if (this.registros != this.efectosAUX.length) {
@@ -302,7 +369,12 @@ export class EfectosPage implements OnInit {
     }
   }
 
-
+  /**
+ * Verifica el efecto y devuelve la clase de color de fondo correspondiente.
+ *
+ * @param {efectos} efecto - El efecto a verificar.
+ * @return {string} La clase de color de fondo.
+ */
   comprobarEfecto(efecto: efectos): string {
     if (efecto.est == "3") {
       return "rowBackgroundGreen";
@@ -315,6 +387,12 @@ export class EfectosPage implements OnInit {
     }
   }
 
+  /**
++   * Formatea una cadena de fecha dada en el formato 'yyyy-MM-dd'.
++   *
++   * @param {string} fecha - La cadena de fecha a formatear.
++   * @return {string} La cadena de fecha formateada, o una cadena vacía si la entrada es nula.
++   */
   public formatearFecha(fecha: string) {
     let fechaFormateada;
     if (fecha != null) {
@@ -326,6 +404,12 @@ export class EfectosPage implements OnInit {
     return fechaFormateada;
   }
 
+  /**
+ * Formatea un número ajustando sus decimales, reemplazando el punto decimal con una coma y agregando separadores de miles.
+ *
+ * @param {any} numero - El número a formatear.
+ * @return {string} El número formateado como una cadena.
+ */
   formatearNumero(numero: any) {
     let numeroFormateado = parseFloat(numero).toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
     return numeroFormateado;
