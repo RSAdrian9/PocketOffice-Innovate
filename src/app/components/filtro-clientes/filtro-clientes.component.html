@@ -1,9 +1,20 @@
 <ion-list>
+  <!-- Separador para "Operaciones recientes" -->
   <ion-item-divider>Operaciones recientes</ion-item-divider>
-  <ion-item><ion-checkbox justify="space-between" [(ngModel)]="this.checkConActividad" (ionChange)="this.controladorCheckConActividad($event)">Con Actividad</ion-checkbox></ion-item>
-  <ion-item><ion-checkbox justify="space-between" [(ngModel)]="this.checkSinActividad" (ionChange)="this.controladorCheckSinActividad($event)">Sin Actividad</ion-checkbox></ion-item>
+  <!-- Checkbox para "Con Actividad" -->
+  <ion-item>
+    <ion-checkbox justify="space-between" [(ngModel)]="this.checkConActividad" (ionChange)="this.controladorCheckConActividad($event)">Con Actividad</ion-checkbox>
+  </ion-item>
+  <!-- Checkbox para "Sin Actividad" -->
+  <ion-item>
+    <ion-checkbox justify="space-between" [(ngModel)]="this.checkSinActividad" (ionChange)="this.controladorCheckSinActividad($event)">Sin Actividad</ion-checkbox>
+  </ion-item>
+  <!-- Separador para "Situación de Riesgo" -->
   <ion-item-divider>Situación de Riesgo</ion-item-divider>
-  <ion-item><ion-checkbox justify="space-between" [(ngModel)]="this.checkConRiesgo" (ionChange)="this.controladorCheckConRiesgo($event)">Con Riesgo</ion-checkbox></ion-item>
-  
+  <!-- Checkbox para "Con Riesgo" -->
+  <ion-item>
+    <ion-checkbox justify="space-between" [(ngModel)]="this.checkConRiesgo" (ionChange)="this.controladorCheckConRiesgo($event)">Con Riesgo</ion-checkbox>
+  </ion-item>
 </ion-list>
-<ion-button (click) = "this.aplicarFiltros()" class="btn" expand="block">Aplicar</ion-button>
+<!-- Botón para aplicar filtros -->
+<ion-button (click)="this.aplicarFiltros()" class="btn" expand="block">Aplicar</ion-button>

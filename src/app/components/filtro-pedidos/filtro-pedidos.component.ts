@@ -21,6 +21,14 @@ export class FiltroPedidosComponent implements OnInit {
   public estados: Array<any> = [];
   public tipo: string = "";
 
+ /**
+ * Constructor para la clase FiltroPedidosComponent.
+ *
+ * @param {PopoverController} popoverController - La instancia de PopoverController.
+ * @param {DatePipe} datepipe - La instancia de DatePipe.
+ * @param {NavParams} navParams - La instancia de NavParams.
+ * @param {ModalController} modalController - La instancia de ModalController.
+ */
   constructor(
     private popoverController: PopoverController,
     private datepipe: DatePipe,
@@ -32,22 +40,48 @@ export class FiltroPedidosComponent implements OnInit {
 
   ngOnInit() { }
 
+ /**
+ * Actualiza el valor de la propiedad 'servido' en el objeto 'filtros' basado en el valor del evento.
+ *
+ * @param {any} ev - El objeto de evento que contiene el nuevo valor.
+ * @return {void} Esta función no devuelve ningún valor.
+ */
   controladorSelectServido(ev: any) {
     this.filtros.servido = ev.detail.value;
   }
 
+ /**
+ * Actualiza la propiedad estado del objeto filtros con el valor del detalle del evento.
+ *
+ * @param {any} ev - El objeto de evento que contiene el valor del detalle.
+ */
   controladorSelectEstado(ev: any) {
     this.filtros.estado = ev.detail.value;
   }
 
+ /**
+ * Actualiza la propiedad 'serie' del objeto 'filtros' con el valor del detalle del evento.
+ *
+ * @param {any} ev - El objeto de evento que contiene el valor del detalle.
+ */
   controladorSelectSerie(ev: any) {
     this.filtros.serie = ev.detail.value;
   }
 
+ /**
+ * Actualiza la propiedad 'orden' del objeto 'filtros' con el valor del detalle del evento.
+ *
+ * @param {any} ev - El objeto de evento que contiene el valor del detalle.
+ */
   controladorSelectOrden(ev: any) {
     this.filtros.orden = ev.detail.value;
   }
 
+ /**
+ * Inicializa el componente y carga los datos iniciales.
+ *
+ * @return {void} Esta función no devuelve ningún valor.
+ */
   ionViewDidEnter() {
     let data: any = this.navParams.data;
     this.tipo = data.tipo;
@@ -63,6 +97,12 @@ export class FiltroPedidosComponent implements OnInit {
     this.filtros.nFiltrosAplicados = data.filtros.nFiltrosAplicados;
   }
 
+ /**
+ * Abre un modal para seleccionar una fecha.
+ *
+ * @param {string} tipo - El tipo de fecha a seleccionar.
+ * @return {Promise<void>} Una promesa que se resuelve cuando el modal se cierra.
+ */
   async abrirModalFecha(tipo: string) {
     const modal = await this.modalController.create({
       component: DatePickerComponent,
@@ -81,6 +121,12 @@ export class FiltroPedidosComponent implements OnInit {
     });
   }
 
+ /**
+ * Formatea una cadena de fecha dada en el formato 'dd/MM/yyyy'.
+ *
+ * @param {string} fecha - La cadena de fecha a formatear.
+ * @return {string} La cadena de fecha formateada, o una cadena vacía si la entrada es nula.
+ */
   public formatearFecha(fecha: string) {
     let fechaFormateada;
     if (fecha != null) {
@@ -92,6 +138,15 @@ export class FiltroPedidosComponent implements OnInit {
     return fechaFormateada;
   }
 
+ /**
+ * Aplica los filtros seleccionados y cierra el popover.
+ *
+ * Esta función incrementa la variable `nFiltrosAplicados` en base a los filtros seleccionados.
+ * Luego crea un nuevo objeto `filtros` extendiendo las propiedades de `this.filtros` y agregando la propiedad `nFiltrosAplicados`.
+ * Finalmente, cierra el popover y pasa el objeto `filtros` como resultado.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   aplicarFiltros() {
     this.nFiltrosAplicados = 0;
     
@@ -119,10 +174,14 @@ export class FiltroPedidosComponent implements OnInit {
 
     this.filtros = { texto: texto, servido: this.filtros.servido, estado: this.filtros.estado, serie: this.filtros.serie, fechaDesde: this.filtros.fechaDesde, fechaHasta: this.filtros.fechaHasta, orden: this.filtros.orden, nFiltrosAplicados: this.nFiltrosAplicados }
 
-    //console.log(this.filtros);
     this.popoverController.dismiss(this.filtros);
   }
 
+ /**
+ * Borra el filtro de fecha seleccionado basado en el tipo proporcionado.
+ *
+ * @param {string} tipo - El tipo de filtro de fecha a borrar. Los valores posibles son 'desde' y 'hasta'.
+ */
   borrarFiltroFecha(tipo: string) {
     switch (tipo) {
       case 'desde':

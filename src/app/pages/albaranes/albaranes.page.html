@@ -1,43 +1,44 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+<ion-header [translucent]="true"> <!-- Encabezado transparente -->
+  <ion-toolbar> <!-- Barra de herramientas -->
+    <ion-buttons slot="start"> <!-- Botones de la izquierda -->
+      <ion-menu-button></ion-menu-button> <!-- Botón de menú -->
     </ion-buttons>
-    <ion-title>Listado Albaranes</ion-title>
-    <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
+    <ion-title>Listado Albaranes</ion-title> <!-- Título de la página -->
+    <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title> <!-- Título pequeño en el lado derecho, con un evento click que llama a la función goBack() -->
 
   </ion-toolbar>
-  <ion-toolbar>
-    <ion-buttons>
+  <ion-toolbar> <!-- Segunda barra de herramientas -->
+    <ion-buttons> <!-- Botones -->
       <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarAlbaranes($event)"
-        placeholder="Buscar"></ion-searchbar>
-      <ion-button style="height: 2px;" (click)="presentPopover($event)">
+        placeholder="Buscar"></ion-searchbar> <!-- Barra de búsqueda con configuraciones -->
+      <ion-button style="height: 2px;" (click)="presentPopover($event)"> <!-- Botón con popover -->
         <div class="icon-container">
-          <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
+          <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon> <!-- Icono de embudo -->
           <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0 "
-            class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
+            class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge> <!-- Distintivo con el número de filtros aplicados -->
         </div>
       </ion-button>
     </ion-buttons>
-    <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
+    <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar> <!-- Barra de progreso indeterminado que se muestra mientras se realiza una consulta -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div *ngIf="this.tipo == 'cliente' && this.albaranesCliente.length > 0 " >
-    <div class="noHayDatos" *ngIf="this.albaranesCliente.length == 0">No hay albaranes de venta para mostrar</div>
+<ion-content [fullscreen]="true"> <!-- Contenido de la página -->
+  <div *ngIf="this.tipo == 'cliente' && this.albaranesCliente.length > 0 " > <!-- Div que muestra un mensaje si es un cliente y hay albaranes -->
+    <div class="noHayDatos" *ngIf="this.albaranesCliente.length == 0">No hay albaranes de venta para mostrar</div> <!-- Mensaje si no hay albaranes de venta -->
   </div>
-  <div *ngIf="this.tipo == 'proveedor'">
-    <div class="noHayDatos" *ngIf="this.albaranesProveedor.length == 0">No hay albaranes de compra para mostrar</div>
+  <div *ngIf="this.tipo == 'proveedor'"> <!-- Div que muestra un mensaje si es un proveedor -->
+    <div class="noHayDatos" *ngIf="this.albaranesProveedor.length == 0">No hay albaranes de compra para mostrar</div> <!-- Mensaje si no hay albaranes de compra -->
   </div>
-  <ion-list *ngIf="this.tipo == 'cliente'">
+  <ion-list *ngIf="this.tipo == 'cliente'"> <!-- Lista de albaranes para clientes -->
     
-    <ion-card *ngFor="let albaran of this.albaranesCliente" class="cardBorder">
+    <ion-card *ngFor="let albaran of this.albaranesCliente" class="cardBorder"> <!-- Tarjeta para cada albarán del cliente -->
 
+      <!-- Datos del albarán -->
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
           <ion-col>
-            <ion-icon src="assets/imgs/delivery-note.svg" />
+            <ion-icon src="assets/imgs/delivery-note.svg" /> <!-- Icono de nota de entrega -->
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -60,6 +61,7 @@
       </ion-grid>
       
 
+      <!-- Importes del albarán -->
       <div class="divider">IMPORTES</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
@@ -87,14 +89,15 @@
   </ion-list>
 
 
-  <ion-list *ngIf="this.tipo == 'proveedor' && this.albaranesProveedor.length > 0">
+  <ion-list *ngIf="this.tipo == 'proveedor' && this.albaranesProveedor.length > 0"> <!-- Lista de albaranes para proveedores -->
 
-    <ion-card *ngFor="let albaran of this.albaranesProveedor" class="cardBorder">
+    <ion-card *ngFor="let albaran of this.albaranesProveedor" class="cardBorder"> <!-- Tarjeta para cada albarán del proveedor -->
 
+      <!-- Datos del albarán -->
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
           <ion-col>
-            <ion-icon src="assets/imgs/delivery-note.svg" />
+            <ion-icon src="assets/imgs/delivery-note.svg" /> <!-- Icono de nota de entrega -->
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -119,6 +122,7 @@
       </ion-grid>
       
 
+      <!-- Importes del albarán -->
       <div class="divider">IMPORTES</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
@@ -144,17 +148,17 @@
     </ion-card>
 
   </ion-list>
-  @if(hayMasAlbaranes){
-  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+  @if(hayMasAlbaranes){ <!-- Renderizado condicional si hay más albaranes -->
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)"> <!-- Scroll infinito -->
     <ion-infinite-scroll-content loadingText="Cargando Albaranes..."
-      loadingSpinner="bubbles"></ion-infinite-scroll-content>
+      loadingSpinner="bubbles"></ion-infinite-scroll-content> <!-- Contenido del scroll infinito -->
   </ion-infinite-scroll>
   }
 
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar style="border-top:1px solid gray">
-    <ion-title>Total: {{this.formatearNumero(this.importeAlbaranes)}}€</ion-title>
+<ion-footer> <!-- Pie de página -->
+  <ion-toolbar style="border-top:1px solid gray"> <!-- Barra de herramientas -->
+    <ion-title>Total: {{this.formatearNumero(this.importeAlbaranes)}}€</ion-title> <!-- Título con el total de importes de albaranes -->
   </ion-toolbar>
 </ion-footer>

@@ -1,45 +1,59 @@
+<!-- Encabezado de la página -->
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón del menú lateral en el lado izquierdo -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título de la página -->
     <ion-title style="padding-left:0 ;">Direcciones</ion-title>
+    <!-- Título secundario con el nombre en el lado derecho -->
     <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal -->
 <ion-content [fullscreen]="true">
+  <!-- Mensaje si no hay direcciones -->
   <div class="noHayDatos" *ngIf="this.direcciones.length == 0">No hay direcciones para mostrar</div>
+  <!-- Lista de direcciones -->
   <ion-list *ngIf="this.direcciones.length > 0">
-    
+    <!-- Tarjeta de dirección para cada dirección -->
     <ion-card *ngFor="let direccion of this.direcciones" class="cardBorderGray">
+      <!-- Encabezado de la tarjeta con la denominación de la dirección -->
       <ion-item>
         <ion-card-header>
           <ion-card-title>Denominación: {{direccion.den}}</ion-card-title>
         </ion-card-header>
       </ion-item>
+      <!-- Información de la dirección -->
       <ion-item>Dirección: {{direccion.dir}}</ion-item>
       <ion-item>Población: {{direccion.pob}}</ion-item>
       <ion-item>Provincia: {{direccion.npro}} - {{direccion.pro}}</ion-item>
+      <!-- Información de contacto: Teléfono -->
       <ion-item>
         <p class="title titleSize">Teléfono:</p>
         <p class="paddingL">{{direccion.tel}}</p>
+        <!-- Botón para llamar al número de teléfono -->
         <ion-button size="" [disabled]="this.valid(direccion.tel)" class="btn btn_margin"
           (click)='callNumber(direccion.tel)' slot="end">
           <ion-icon name="call-outline"></ion-icon>
         </ion-button>
       </ion-item>
+      <!-- Información de la dirección: Ruta de venta -->
       <ion-item>Ruta de venta: {{direccion.rut}} - {{direccion.nomrut}}</ion-item>
+      <!-- Información de contacto: Persona de contacto -->
       <ion-item>Persona de contacto: {{direccion.per}}</ion-item>
+      <!-- Información de contacto: Correo electrónico -->
       <ion-item>
         <p class="title titleSize">E-Mail:</p>
+        <!-- Botón para enviar correo electrónico -->
         <ion-button size="" [disabled]="this.valid(direccion.email)" class="btn btn_margin"
           (click)='mailto(direccion.email)' slot="end">
           <ion-icon name="mail-outline"></ion-icon>
         </ion-button>
         <p class="paddingL">{{direccion.email}}</p>
       </ion-item>
-      
     </ion-card>
   </ion-list>
 </ion-content>

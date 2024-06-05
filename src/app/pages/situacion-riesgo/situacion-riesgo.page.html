@@ -1,17 +1,25 @@
+<!-- Encabezado de la página -->
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón de menú en la esquina izquierda -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título principal de la página -->
     <ion-title>Situación de riesgo</ion-title>
+    <!-- Título pequeño con función de retroceso en la esquina derecha -->
     <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal de la página -->
 <ion-content [fullscreen]="true">
+  <!-- Título principal centrado -->
   <ion-item class="ion-text-center title titleRiesgo">
     <ion-label>SITUACIÓN DE RIESGO</ion-label>
   </ion-item>
+
+  <!-- Información de la situación de riesgo del cliente -->
   <ion-item>
     <p>Riesgo del Cliente:</p>
     <ion-label class="paddingL">{{this.formatearNumero(situacion.rie)}}€</ion-label>
@@ -32,21 +40,30 @@
     <p>Total:</p>
     <ion-label class="paddingL">{{this.formatearNumero(situacion.total)}}€</ion-label>
   </ion-item>
-  <hr> <!-- linea divisoria roja-->
+
+  <!-- Línea divisoria -->
+  <hr> <!-- línea divisoria roja -->
+
+  <!-- Información de la diferencia -->
   <ion-item>
     <p>Diferencia:</p>
     <ion-label class="paddingL">{{this.formatearNumero(situacion.diferencia)}}€</ion-label>
   </ion-item>
+
+  <!-- Título de información adicional centrado -->
   <ion-item class="ion-text-center title titleRiesgo">
     <ion-label>INFORMACIÓN ADICIONAL DE LA EMPRESA ACTUAL</ion-label>
   </ion-item>
 
+  <!-- Información adicional estructurada en una cuadrícula -->
   <ion-grid [fixed]="true">
+    <!-- Encabezados de la cuadrícula -->
     <ion-row class="ion-text-center title rowRiesgo">
       <ion-col>Título</ion-col>
       <ion-col>Nº</ion-col>
       <ion-col>Importe</ion-col>
     </ion-row>
+    <!-- Filas de datos de la cuadrícula -->
     <ion-row>
       <ion-col>Total efectos</ion-col>
       <ion-col>{{ situacion.nefetot }}</ion-col>

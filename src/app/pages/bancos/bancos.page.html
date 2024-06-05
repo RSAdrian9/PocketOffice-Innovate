@@ -1,39 +1,39 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+<ion-header [translucent]="true"> <!-- Encabezado transparente -->
+  <ion-toolbar> <!-- Barra de herramientas -->
+    <ion-buttons slot="start"> <!-- Botones en el extremo izquierdo -->
+      <ion-menu-button></ion-menu-button> <!-- Botón de menú lateral -->
     </ion-buttons>
-    <ion-title>Datos Bancarios</ion-title>
-    <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
+    <ion-title>Datos Bancarios</ion-title> <!-- Título de la página -->
+    <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title> <!-- Título secundario con nombre y función de retroceso -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div class="noHayDatos" *ngIf="this.bancos.length == 0">No hay bancos para mostrar</div>
-  <ion-list *ngIf="this.bancos.length > 0">
+<ion-content [fullscreen]="true"> <!-- Contenido a pantalla completa -->
+  <div class="noHayDatos" *ngIf="this.bancos.length == 0">No hay bancos para mostrar</div> <!-- Mostrar mensaje si no hay datos -->
+  <ion-list *ngIf="this.bancos.length > 0"> <!-- Lista de bancos si hay datos -->
     
-    <ion-card *ngFor="let banco of bancos" class="cardBorderGray">
-      <ion-item>
-        <p class="title titleSize">Habitual:</p>
-        <ion-item *ngIf="banco.hab=='S'">
+    <ion-card *ngFor="let banco of bancos" class="cardBorderGray"> <!-- Tarjeta para cada banco -->
+      <ion-item> <!-- Elemento de lista -->
+        <p class="title titleSize">Habitual:</p> <!-- Título -->
+        <ion-item *ngIf="banco.hab=='S'"> <!-- Mostrar ícono de verificación si es habitual -->
           <ion-icon name="checkmark-outline"></ion-icon>
         </ion-item>
       </ion-item>
-      <ion-item>
-        <p class="title titleSize">Banco:</p>
-        <ion-title>{{ banco.nom }}</ion-title>
+      <ion-item> <!-- Elemento de lista -->
+        <p class="title titleSize">Banco:</p> <!-- Título -->
+        <ion-title>{{ banco.nom }}</ion-title> <!-- Nombre del banco -->
       </ion-item>
-      <ion-item>
-        <p class="title titleSize">Cuenta:</p>
-        <ion-label>{{ banco.cu1 }}/{{ banco.cu2 }}/{{ banco.cu3 }}/{{ banco.cu4 }}</ion-label>
+      <ion-item> <!-- Elemento de lista -->
+        <p class="title titleSize">Cuenta:</p> <!-- Título -->
+        <ion-label>{{ banco.cu1 }}/{{ banco.cu2 }}/{{ banco.cu3 }}/{{ banco.cu4 }}</ion-label> <!-- Número de cuenta -->
       </ion-item>
-      <ion-item>
-        <p class="title titleSize">IBAN:</p>
-        <ion-label>{{ banco.iban }}</ion-label>
+      <ion-item> <!-- Elemento de lista -->
+        <p class="title titleSize">IBAN:</p> <!-- Título -->
+        <ion-label>{{ banco.iban }}</ion-label> <!-- IBAN -->
       </ion-item>
-      <ion-item>
-        <p class="title titleSize">SWIFT/BIC:</p>
-        <ion-label>{{ banco.bic }}</ion-label>
+      <ion-item> <!-- Elemento de lista -->
+        <p class="title titleSize">SWIFT/BIC:</p> <!-- Título -->
+        <ion-label>{{ banco.bic }}</ion-label> <!-- Código SWIFT/BIC -->
       </ion-item>
       
     </ion-card>

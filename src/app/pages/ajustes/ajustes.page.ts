@@ -14,6 +14,11 @@ export class AjustesPage implements OnInit {
 
   constructor() { }
 
+ /**
+ * Inicializa el componente después de que Angular haya inicializado todas las propiedades vinculadas.
+ * Aquí puedes poner el código de inicialización que depende de los enlaces,
+ * directivas de atributos o otras características de Angular.
+ */
   ngOnInit() {
   }
 

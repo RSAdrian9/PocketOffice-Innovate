@@ -1,39 +1,52 @@
 <ion-header [translucent]="true">
+  <!-- Primera barra de herramientas -->
   <ion-toolbar>
+    <!-- Botón de menú en la posición de inicio -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título principal de la página -->
     <ion-title>Listado Facturas</ion-title>
+    <!-- Título pequeño en la posición de fin, que ejecuta la función goBack al hacer clic -->
     <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
-
   </ion-toolbar>
+
+  <!-- Segunda barra de herramientas -->
   <ion-toolbar>
     <ion-buttons>
-      <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarFacturas($event)"
-        placeholder="Buscar"></ion-searchbar>
+      <!-- Barra de búsqueda con cancelación al enfocar y debounce de 500ms -->
+      <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarFacturas($event)" placeholder="Buscar"></ion-searchbar>
+      <!-- Botón para abrir el popover de filtros -->
       <ion-button style="height: 2px;" (click)="presentPopover($event)">
         <div class="icon-container">
+          <!-- Icono de embudo -->
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
-          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0 "
-            class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
+          <!-- Badge que muestra el número de filtros aplicados -->
+          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0" class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
       </ion-button>
     </ion-buttons>
+    <!-- Barra de progreso que se muestra si la consulta no ha sido realizada -->
     <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <!-- Mensaje cuando no hay facturas de venta para mostrar (clientes) -->
   <div *ngIf="this.tipo == 'cliente'">
     <div class="noHayDatos" *ngIf="this.facturasCliente.length == 0">No hay facturas de venta para mostrar</div>
   </div>
+  <!-- Mensaje cuando no hay facturas de compra para mostrar (proveedores) -->
   <div *ngIf="this.tipo == 'proveedor'">
     <div class="noHayDatos" *ngIf="this.facturasProveedor.length == 0">No hay facturas de compra para mostrar</div>
   </div>
 
-  <ion-list *ngIf="this.tipo == 'cliente' && this.facturasCliente.length > 0">    
+  <!-- Lista de facturas de clientes -->
+  <ion-list *ngIf="this.tipo == 'cliente' && this.facturasCliente.length > 0">
+    <!-- Itera sobre cada factura del cliente -->
     <ion-card *ngFor="let factura of this.facturasCliente" class="cardBorder">
-
+      
+      <!-- Icono de factura -->
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
           <ion-col>
@@ -41,10 +54,12 @@
           </ion-col>
         </ion-row>
       </ion-grid>
+
+      <!-- Sección de datos de la factura -->
       <div class="divider">DATOS FACTURA</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
-          <ion-col>Nº Factura</ion-col>          
+          <ion-col>Nº Factura</ion-col>
           <ion-col>Fecha</ion-col>
         </ion-row>
         <ion-row>
@@ -53,6 +68,7 @@
         </ion-row>
       </ion-grid>
 
+      <!-- Sección de importes de la factura -->
       <div class="divider">IMPORTES</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
@@ -69,20 +85,21 @@
           <ion-col>Cobrado</ion-col>
           <ion-col>Pendiente</ion-col>
         </ion-row>
+        <!-- Aplica la clase de estilo según el estado de la factura -->
         <ion-row class="{{this.comprobarFactura(factura)}}">
           <ion-col>{{this.formatearNumero(factura.toceu)}}€</ion-col>
           <ion-col>{{this.formatearNumero(factura.impend)}}€</ion-col>
         </ion-row>
       </ion-grid>
-      
     </ion-card>
-
   </ion-list>
 
+  <!-- Lista de facturas de proveedores -->
   <ion-list *ngIf="this.tipo == 'proveedor' && this.facturasProveedor.length > 0">
-    
+    <!-- Itera sobre cada factura del proveedor -->
     <ion-card *ngFor="let factura of this.facturasProveedor" class="cardBorder">
-
+      
+      <!-- Icono de factura -->
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
           <ion-col>
@@ -90,10 +107,13 @@
           </ion-col>
         </ion-row>
       </ion-grid>
+
+      <!-- Sección de datos de la factura -->
       <div class="divider">DATOS FACTURA</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
           <ion-col>Nº Factura</ion-col>
+          <!-- Muestra el número de factura del proveedor si existe -->
           <ion-col *ngIf="factura.numpro!=undefined || factura.numpro!=null">Nº Fac. Proveedor</ion-col>
           <ion-col>Fecha</ion-col>
         </ion-row>
@@ -104,6 +124,7 @@
         </ion-row>
       </ion-grid>
 
+      <!-- Sección de importes de la factura -->
       <div class="divider">IMPORTES</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
@@ -120,25 +141,24 @@
           <ion-col>Cobrado</ion-col>
           <ion-col>Pendiente</ion-col>
         </ion-row>
+        <!-- Aplica la clase de estilo según el estado de la factura -->
         <ion-row class="{{this.comprobarFactura(factura)}}">
           <ion-col>{{this.formatearNumero(factura.toceu)}}€</ion-col>
           <ion-col>{{this.formatearNumero(factura.impend)}}€</ion-col>
         </ion-row>
       </ion-grid>
-      
     </ion-card>
-
   </ion-list>
 
+  <!-- Scroll infinito para cargar más facturas -->
   @if(hayMasFacturas){
   <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-    <ion-infinite-scroll-content loadingText="Cargando Facturas..."
-      loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    <ion-infinite-scroll-content loadingText="Cargando Facturas..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
   </ion-infinite-scroll>
   }
-
 </ion-content>
 
+<!-- Pie de página con el total de las facturas -->
 <ion-footer>
   <ion-toolbar style="border-top:1px solid gray">
     <ion-title>Total: {{this.formatearNumero(this.importeFacturas)}}€</ion-title>

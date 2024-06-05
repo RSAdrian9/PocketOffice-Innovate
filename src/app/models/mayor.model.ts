@@ -1,3 +1,4 @@
+// Las definiciones de cada variable se encuentran en el pdf.
 export interface mayor {
     id?: string,
     num?: string,

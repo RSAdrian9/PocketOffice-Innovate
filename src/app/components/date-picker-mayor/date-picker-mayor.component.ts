@@ -19,19 +19,43 @@ export class DatePickerMayorComponent implements OnInit {
   fechaSeleccionada: string = (new Date()).toISOString();
   reestablecerPulsado: boolean = false;
 
+ /**
+ * Constructor para la clase DatePickerMayorComponent.
+ *
+ * @param {ModalController} modalCtrl - La instancia de ModalController.
+ * @param {NavParams} navParams - La instancia de NavParams.
+ */
   constructor(
     private modalCtrl: ModalController,
     private navParams: NavParams
   ) { }
 
-  ngOnInit() { }
+ /**
+ * Inicializa el componente y establece los valores iniciales.
+ *
+ * Este gancho de ciclo de vida se llama después de que Angular haya inicializado todas las propiedades vinculadas a datos de un componente.
+ * Es un buen lugar para poner el código de inicialización, como obtener datos de un servidor o inicializar variables.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
+  ngOnInit() { 
 
+  }
+
+ /**
+ * Se ejecuta cuando la vista ha terminado de entrar y ahora es la vista activa.
+ * Establece los valores de 'reestablecerPulsado', 'tipo', 'anio', 'filtros.texto', 'filtros.fechaDesde' y 'filtros.fechaHasta'
+ * basándose en los datos pasados a través de 'navParams'.
+ * Establece el valor de 'fechaSeleccionada' basándose en los valores de 'tipo' y 'anio'.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   ionViewDidEnter() {
     let data: any = this.navParams.data;
 
     this.reestablecerPulsado = false;
     this.tipo = data.tipo;
-    this.anio = this.filtros.anio;
+    this.anio = data.anio;
 
     this.filtros.texto = data.filtros.texto;
     this.filtros.fechaDesde = data.filtros.fechaDesde;
@@ -55,6 +79,14 @@ export class DatePickerMayorComponent implements OnInit {
     }
   }
 
+ /**
+ * Actualiza la propiedad 'fechaDesde' o 'fechaHasta' del objeto 'filtros' basándose en el valor de la propiedad 'tipo'.
+ * Si 'reestablecerPulsado' es falso, la propiedad correspondiente se establece en el valor de 'fechaSeleccionada'.
+ * De lo contrario, la propiedad correspondiente se establece en una cadena vacía.
+ * Descarta el modal con el objeto 'filtros' actualizado.
+ *
+ * @return {void}
+ */
   aceptar() {
     switch (this.tipo) {
       case 'desde':
@@ -70,17 +102,26 @@ export class DatePickerMayorComponent implements OnInit {
         } else {
           this.filtros.fechaHasta = '';
         }
-
         break;
     }
 
     this.modalCtrl.dismiss({ filtros: this.filtros, cancelar: false });
   }
 
+ /**
+ * Cancela la operación actual al desactivar el modal y pasar una bandera que indica el cancelamiento.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   cancelar() {
     this.modalCtrl.dismiss({ cancelar: true });
   }
 
+ /**
+ * Reinicia el datetimePicker y establece la fecha seleccionada en función de los valores de 'tipo' y 'anio'.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   reestablecer() {
     this.datetimePicker.reset();
 
@@ -95,7 +136,4 @@ export class DatePickerMayorComponent implements OnInit {
     
     this.reestablecerPulsado = true;
   }
-
-
-
 }

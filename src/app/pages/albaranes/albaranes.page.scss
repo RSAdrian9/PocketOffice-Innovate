@@ -1,3 +1,4 @@
+/* Estilos para los divisores */
 .divider {
     font-size: larger;
     color: black;
@@ -17,6 +18,7 @@
     border-radius: 15px;
 }
 
+/* Estilos para el grid */
 ion-grid {
     --ion-grid-column-padding: 10px;
     border-collapse: collapse;
@@ -30,6 +32,7 @@ ion-grid {
         border-radius: 5px;
     }
 
+    /* Estilos específicos para diferentes tipos de filas */
     .row_icon ion-col {
         border: none;
     }
@@ -39,6 +42,7 @@ ion-grid {
         color: #6d226d;
     }
 
+    /* Otras clases de filas */
     .row_separador ion-col {
         color: white !important;
         background-color: black;
@@ -49,6 +53,7 @@ ion-grid {
         background-color: #6d226d;
     }
 
+    /* Clases para fondos de diferentes colores */
     .rowBackgroundRed ion-col {
         color: white !important;
         background-color: red;
@@ -76,12 +81,12 @@ ion-grid {
 
 }
 
+/* Estilos para las tarjetas */
 .cardBorder {
     border: 1px solid gray;
 }
 
 /* Estilos para el footer */
-
 .footer-content {
     display: flex;
     justify-content: space-between;
@@ -99,7 +104,9 @@ ion-grid {
     text-align: right;
 }
 
+/* Estilos en modo oscuro */
 @media (prefers-color-scheme: dark) {
+    /* Estilos para los divisores en modo oscuro */
     .divider {
         font-size: larger;
         color: white;
@@ -119,6 +126,7 @@ ion-grid {
         border-radius: 15px;
     }
 
+    /* Estilos para el grid en modo oscuro */
     ion-grid {
         --ion-grid-column-padding: 10px;
         border-collapse: collapse;
@@ -132,6 +140,7 @@ ion-grid {
             border-radius: 5px;
         }
 
+        /* Estilos específicos para diferentes tipos de filas en modo oscuro */
         .row_icon ion-col {
             border: none;
         }
@@ -141,6 +150,7 @@ ion-grid {
             color: #6d226d;
         }
 
+        /* Otras clases de filas en modo oscuro */
         .row_separador ion-col {
             color: white !important;
             background-color: black;
@@ -151,6 +161,7 @@ ion-grid {
             background-color: #6d226d;
         }
 
+        /* Clases para fondos de diferentes colores en modo oscuro */
         .rowBackgroundRed ion-col {
             color: white !important;
             background-color: red;
@@ -178,8 +189,7 @@ ion-grid {
 
     }
 
-    /* Estilos para el footer */
-
+    /* Estilos para el footer en modo oscuro */
     .footer-content {
         display: flex;
         justify-content: space-between;
@@ -196,6 +206,4 @@ ion-grid {
         flex: 1;
         text-align: right;
     }
-
-
 }

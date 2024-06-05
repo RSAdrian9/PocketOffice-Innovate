@@ -1,57 +1,71 @@
 <ion-header>
   <ion-toolbar>
+    <!-- Botón de menú -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título de la página -->
     <ion-title>Datos Mayor de Cuentas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <!-- Mostrar número de asiento -->
   <ion-item>
     <p class="title titleSize">Nº Asiento:</p>
     <p class="paddingL">{{mayor.num}}</p>
   </ion-item>
+  <!-- Mostrar fecha -->
   <ion-item>
     <p class="title titleSize">Fecha:</p>
     <p class="paddingL">{{mayor.fec2}}</p>
   </ion-item>
+  <!-- Mostrar año -->
   <ion-item>
     <p class="title titleSize">Año:</p>
     <p class="paddingL">{{mayor.anio2}}</p>
   </ion-item>
+  <!-- Sección de datos bancarios -->
   <ion-item class="ion-text-center title titleCliente">
     <ion-label>Datos Bancarios</ion-label>
   </ion-item>
+  <!-- Mostrar concepto -->
   <ion-item>
     <p class="title titleSize">Concepto: </p>
     <p class="paddingL">{{mayor.con}}</p>
   </ion-item>
+  <!-- Mostrar cuenta -->
   <ion-item>
     <p class="title titleSize">Cuenta: </p>
     <p class="paddingL">{{mayor.cue}}</p>
   </ion-item>
+  <!-- Mostrar signo -->
   <ion-item>
     <p class="title titleSize">Signo:</p>
     <p class="paddingL">{{mayor.sig}}</p>
   </ion-item>
+  <!-- Sección de importes -->
   <ion-item class="ion-text-center title titleCliente">
     <ion-label>Importes</ion-label>
   </ion-item>
+  <!-- Mostrar importe debe -->
   <ion-item>
     <p class="title titleSize">Debe: </p>
-    <p class="paddingL">{{this.formatearNumero(this.mayor.deb)}}€
+    <p class="paddingL">{{this.formatearNumero(this.mayor.deb)}}€</p>
   </ion-item>
+  <!-- Mostrar importe haber -->
   <ion-item>
     <p class="title titleSize">Haber: </p>
-    <p class="paddingL">{{this.formatearNumero(this.mayor.hab)}}€
+    <p class="paddingL">{{this.formatearNumero(this.mayor.hab)}}€</p>
   </ion-item>
+  <!-- Mostrar saldo -->
   <ion-item>
     <p class="title titleSize">Saldo: </p>
-    <p class="paddingL">{{this.formatearNumero(this.mayor.sal)}}€
+    <p class="paddingL">{{this.formatearNumero(this.mayor.sal)}}€</p>
   </ion-item>
+  <!-- Mostrar importe total -->
   <ion-item>
     <p class="title titleSize">Importe:</p>
-    <p class="paddingL">{{this.formatearNumero(this.mayor.impeu)}}€
+    <p class="paddingL">{{this.formatearNumero(this.mayor.impeu)}}€</p>
   </ion-item>
 </ion-content>

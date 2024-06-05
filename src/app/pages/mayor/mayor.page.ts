@@ -39,6 +39,16 @@ export class MayorPage implements OnInit {
   public totalSaldo: number = 0;
   public filtros: any = { texto: '', anio: this.devuelveAnioDefecto(), fechaDesde: '', fechaHasta: '', nFiltrosAplicados: 1 };
 
+    /**
+   * Crea una nueva instancia de la clase.
+   *
+   * @param {Platform} platform - El servicio de la plataforma.
+   * @param {TransferirDatosService} transferirService - El servicio de transferencia de datos.
+   * @param {NavController} navC - El controlador de navegación.
+   * @param {DbService} dbService - El servicio de base de datos.
+   * @param {DatePipe} datepipe - El servicio de formateo de fecha.
+   * @param {PopoverController} popoverController - El controlador de popover.
+   */
   constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
@@ -52,6 +62,11 @@ export class MayorPage implements OnInit {
     });
   }
 
+  /**
+ * Inicializa el componente y recupera los parámetros 'tipo' y 'codigo' de la instantánea de la ruta activada.
+ * Registra los parámetros de la ruta activada en la consola.
+ * Llama al método 'pageController'.
+ */
   ngOnInit() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -60,6 +75,12 @@ export class MayorPage implements OnInit {
     this.pageController();
   }
 
+  /**
+ * Se ejecuta cuando la vista ha completado la entrada y ahora es la vista activa.
+ * Recupera los parámetros 'tipo' y 'codigo' de la instantánea de la ruta activada.
+ * Registra los parámetros de la ruta activada en la consola.
+ * Llama al método 'pageController'.
+ */
   ionViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -68,6 +89,12 @@ export class MayorPage implements OnInit {
     this.pageController();
   }
 
+    /**
+   * Asincrónicamente carga la lista de mayor para un filtro dado, basándose en el tipo de entidad.
+   *
+   * @param {string} filtro - El filtro a aplicar a la lista de mayor.
+   * @return {Promise<void>} Una promesa que se resuelve cuando se haya cargado la lista de mayor.
+   */
   async cargarMayor(filtro: string) {
     switch (this.tipo) {
       case 'cliente':
@@ -123,7 +150,13 @@ export class MayorPage implements OnInit {
 
   }
 
-
+    /**
+   * Navega hacia atrás a la vista adecuada basándose en el valor de 'this.tipo' y envía el origen del objeto a 'this.transferirService'.
+   * Si 'this.tipo' es 'cliente', navega hacia atrás a '/vista-cliente/{this.codigo}'.
+   * Si 'this.tipo' es 'proveedor', navega hacia atrás a '/vista-proveedor/{this.codigo}'.
+   *
+   * @return {void} Esta función no devuelve nada.
+   */
   goBack() {
     switch (this.tipo) {
       case 'cliente':
@@ -137,7 +170,16 @@ export class MayorPage implements OnInit {
     }
   }
 
-
+    /**
+   * Ejecuta la lógica del controlador de página.
+   *
+   * Esta función establece la propiedad `filtroBusqueda` llamando al método `devuelveFiltroSentencia` con la propiedad `filtros`.
+   * Luego llama al método `cargarMayor` con la propiedad `filtroBusqueda`.
+   *
+   * Después de eso, envía un objeto con la propiedad `codigo` al servicio `transferirService` utilizando el método `sendObjectSource`.
+   *
+   * Finalmente, se suscribe al evento del botón Atrás con una prioridad de 10 y llama al método `goBack` cuando se activa el evento.
+   */
   pageController() {
     this.filtroBusqueda = this.devuelveFiltroSentencia(this.filtros);
     this.cargarMayor(this.filtroBusqueda);
@@ -148,6 +190,12 @@ export class MayorPage implements OnInit {
     });
   }
 
+  /**
+ * Filtra los efectos en función del valor proporcionado en el evento y actualiza la búsqueda del filtro y los datos.
+ *
+ * @param {$event} $event - El objeto de evento que contiene el valor de detalle.
+ * @return {Promise<void>} Una promesa que se resuelve cuando se aplica el filtro y se cargan los datos.
+ */
   public async filtrarEfectos($event: any) {
 
     this.filtros.texto = $event.detail.value;
@@ -157,6 +205,12 @@ export class MayorPage implements OnInit {
     this.cargarMayor(this.filtroBusqueda);
   }
 
+  /**
+  * Genera una sentencia de filtro basada en los filtros proporcionados.
+  *
+  * @param {any} filtros - Los filtros a aplicar.
+  * @return {string} La sentencia de filtro generada.
+  */
   private devuelveFiltroSentencia(filtros: any): string {
     let filtro = '';
     let nFiltrosAnadidos = 0;
@@ -212,6 +266,12 @@ export class MayorPage implements OnInit {
     return filtro;
   }
 
+    /**
+   * Presenta un popover con el componente FiltroMayorComponent y maneja el evento de cierre.
+   *
+   * @param {any} ev - El evento que desencadenó la presentación del popover.
+   * @return {Promise<void>} Una promesa que se resuelve cuando el popover se cierra.
+   */
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: FiltroMayorComponent,
@@ -238,6 +298,15 @@ export class MayorPage implements OnInit {
     })
   }
 
+    /**
+   * Calcula los importes totales de débito, crédito y saldo desde el array 'mayorAUX'.
+   *
+   * Esta función itera sobre cada elemento en el array 'mayorAUX' y calcula los importes totales de débito y crédito basados en la propiedad 'sig'.
+   * El importe total de débito se calcula si la propiedad 'sig' es 'D', y el importe total de crédito se calcula si la propiedad 'sig' es 'H'.
+   * Los importes calculados se almacenan en las propiedades 'totalDebe', 'totalHaber' y 'totalSaldo'.
+   *
+   * @return {void} Esta función no devuelve ningún valor.
+   */
   calcularImporteMayor() {
     this.totalDebe = 0;
     this.totalHaber = 0;
@@ -265,6 +334,11 @@ export class MayorPage implements OnInit {
     this.totalSaldo = this.totalDebe - this.totalHaber;
   }
 
+  /**
+   * Maneja el evento de desplazamiento infinito.
+   * @param {InfiniteScrollCustomEvent} ev - El objeto de evento que representa el evento de desplazamiento infinito.
+   * @return {void} Esta función no devuelve nada. 
+   */
   onIonInfinite(ev: InfiniteScrollCustomEvent) {
 
     if (this.registros != this.mayorAUX.length) {
@@ -277,6 +351,12 @@ export class MayorPage implements OnInit {
     }
   }
 
+  /**
+  * Formatea una cadena de fecha dada en el formato 'yyyy-MM-dd'.
+  *
+  * @param {string} fecha - La cadena de fecha a formatear.
+  * @return {string} La cadena de fecha formateada, o una cadena vacía si la entrada es nula.
+  */
   public formatearFecha(fecha: string) {
     let fechaFormateada;
     if (fecha != null) {
@@ -288,11 +368,22 @@ export class MayorPage implements OnInit {
     return fechaFormateada;
   }
 
+    /**
+   * Formatea un número limite sus decimales a 2, reemplazando el punto decimal por una coma y agregando separadores de miles.
+   *
+   * @param {any} numero - El número a formatear.
+   * @return {string} El número formateado como una cadena de texto.
+   */
   formatearNumero(numero: any) {
     let numeroFormateado = parseFloat(numero).toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
     return numeroFormateado;
   }
 
+  /**
+   * Devuelve el año actual como una cadena de texto.
+   *
+   * @return {string} El año actual.
+   */
   devuelveAnioDefecto(): string {
     return (new Date()).getFullYear().toString();
   }

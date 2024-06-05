@@ -1,6 +1,13 @@
 <ion-list>
   <ion-item-divider>Operaciones recientes</ion-item-divider>
-  <ion-item><ion-checkbox justify="space-between" [(ngModel)]="this.checkConActividad" (ionChange)="this.controladorCheckConActividad($event)">Con Actividad</ion-checkbox></ion-item>
-  <ion-item><ion-checkbox justify="space-between" [(ngModel)]="this.checkSinActividad" (ionChange)="this.controladorCheckSinActividad($event)">Sin Actividad</ion-checkbox></ion-item>
+  <!-- Checkbox para filtrar por operaciones con actividad -->
+  <ion-item>
+    <ion-checkbox slot="start" [(ngModel)]="checkConActividad" (ionChange)="controladorCheckConActividad($event)">Con Actividad</ion-checkbox>
+  </ion-item>
+  <!-- Checkbox para filtrar por operaciones sin actividad -->
+  <ion-item>
+    <ion-checkbox slot="start" [(ngModel)]="checkSinActividad" (ionChange)="controladorCheckSinActividad($event)">Sin Actividad</ion-checkbox>
+  </ion-item>
 </ion-list>
-<ion-button (click) = "this.aplicarFiltros()" class="btn" expand="block">Aplicar</ion-button>
+<!-- Botón para aplicar los filtros seleccionados -->
+<ion-button (click)="aplicarFiltros()" expand="block" class="btn">Aplicar</ion-button>

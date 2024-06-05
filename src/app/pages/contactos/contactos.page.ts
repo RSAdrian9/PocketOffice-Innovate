@@ -25,6 +25,15 @@ export class ContactosPage implements OnInit {
   contactos: contacto[] = [];
   nombre: string = '';
 
+  /**
+   * Carga la información de los contactos y el nombre del contacto
+   * 
+   * @param platform 
+   * @param transferirService 
+   * @param navC 
+   * @param dbService 
+   * @param utils 
+   */
   constructor(
     private platform: Platform,
     private transferirService: TransferirDatosService,
@@ -35,18 +44,35 @@ export class ContactosPage implements OnInit {
     addIcons({ callOutline, mailOutline });
   }
 
+  /**
+   * Carga la información de los contactos y el nombre del contacto
+   * 
+   * @return {void} Esta función no devuelve nada.
+   * */
   ngOnInit() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
     this.pageController();
   }
 
+  /**
+   * Se ejecuta cuando la vista ha entrado completamente y ahora es la vista activa.
+   * Establece las propiedades 'tipo' y 'codigo' a partir de los parámetros de la ruta activada.
+   * Llama al método 'pageController'.
+   * 
+   * @return {void} Esta función no devuelve nada.
+   */
   ionViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
     this.pageController();
   }
 
+  /**
+   * Carga la información de los contactos y el nombre del contacto
+   * 
+   * @return {void} Esta función no devuelve nada.
+   */
   async cargarContactos() {
     switch (this.tipo) {
       case 'cliente':
@@ -72,6 +98,11 @@ export class ContactosPage implements OnInit {
     }
   }
 
+  /**
+   * Carga la información de los contactos y el nombre del contacto
+   * 
+   * @return {void} Esta función no devuelve nada.
+   */
   pageController() {
     this.cargarContactos();
     this.transferirService.sendObjectSource({ codigo: this.codigo })
@@ -80,6 +111,11 @@ export class ContactosPage implements OnInit {
     });
   }
 
+  /**
+   * Regresa a la vista anterior
+   * 
+   * @return {void} Esta función no devuelve nada.
+   */
   goBack() {
     switch (this.tipo) {
       case 'cliente':
@@ -93,14 +129,29 @@ export class ContactosPage implements OnInit {
     }
   }
 
+  /**
+   * Valida la entrada de texto
+   * @param e 
+   * @returns 
+   */
   valid(e?: String) {
     return this.utils.valid(e);
   }
 
+  /**
+   * Llama al número de telefono
+   * @param number 
+   * @returns 
+   */
   callNumber(number?: string) {
     window.open(`tel:${number}`, '_system');
   }
 
+  /**
+   * Llama al correo electronico
+   * @param email 
+   * @returns 
+   */
   mailto(email?: string) {
     window.open(`mailto:${email}`, '_system');
   }

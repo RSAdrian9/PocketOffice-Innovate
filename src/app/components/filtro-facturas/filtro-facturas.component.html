@@ -1,30 +1,41 @@
 <ion-list>
+  <!-- Divider for series -->
   <ion-item-divider *ngIf="this.series.length > 1">Serie documento</ion-item-divider>
   <ion-item *ngIf="this.series.length > 1">
+    <!-- Select for series -->
     <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.serie}}"
       (ionChange)="this.controladorSelectSerie($event)" >
+      <!-- Options for series -->
       <ion-select-option *ngFor="let serie of series" value="{{serie.serie}}">{{serie.serie}}</ion-select-option>      
     </ion-select>
   </ion-item>
+
+  <!-- Divider for payment status -->
   <ion-item-divider>Estado de cobro</ion-item-divider>
   <ion-item>
+    <!-- Select for payment status -->
     <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.estCobro}}"
       (ionChange)="this.controladorSelectEstado($event)">
+      <!-- Options for payment status -->
       <ion-select-option value="0">Todas</ion-select-option>
       <ion-select-option value="1">Pendientes</ion-select-option>
       <ion-select-option value="2">Parc. Cobradas</ion-select-option>
       <ion-select-option value="3">Cobradas</ion-select-option>
     </ion-select>
   </ion-item>
+
+  <!-- Divider for date range -->
   <ion-item-divider>Rango de fechas</ion-item-divider>
   <ion-item>    
     <div class="icon-container">
       Desde: {{formatearFecha(this.filtros.fechaDesde)}}
+      <!-- Badge to clear date filter -->
       <ion-badge *ngIf="this.filtros.fechaDesde !=''" class="badge_float_button">
         <ion-icon style="color:red; position: relative; font-weight: bold; font-size: 1.5em;"
           name="trash-bin" (click)="this.borrarFiltroFecha('desde')"></ion-icon>
       </ion-badge>
     </div>
+    <!-- Button to open date picker modal -->
     <ion-button size="" class="btn btn_margin" (click)="this.abrirModalFecha('desde')" slot="end">
       <ion-icon name="calendar-outline"></ion-icon>
     </ion-button>
@@ -32,19 +43,25 @@
   <ion-item>
     <div class="icon-container">
       Hasta: {{formatearFecha(this.filtros.fechaHasta)}}
+      <!-- Badge to clear date filter -->
       <ion-badge *ngIf="this.filtros.fechaHasta !=''" class="badge_float_button">
         <ion-icon style="color:red; position: relative; font-weight: bold; font-size: 1.5em;"
           name="trash-bin" (click)="this.borrarFiltroFecha('hasta')"></ion-icon>
       </ion-badge>
     </div>
+    <!-- Button to open date picker modal -->
     <ion-button size="" class="btn btn_margin" (click)="this.abrirModalFecha('hasta')" slot="end">
       <ion-icon name="calendar-outline"></ion-icon>
     </ion-button>
   </ion-item>
+
+  <!-- Divider for sorting -->
   <ion-item-divider>Ordenar por</ion-item-divider>
   <ion-item>
+    <!-- Select for sorting -->
     <ion-select cancelText="Cancelar" okText="Ok" placeholder="selecciona" value="{{this.filtros.orden}}"
       (ionChange)="this.controladorSelectOrden($event)">
+      <!-- Options for sorting -->
       <ion-select-option value="1">Fecha descendente</ion-select-option>
       <ion-select-option value="2">Fecha ascendente</ion-select-option>
       <ion-select-option value="3">Número descendente</ion-select-option>
@@ -52,4 +69,6 @@
     </ion-select>
   </ion-item>
 </ion-list>
+
+<!-- Button to apply filters -->
 <ion-button expand="block" (click)="this.aplicarFiltros()" class="btn">Aplicar</ion-button>

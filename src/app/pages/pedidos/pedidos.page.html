@@ -1,62 +1,75 @@
+<!-- Encabezado de la página con una barra de herramientas translúcida -->
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón de menú en el lado izquierdo del encabezado -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Título principal del encabezado -->
     <ion-title>Listado Pedidos</ion-title>
+    <!-- Título pequeño con evento de click en el lado derecho del encabezado -->
     <ion-title size="small" (click)="goBack()" slot="end">{{this.nombre}}</ion-title>
-
   </ion-toolbar>
+
   <ion-toolbar>
+    <!-- Barra de búsqueda y botón de filtro en el encabezado -->
     <ion-buttons>
-      <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarPedidos($event)"
-        placeholder="Buscar"></ion-searchbar>
+      <ion-searchbar #input showCancelButton="focus" debounce="500" (ionInput)="this.filtrarPedidos($event)" placeholder="Buscar"></ion-searchbar>
       <ion-button style="height: 2px;" (click)="presentPopover($event)">
         <div class="icon-container">
           <ion-icon style="position: relative; font-weight: bold; font-size: 1.5em;" name="funnel"></ion-icon>
-          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0 "
-            class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
+          <!-- Badge para mostrar el número de filtros aplicados -->
+          <ion-badge *ngIf="this.filtros.nFiltrosAplicados > 0" class="badge">{{this.filtros.nFiltrosAplicados}}</ion-badge>
         </div>
       </ion-button>
     </ion-buttons>
+    <!-- Barra de progreso indeterminada -->
     <ion-progress-bar *ngIf="this.consultaRealizada == false" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal de la página -->
 <ion-content [fullscreen]="true">
+  <!-- Mensaje para cuando no hay pedidos de clientes -->
   <div *ngIf="this.tipo == 'cliente'">
     <div class="noHayDatos" *ngIf="this.pedidosCliente.length == 0">No hay pedidos de venta para mostrar</div>
   </div>
+  <!-- Mensaje para cuando no hay pedidos de proveedores -->
   <div *ngIf="this.tipo == 'proveedor'">
     <div class="noHayDatos" *ngIf="this.pedidosProveedor.length == 0">No hay pedidos de compra para mostrar</div>
   </div>
-  <ion-list *ngIf="this.tipo == 'cliente' && this.pedidosCliente.length > 0">
-    
-    <ion-card *ngFor="let pedido of this.pedidosCliente" class="cardBorder">
 
+  <!-- Lista de pedidos de clientes -->
+  <ion-list *ngIf="this.tipo == 'cliente' && this.pedidosCliente.length > 0">
+    <!-- Tarjeta individual para cada pedido de cliente -->
+    <ion-card *ngFor="let pedido of this.pedidosCliente" class="cardBorder">
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
           <ion-col>
+            <!-- Icono del pedido -->
             <ion-icon src="assets/imgs/caja.svg" />
           </ion-col>
         </ion-row>
       </ion-grid>
+      <!-- Sección de datos del pedido -->
       <div class="divider">DATOS PEDIDO</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
-          <ion-col>Nº Pedido</ion-col>          
+          <ion-col>Nº Pedido</ion-col>
           <ion-col>Fecha</ion-col>
         </ion-row>
         <ion-row>
           <ion-col>{{pedido.num}}</ion-col>
           <ion-col>{{pedido.fec2}}</ion-col>
         </ion-row>
+        <!-- Estado del pedido si está disponible -->
         <ion-row class="row_titulos" *ngIf="pedido.est != ''">
           <ion-col>Estado</ion-col>
         </ion-row>
         <ion-row *ngIf="pedido.est != ''">
           <ion-col>{{pedido.est}}</ion-col>
         </ion-row>
+        <!-- Tipo de documento y documento asociado si está disponible -->
         <ion-row class="row_titulos" *ngIf="pedido.aof != ''">
           <ion-col>{{pedido.tipdoc}}</ion-col>
         </ion-row>
@@ -65,6 +78,7 @@
         </ion-row>
       </ion-grid>
 
+      <!-- Sección de importes del pedido -->
       <div class="divider">IMPORTES</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
@@ -76,33 +90,35 @@
           <ion-col>{{this.formatearNumero(pedido.baseu)}}€</ion-col>
           <ion-col>{{this.formatearNumero(pedido.totimpu)}}€</ion-col>
           <ion-col>{{this.formatearNumero(pedido.toteu)}}€</ion-col>
-        </ion-row>        
+        </ion-row>
       </ion-grid>
-      
     </ion-card>
-
   </ion-list>
 
-  <ion-list *ngIf="this.tipo == 'proveedor' && this.pedidosProveedor.length > 0">    
+  <!-- Lista de pedidos de proveedores -->
+  <ion-list *ngIf="this.tipo == 'proveedor' && this.pedidosProveedor.length > 0">
+    <!-- Tarjeta individual para cada pedido de proveedor -->
     <ion-card *ngFor="let pedido of this.pedidosProveedor" class="cardBorder">
-
       <ion-grid [fixed]="true">
         <ion-row class="row_icon">
           <ion-col>
+            <!-- Icono del pedido -->
             <ion-icon src="assets/imgs/caja.svg" />
           </ion-col>
         </ion-row>
       </ion-grid>
+      <!-- Sección de datos del pedido -->
       <div class="divider">DATOS PEDIDO</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
-          <ion-col>Nº Pedido</ion-col>          
+          <ion-col>Nº Pedido</ion-col>
           <ion-col>Fecha</ion-col>
         </ion-row>
         <ion-row>
           <ion-col>{{pedido.num}}</ion-col>
           <ion-col>{{pedido.fec2}}</ion-col>
-        </ion-row>               
+        </ion-row>
+        <!-- Tipo de documento y documento asociado si está disponible -->
         <ion-row class="row_titulos" *ngIf="pedido.aof != ''">
           <ion-col>{{pedido.tipdoc}}</ion-col>
         </ion-row>
@@ -111,6 +127,7 @@
         </ion-row>
       </ion-grid>
 
+      <!-- Sección de importes del pedido -->
       <div class="divider">IMPORTES</div>
       <ion-grid [fixed]="true">
         <ion-row class="row_titulos">
@@ -122,22 +139,20 @@
           <ion-col>{{this.formatearNumero(pedido.baseu)}}€</ion-col>
           <ion-col>{{this.formatearNumero(pedido.totimpu)}}€</ion-col>
           <ion-col>{{this.formatearNumero(pedido.toteu)}}€</ion-col>
-        </ion-row>        
+        </ion-row>
       </ion-grid>
-      
     </ion-card>
-
   </ion-list>
 
+  <!-- Scroll infinito para cargar más datos -->
   @if(hayMasPedidos){
   <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-    <ion-infinite-scroll-content loadingText="Cargando Pedidos..."
-      loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    <ion-infinite-scroll-content loadingText="Cargando Pedidos..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
   </ion-infinite-scroll>
   }
-
 </ion-content>
 
+<!-- Pie de página con el total de los importes de los pedidos -->
 <ion-footer>
   <ion-toolbar style="border-top:1px solid gray">
     <ion-title>Total: {{this.formatearNumero(this.importePedidos)}}€</ion-title>

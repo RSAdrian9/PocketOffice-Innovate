@@ -19,10 +19,21 @@ export class LoginPage implements OnInit {
 
   constructor(private router: Router) { }
 
+    /**
+   * Inicializa el componente después de que Angular haya inicializado todas las propiedades enlazadas a datos.
+   * Esta función de ciclo de vida se llama una vez después del primer ngOnChanges.
+   * Se utiliza comúnmente para tareas de inicialización, como obtener datos.
+   *
+   * @return {void} Esta función no devuelve nada.
+   */
   ngOnInit() {
   }
 
-
+    /**
+   * Navega a la página de inicio después de un inicio de sesión exitoso.
+   *
+   * @return {void} Esta función no devuelve nada.
+   */
   login() {
     this.router.navigate(['/home']);
   }

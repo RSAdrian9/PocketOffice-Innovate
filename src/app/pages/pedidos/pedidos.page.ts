@@ -39,6 +39,16 @@ export class PedidosPage implements OnInit {
   public filtros: any = { texto: '', servido: 'Todos', estado: 'Todos', serie: 'Todos', fechaDesde: '', fechaHasta: '', orden: '1', nFiltrosAplicados: 0 };
 
 
+    /**
+ * Constructor de la clase PedidosPage.
+ *
+ * @param {Platform} platform - El servicio de la plataforma.
+ * @param {DbService} dbService - El servicio de base de datos.
+ * @param {DatePipe} datepipe - El servicio de formateo de fecha.
+ * @param {PopoverController} popoverController - El controlador de popover.
+ * @param {TransferirDatosService} transferirService - El servicio de transferencia de datos.
+ * @param {NavController} navC - El controlador de navegación.
+ */
   constructor(
     private platform: Platform,
     private dbService: DbService,
@@ -48,6 +58,12 @@ export class PedidosPage implements OnInit {
     private navC: NavController
   ) { }
 
+ /**
+ * Inicializa el componente y establece las propiedades 'tipo' y 'codigo' basadas en los parámetros de la ruta activada.
+ * Luego llama al método 'pageController'.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   ngOnInit() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -55,6 +71,13 @@ export class PedidosPage implements OnInit {
     this.pageController();
   }
 
+ /**
+ * Se ejecuta cuando la vista ha entrado completamente y ahora es la vista activa.
+ * Establece las propiedades 'tipo' y 'codigo' basadas en los parámetros de la ruta activada.
+ * Llama al método 'pageController'.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   ionViewDidEnter() {
     this.tipo = this.activatedRoute.snapshot.paramMap.get('tipo') as string;
     this.codigo = this.activatedRoute.snapshot.paramMap.get('codigo') as string;
@@ -62,6 +85,15 @@ export class PedidosPage implements OnInit {
     this.pageController();
   }
 
+  /**
+   * Ejecuta la lógica del controlador de página.
+   *
+   * Establece la propiedad `filtroBusqueda` llamando al método `devuelveFiltroSentencia` con la propiedad `filtros`.
+   * Llama al método `cargarPedidos` con la propiedad `filtroBusqueda`.
+   *
+   * Envía un objeto con la propiedad `codigo` al servicio `transferirService` utilizando el método `sendObjectSource`.
+   * Se suscribe al evento de botón de retroceso con una prioridad de 10 y llama al método `goBack` cuando se activa el evento.
+   */
   pageController() {
     this.filtroBusqueda = this.devuelveFiltroSentencia(this.filtros);
     this.cargarPedidos(this.filtroBusqueda);
@@ -72,6 +104,13 @@ export class PedidosPage implements OnInit {
     });
   }
 
+  /**
+ * Navega hacia atrás a la vista adecuada según el valor de 'this.tipo' y envía el objeto fuente al servicio 'this.transferirService'.
+ * Si 'this.tipo' es 'cliente', navega hacia atrás a '/vista-cliente/{this.codigo}'.
+ * Si 'this.tipo' es 'proveedor', navega hacia atrás a '/vista-proveedor/{this.codigo}'.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   goBack() {
     switch (this.tipo) {
       case 'cliente':
@@ -85,6 +124,12 @@ export class PedidosPage implements OnInit {
     }
   }
 
+  /**
+ * Filtra los pedidos basados en el valor de entrada.
+ *
+ * @param {$event} $event - El evento que contiene el valor para filtrar los pedidos.
+ * @return {Promise<void>} Una promesa que se resuelve cuando los pedidos han sido filtrados.
+ */
   public async filtrarPedidos($event: any) {
 
     this.filtros.texto = $event.detail.value;
@@ -95,6 +140,12 @@ export class PedidosPage implements OnInit {
     this.cargarPedidos(this.filtroBusqueda);
   }
 
+  /**
+   * Genera una sentencia de filtro basada en los filtros proporcionados.
+   *
+   * @param {any} filtros - Los filtros a aplicar.
+   * @return {string} La sentencia de filtro generada.
+   */
   private devuelveFiltroSentencia(filtros: any): string {
     let filtro = '';
     let nFiltrosAnadidos = 0;
@@ -185,6 +236,12 @@ export class PedidosPage implements OnInit {
     return filtro;
   }
 
+  /**
+ * Presenta un popover con el componente FiltroPedidosComponent y maneja el evento de cierre.
+ *
+ * @param {any} ev - El evento que desencadenó la aparición del popover.
+ * @return {Promise<void>} Una promesa que se resuelve cuando el popover se cierra.
+ */
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: FiltroPedidosComponent,
@@ -211,6 +268,12 @@ export class PedidosPage implements OnInit {
     })
   }
 
+  /**
+ * Carga la lista de pedidos basada en el filtro dado.
+ *
+ * @param {string} filtro - El filtro a aplicar a la lista de pedidos.
+ * @return {void} Esta función no devuelve nada.
+ */
   private cargarPedidos(filtro: string) {
     switch (this.tipo) {
       case 'cliente':
@@ -270,6 +333,17 @@ export class PedidosPage implements OnInit {
     }
   }
 
+    /**
+   * Calcula el importe total de los pedidos según el tipo de pedido.
+   *
+   * Esta función itera sobre la lista de pedidos (cliente o proveedor)
+   * y calcula el importe total de cada pedido. El importe total se almacena
+   * en la propiedad `importePedidos`. La función verifica si el tipo de pedido
+   * es 'cliente' o 'proveedor' y realiza el cálculo correspondiente. La
+   * función también redondea el importe total a 2 decimales.
+   *
+   * @return {void} Esta función no devuelve nada.
+   */
   calcularImportePedidos() {
     this.importePedidos = 0;
     if (this.tipo == 'cliente'){
@@ -290,6 +364,12 @@ export class PedidosPage implements OnInit {
     this.importePedidos = parseFloat(this.importePedidos.toFixed(2));
   }
 
+  /**
+ * Maneja el evento de scroll infinito.
+ *
+ * @param {InfiniteScrollCustomEvent} ev - El objeto de evento para el scroll infinito.
+ * @return {void} Esta función no devuelve nada.
+ */
   onIonInfinite(ev: InfiniteScrollCustomEvent) {
     if (this.tipo == 'cliente') {
       if (this.registros != this.pedidosAUXCliente.length) {
@@ -309,6 +389,12 @@ export class PedidosPage implements OnInit {
 
   }
 
+  /**
+ * Formatea una cadena de fecha dada en el formato 'yyyy-MM-dd'.
+ *
+ * @param {string} fecha - La cadena de fecha a formatear.
+ * @return {string} La cadena de fecha formateada, o una cadena vacía si la entrada es nula.
+ */
   public formatearFecha(fecha: string) {
     let fechaFormateada;
     if (fecha != null) {
@@ -320,6 +406,12 @@ export class PedidosPage implements OnInit {
     return fechaFormateada;
   }
 
+    /**
+   * Determina la clase de color de fondo basada en el estado de servicio del pedido dado.
+   *
+   * @param {any} pedido - El objeto de pedido para verificar el estado de servicio.
+   * @return {string} La clase de color de fondo correspondiente al estado de servicio del pedido.
+   */
   comprobarServido(pedido: any): string {
     if (pedido.ser == "") {
       return "rowBackgroundRed";
@@ -332,6 +424,12 @@ export class PedidosPage implements OnInit {
     }
   }
 
+  /**
+ * Formatea un número limitando sus decimales a 2, reemplazando el punto decimal con una coma y agregando separadores de miles.
+ *
+ * @param {any} numero - El número a formatear.
+ * @return {string} El número formateado como una cadena.
+ */
   formatearNumero(numero: any) {
     let numeroFormateado = parseFloat(numero).toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
     return numeroFormateado;

@@ -23,6 +23,19 @@ export class HomePage implements OnInit {
   public opcionesVentanaPrincipal: any = [
     { id: 0, nombre: '', icono: '', datos: '', clase: '', tipo: '', posicionTexto: '', mostrar: false, tipoGrafica: '' }
   ];
+
+    /**
+   * Crea una nueva instancia de la clase HomePage.
+   *
+   * @param {Platform} platform - El objeto de la plataforma.
+   * @param {ModalController} modalCtrl - El objeto del controlador modal.
+   * @param {AlertController} alertCtrl - El objeto del controlador de alertas.
+   * @param {TransferirDatosService} transferirService - El objeto del servicio de transferencia de datos.
+   * @param {IonRouterOutlet} routerOutlet - El objeto del enrutador de salida.
+   * @param {DownloadService} downloadService - El objeto del servicio de descarga.
+   * @param {FilesystemService} filesystemService - El objeto del servicio del sistema de archivos.
+   * @param {DbService} dbService - El objeto del servicio de base de datos.
+   */
   constructor(
     private platform: Platform,
     private modalCtrl: ModalController,
@@ -36,16 +49,33 @@ export class HomePage implements OnInit {
     addIcons({ funnel, chevronUpCircle, downloadOutline, settingsOutline });
   }
 
+  /**
+  * Inicializa el componente y llama a los métodos pageController y cargarTarjetasInicio.
+  *
+  * @return {void} Esta función no devuelve nada.
+  */
   ngOnInit() {
     this.pageController('/home');
     this.cargarTarjetasInicio();
   }
 
+  /**
+  * Se ejecuta cuando la vista ha sido completamente ingresada y ahora es la vista activa.
+  * Llama al método pageController con la ruta '/home'.
+  *
+  * @return {void} Esta función no devuelve nada.
+  */
   ionViewDidEnter() {
     this.pageController('/home');
   }
   
 
+    /**
+   * Ejecuta la lógica del controlador de página para la ruta dada.
+   *
+   * @param {string} route - La ruta para la cual se ejecuta la lógica del controlador de página.
+   * @return {void} Esta función no devuelve nada.
+   */
   pageController(route: string) {
     this.transferirService.sendObjectSource({ ruta: route });
     this.platform.backButton.subscribeWithPriority(10, () => {
@@ -55,6 +85,11 @@ export class HomePage implements OnInit {
     });
   }
 
+    /**
+   * Muestra una alerta para confirmar si el usuario desea salir de la aplicación.
+   *
+   * @return {Promise<void>} Una promesa que se resuelve cuando se presenta la alerta.
+   */
   async alertSalirApp() {
     const alert = await this.alertCtrl.create({
       header: 'Salir de la aplicación',
@@ -74,6 +109,11 @@ export class HomePage implements OnInit {
     alert.present();
   }  
 
+    /**
+   * Carga las tarjetas de inicio de la pantalla principal con opciones para la ventana principal.
+   *
+   * @return {void} Esta función no devuelve nada.
+   */
   cargarTarjetasInicio() {
     this.opcionesVentanaPrincipal = [
       { id: 1, nombre: 'Ventas últimos 12 meses', icono: 'assets/imgs/sales.svg', datos: '17800', tipo: 'moneda', posicionTexto: 'ion-text-end', clase: 'green', mostrar: true, tipoGrafica: 'barras' },
@@ -83,16 +123,23 @@ export class HomePage implements OnInit {
     ]
   }
 
+  /**
+  * Descarga y descomprime un paquete de datos utilizando el servicio de descarga.
+  *
+  * @return {void} Esta función no devuelve ningún valor.
+  */
   descargarPaqueteDeDatos(){
     this.downloadService.descargarYDescomprimirPaqueteDatos();
   }
 
-  pruebas() {
-    //this.downloadService.descargarYDescomprimirPaqueteDatos();
-    //this.dbService.connectDatabase();
-    //this.filesystemService.solicitarPermisos();
-  }
-
+  /**
+ * Abre un modal con el ID especificado, el título y el tipo de gráfica.
+ *
+ * @param {number} id - El ID del modal.
+ * @param {string} titulo - El título del modal.
+ * @param {string} tipoGrafica - El tipo de gráfica que se mostrará en el modal.
+ * @return {Promise<void>} Una promesa que se resuelve cuando se presenta el modal.
+ */
   async abrirModal(id: number, titulo: string, tipoGrafica: string) {
     console.log('desde home: ' + tipoGrafica);
     const modal = await this.modalCtrl.create({

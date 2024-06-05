@@ -1,8 +1,17 @@
+<!-- Un contenedor div con estilo para centrar su contenido horizontalmente -->
 <div style="text-align:center">
+
+  <!-- Componente de gráfico 'apx-chart' -->
   <apx-chart
     [series]="this.chartOptions.series"
     [chart]="this.chartOptions.chart"
     [xaxis]="this.chartOptions.xaxis"
     [title]="this.chartOptions.title"
   ></apx-chart>
-</div>
+
+</div> <!-- Fin del contenedor div -->
+
+<!-- [series] Atributo para proporcionar los datos de la serie del gráfico -->
+<!-- [chart] Atributo para proporcionar opciones de configuración general del gráfico -->
+<!-- [xaxis] Atributo para proporcionar opciones específicas del eje X del gráfico -->
+<!-- [title] Atributo para proporcionar el título del gráfico -->
