@@ -9,7 +9,6 @@ import { funnel, chevronUpCircle, downloadOutline, settingsOutline } from 'ionic
 import { ModalGraficaComponent } from 'src/app/components/modal-grafica/modal-grafica.component';
 import { DbService } from 'src/app/services/db.service';
 import { DownloadService } from 'src/app/services/download.service';
-import { FilesystemService } from 'src/app/services/filesystem.service';
 import { TransferirDatosService } from 'src/app/services/transferir-datos.service';
 
 @Component({
@@ -23,6 +22,10 @@ export class HomePage implements OnInit {
   public opcionesVentanaPrincipal: any = [
     { id: 0, nombre: '', icono: '', datos: '', clase: '', tipo: '', posicionTexto: '', mostrar: false, tipoGrafica: '' }
   ];
+
+  importeVentas: string = '0';
+  importeCompras: string = '0';
+  efectosPendientes: string = '0';
 
     /**
    * Crea una nueva instancia de la clase HomePage.
@@ -43,7 +46,6 @@ export class HomePage implements OnInit {
     private transferirService: TransferirDatosService,
     private routerOutlet: IonRouterOutlet,
     private downloadService: DownloadService,
-    private filesystemService: FilesystemService,
     private dbService: DbService
   ) {
     addIcons({ funnel, chevronUpCircle, downloadOutline, settingsOutline });
@@ -109,16 +111,16 @@ export class HomePage implements OnInit {
     alert.present();
   }  
 
-    /**
-   * Carga las tarjetas de inicio de la pantalla principal con opciones para la ventana principal.
-   *
-   * @return {void} Esta función no devuelve nada.
-   */
+ /**
+ * Carga las tarjetas iniciales para la pantalla principal con opciones para la ventana principal.
+ *
+ * @return {void} Esta función no devuelve nada.
+ */
   cargarTarjetasInicio() {
     this.opcionesVentanaPrincipal = [
-      { id: 1, nombre: 'Ventas últimos 12 meses', icono: 'assets/imgs/sales.svg', datos: '17800', tipo: 'moneda', posicionTexto: 'ion-text-end', clase: 'green', mostrar: true, tipoGrafica: 'barras' },
-      { id: 2, nombre: 'Compras últimos 12 meses', icono: 'assets/imgs/delivery-note.svg', datos: '11600', tipo: 'moneda', posicionTexto: 'ion-text-end', clase: 'orange', mostrar: true, tipoGrafica: 'barras' },
-      { id: 3, nombre: 'Efectos pendientes de cobro', icono: 'assets/imgs/flujo-de-efectivo.svg', datos: '25', tipo: 'texto', posicionTexto: 'ion-text-center', clase: 'blue', mostrar: true, tipoGrafica: 'sectores' },
+      { id: 1, nombre: 'Ventas últimos 12 meses', icono: 'assets/imgs/sales.svg', datos: this.importeVentas, tipo: 'moneda', posicionTexto: 'ion-text-end', clase: 'green', mostrar: true, tipoGrafica: 'barras' },
+      { id: 2, nombre: 'Compras últimos 12 meses', icono: 'assets/imgs/delivery-note.svg', datos: this.importeCompras, tipo: 'moneda', posicionTexto: 'ion-text-end', clase: 'orange', mostrar: true, tipoGrafica: 'barras' },
+      { id: 3, nombre: 'Efectos pendientes de cobro', icono: 'assets/imgs/flujo-de-efectivo.svg', datos: this.efectosPendientes, tipo: 'texto', posicionTexto: 'ion-text-center', clase: 'blue', mostrar: false, tipoGrafica: 'sectores' },
       { id: 4, nombre: 'Ratio de cobro', icono: 'assets/imgs/bill.svg', datos: '', tipo: 'texto', posicionTexto: 'ion-text-center', clase: 'purple', mostrar: false, tipoGrafica: '' }
     ]
   }
@@ -129,7 +131,7 @@ export class HomePage implements OnInit {
  * @return {Promise<void>} Una promesa que se resuelve cuando la descarga y descompresión están completas.
  */
   async descargarPaqueteDeDatos() {
-    const resultadoDescarga = await this.downloadService.descargarYDescomprimirPaqueteDatos2();
+    const resultadoDescarga = await this.downloadService.descargarYDescomprimirPaqueteDatos();
 
     if(resultadoDescarga){
       this.alertImportacionFinalizada();      
@@ -178,6 +180,28 @@ export class HomePage implements OnInit {
 
       });
     return await modal.present();
+  }
+
+  private async cargaInfoTarjetas() {
+    
+    this.dbService.devuelveDatosTarjetas().then((datosTarjetas)=>{
+      this.importeVentas = this.formatearNumero(datosTarjetas.importeVentas);
+      this.importeCompras = this.formatearNumero(datosTarjetas.importeCompras);
+      this.efectosPendientes = datosTarjetas.efectosPendientes;
+      this.cargarTarjetasInicio();
+    });
+
+  }
+
+ /**
+ * Formatea un número limite los decimales a 2, reemplaza el punto decimal con una coma y agrega separadores de miles.
+ *
+ * @param {any} numero - El número a formatear.
+ * @return {string} El número formateado como una cadena.
+ */
+  formatearNumero(numero: any) {
+    let numeroFormateado = parseFloat(numero).toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    return numeroFormateado;
   }
 
 }

@@ -33,55 +33,10 @@ export class DownloadService {
  /**
  * Descarga e infla un paquete de datos.
  *
- * @return {Promise<void>} Una promesa que se resuelve cuando se completa la descarga e inflación.
- * @throws {Error} Si no hay conexión a Internet o ocurre un error durante el proceso de descarga o inflación.
- */
-  public async descargarYDescomprimirPaqueteDatos() {
-    try {
-      const status = await Network.getStatus();
-      if (status.connected) {
-        this.toastService.mostrarToast('Descargando paquete de datos', 1500, 'bottom', 'baseline');
-        const downloadResult = await this.filesystemService.descargarFichero(this.directorioTmp + "/" + this.nombre, this.endpoint, Directory.External);
-
-        if (downloadResult.path) {
-          this.toastService.mostrarToast('Descarga completada', 1500, 'bottom', 'baseline');
-          const zipData = await this.filesystemService.leerFichero(this.directorioTmp + "/" + this.nombre, Directory.External);
-
-          const zip = new JSZip();
-          const zipContent = await zip.loadAsync(zipData.data, { base64: true });
-
-          zipContent.forEach(async (relativePath: string, zipFile: JSZip.JSZipObject) => {
-
-            await this.filesystemService.crearFichero(relativePath, Directory.External, await zipFile.async('base64'), true).then(() => {
-              this.filesystemService.copiarBBDDExternaAInterna(this.dbService.nombreDB).then(() => {
-
-                this.dbService.moverBBDDAInterna().then(() => {
-                  this.dbService.connectDatabase().then((result) => {
-                    return result;
-                  });
-                });
-              });
-            });
-          });
-        } else {
-          this.toastService.mostrarToast('No hay ningun paquete de datos', 1500, 'bottom', 'baseline');
-        }
-
-      } else {
-        this.toastService.mostrarToast('No tienes conexión a Internet', 1500, 'bottom', 'baseline');
-      }
-    } catch (error) {
-      this.toastService.mostrarToast('Error descargando el paquete:' + error, 1500, 'bottom', 'baseline');
-    }
-  }
-
- /**
- * Descarga e infla un paquete de datos.
- *
  * @return {Promise<boolean>} Retorna verdadero si la base de datos se conecta correctamente, de lo contrario retorna falso.
  * @throws {Error} Si no hay conexión a Internet o ocurre un error durante el proceso de descarga o inflación.
  */
-  public async descargarYDescomprimirPaqueteDatos2() {
+  public async descargarYDescomprimirPaqueteDatos() {
     const hayConexion = (await Network.getStatus()).connected;
     if(hayConexion){
       const paqueteDescargado = await this.descargarPaquete();
