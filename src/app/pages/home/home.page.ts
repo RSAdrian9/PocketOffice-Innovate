@@ -123,13 +123,38 @@ export class HomePage implements OnInit {
     ]
   }
 
-  /**
-  * Descarga y descomprime un paquete de datos utilizando el servicio de descarga.
-  *
-  * @return {void} Esta función no devuelve ningún valor.
-  */
-  descargarPaqueteDeDatos(){
-    this.downloadService.descargarYDescomprimirPaqueteDatos();
+ /**
+ * Descarga e inicia el descompresión de un paquete de datos utilizando el servicio de descarga.
+ *
+ * @return {Promise<void>} Una promesa que se resuelve cuando la descarga y descompresión están completas.
+ */
+  async descargarPaqueteDeDatos() {
+    const resultadoDescarga = await this.downloadService.descargarYDescomprimirPaqueteDatos2();
+
+    if(resultadoDescarga){
+      this.alertImportacionFinalizada();      
+    }   
+  }
+
+ /**
+ * Muestra una alerta indicando que la importación ha finalizado correctamente.
+ * Cuando el usuario hace clic en el botón 'Aceptar', se llama a la función 'cargaInfoTarjetas'.
+ *
+ * @return {Promise<void>} Una promesa que se resuelve cuando se presenta la alerta.
+ */
+  async alertImportacionFinalizada() {
+    const alert = await this.alertCtrl.create({
+      header: 'Importación',
+      message: 'La importacion ha finalizado correctamente.',
+      buttons: [        
+        {
+          text: 'Aceptar',
+          role: 'confirm',
+          handler: () => { this.cargaInfoTarjetas(); }
+        }
+      ],
+    });
+    alert.present();
   }
 
   /**
@@ -154,8 +179,5 @@ export class HomePage implements OnInit {
       });
     return await modal.present();
   }
-
-
-
 
 }

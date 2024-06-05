@@ -87,13 +87,17 @@ export class DbService {
     return db;
   }
 
-  /**
-  * Mueve la base de datos especificada al directorio interno y agrega un sufijo a su nombre.
-  *
-  * @return {Promise<void>} Una promesa que se resuelve cuando la base de datos se ha movido exitosamente.
-  */
+ /**
+ * Mueve la base de datos especificada al directorio interno y agrega un sufijo a su nombre.
+ *
+ * @return {Promise<boolean>} Una promesa que se resuelve a true si la base de datos se ha movido exitosamente, o false en caso contrario.
+ */
   async moverBBDDAInterna() {
-    this.sqlitePlugin.moveDatabasesAndAddSuffix({ folderPath: Directory.External, dbNameList: [this.nombreDB] });
+    return await this.sqlitePlugin.moveDatabasesAndAddSuffix({ folderPath: Directory.External, dbNameList: [this.nombreDB] }).then((result)=>{
+      return true;
+    }).catch(()=>{
+      return false;
+    });
   }
 
   /**
@@ -539,6 +543,54 @@ export class DbService {
     }
 
     return datosTarjetas;
+  }
+
+ /**
+ * Recupera datos para un gráfico de ventas.
+ *
+ * @return {Promise<any>} Un array de objetos que contiene el mes, el nombre del mes, el año y el total de ventas para los últimos 12 meses.
+ */
+  public async devuelveDatosGraficaVentas(){
+    let datosVentas: any;
+
+    let sentencia = "";
+
+    for (let index = 1; index <= 12; index++) {
+      
+      if(index == 12){
+        sentencia = sentencia + "SELECT strftime('%m', date('now','start of month')) AS mes, substr('--EneFebMarAbrMayJunJulAgoSepOctNovDic', strftime ('%m', date('now','start of month')) * 3, 3) as mesletras, strftime('%Y', date('now', 'start of month')) AS periodo, ((SELECT IFNULL(SUM(baseu),0) FROM ALBARA WHERE fec >= date('now','start of month') AND strftime('%m', fec) = strftime('%m', date('now', 'start of month'))  AND fac = 0)+(SELECT IFNULL(SUM(basmon),0) FROM FACEMI WHERE fee >= date('now','start of month') AND strftime('%m', fee) =strftime('%m', date('now', 'start of month')))) AS total ORDER BY periodo, mes;"
+      }else{
+        sentencia = sentencia + "SELECT strftime('%m', date('now', '-"+(12-index)+" month')) AS mes, substr('--EneFebMarAbrMayJunJulAgoSepOctNovDic',strftime ('%m', date('now','-"+(12-index)+" month')) * 3, 3) as mesletras, strftime('%Y', date('now', '-"+(12-index)+" month')) AS periodo, ((SELECT IFNULL(SUM(baseu),0) FROM ALBARA WHERE fec >= date('now','-"+(12-index)+" month') AND strftime('%m', fec) =strftime('%m', date('now', '-"+(12-index)+" month'))  AND fac = 0)+(SELECT IFNULL(SUM(basmon),0) FROM FACEMI WHERE fee >= date('now','-"+(12-index)+" month') AND strftime('%m', fee) =strftime('%m', date('now', '-"+(12-index)+" month')))) AS total UNION ";
+      }
+
+    }
+
+    datosVentas = (await this.db.query(sentencia)).values;
+    
+    return datosVentas;    
+  }
+
+ /**
+ * Recupera datos para un gráfico de compras.
+ *
+ * @return {Promise<any>} Un array de objetos que contiene el mes, el nombre del mes, el año y el total de compras para los últimos 12 meses.
+ */
+  public async devuelveDatosGraficaCompras(){
+    let datosCompras: any;
+
+    let sentencia = "";
+
+    for (let index = 1; index <= 12; index++) {
+      if(index == 12){
+        sentencia = sentencia + "SELECT strftime('%m', date('now','start of month')) AS mes, substr('--EneFebMarAbrMayJunJulAgoSepOctNovDic', strftime ('%m', date('now','start of month')) * 3, 3) as mesletras, strftime('%Y', date('now', 'start of month')) AS periodo, ((SELECT IFNULL(SUM(baseu),0) FROM ALBENT WHERE fec >= date('now','start of month') AND strftime('%m', fec) = strftime('%m', date('now', 'start of month'))  AND fac = 0)+(SELECT IFNULL(SUM(basmon),0) FROM FACREC WHERE fee >= date('now','start of month') AND strftime('%m', fee) =strftime('%m', date('now', 'start of month')))) AS total ORDER BY periodo, mes;"
+      }else{
+        sentencia = sentencia + "SELECT strftime('%m', date('now', '-"+(12-index)+" month')) AS mes, substr('--EneFebMarAbrMayJunJulAgoSepOctNovDic',strftime ('%m', date('now','-"+(12-index)+" month')) * 3, 3) as mesletras, strftime('%Y', date('now', '-"+(12-index)+" month')) AS periodo, ((SELECT IFNULL(SUM(baseu),0) FROM ALBENT WHERE fec >= date('now','-"+(12-index)+" month') AND strftime('%m', fec) =strftime('%m', date('now', '-"+(12-index)+" month'))  AND fac = 0)+(SELECT IFNULL(SUM(basmon),0) FROM FACREC WHERE fee >= date('now','-"+(12-index)+" month') AND strftime('%m', fee) =strftime('%m', date('now', '-"+(12-index)+" month')))) AS total UNION ";
+      }      
+    }
+
+    datosCompras = (await this.db.query(sentencia)).values;
+    
+    return datosCompras;    
   }
 
   //*************************PARA LOS FILTROS*****************************

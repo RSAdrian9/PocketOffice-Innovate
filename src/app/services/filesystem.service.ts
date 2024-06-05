@@ -39,15 +39,15 @@ export class FilesystemService {
   }
 
  /**
- * Copia una base de datos externa a la interna.
+ * Copies an external database to the internal one.
  *
- * @param {string} nombreDB - El nombre de la base de datos a copiar.
- * @return {Promise<void>} Una promesa que se resuelve cuando se ha copiado la base de datos.
+ * @param {string} nombreDB - The name of the database to copy.
+ * @return {Promise<void>} A promise that resolves when the database has been copied.
  */
   public async copiarBBDDExternaAInterna(nombreDB: string) {
     
     const data = await this.compruebaFicheroExiste(nombreDB, Directory.External);
-    await this.crearFichero(nombreDB, Directory.Data, data.data);
+    return await this.crearFichero(nombreDB, Directory.Data, data.data);
   }
 
  /**
